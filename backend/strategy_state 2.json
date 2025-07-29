@@ -1,0 +1,135 @@
+{
+    "timestamp": "2025-07-02T15:39:08.930949",
+    "strategy_mode": "CALL_PUT",
+    "active_options": {},
+    "last_signal_time": {
+        "TESLA/FORD": "2025-07-02T14:04:34.537370",
+        "XAU/XAG": "2025-07-02T10:10:53.627480",
+        "UK100": "2025-07-02T10:11:04.777025"
+    },
+    "consecutive_losses": {
+        "TESLA/FORD": 1
+    },
+    "daily_lockouts": {},
+    "wins": {},
+    "losses": {
+        "TESLA/FORD": 1
+    },
+    "ties": {},
+    "total_profit": -20329.52,
+    "daily_profit": -20329.52,
+    "monthly_profits": {},
+    "monthly_starting_capital": {
+        "2025-07": 1016476.12
+    },
+    "monthly_stop_loss": false,
+    "stop_loss_triggered_month": null,
+    "absolute_stop_loss_activated": false,
+    "min_capital": 996147.12,
+    "last_date": "2025-07-02",
+    "current_month": "2025-07",
+    "daily_profit_lock": false,
+    "daily_profit_lock_amount": 0.0,
+    "daily_profit_lock_time": null,
+    "daily_consecutive_losses": 1,
+    "daily_loss_lock": false,
+    "daily_loss_lock_time": null,
+    "max_daily_consecutive_losses": 3,
+    "day_start_balance": 1016476.12,
+    "rsi_history": {
+        "GER30": [
+            33.96
+        ],
+        "UK100": [
+            31.62,
+            31.31
+        ],
+        "JP225": [
+            51.85,
+            50.44,
+            51.06,
+            52.58,
+            54.9
+        ],
+        "MSFT": [
+            57.88,
+            57.33,
+            56.78,
+            56.28,
+            57.24
+        ],
+        "XAUUSD": [
+            24.48,
+            25.69
+        ],
+        "XAGUSD": [
+            58.96,
+            58.92,
+            59.55,
+            60.21,
+            56.46
+        ],
+        "NVDA/AMD": [
+            26.99,
+            26.65,
+            26.67
+        ],
+        "TESLA/FORD": [],
+        "GER30/UK100": [
+            64.74,
+            64.93,
+            66.47,
+            66.69,
+            67.67
+        ],
+        "XAU/XAG": [
+            45.88,
+            45.98,
+            45.92,
+            45.51,
+            45.14
+        ],
+        "META/GOOGLE": [
+            40.3,
+            39.58,
+            40.08,
+            39.56,
+            38.87
+        ],
+        "AMZN/ALIBABA": [
+            42.88,
+            42.95,
+            43.76,
+            43.41,
+            43.15
+        ],
+        "MSFT/AAPL": [
+            62.34,
+            61.52,
+            62.02,
+            63.53,
+            63.91
+        ],
+        "US30": [
+            58.65,
+            58.65,
+            58.65,
+            58.65,
+            58.65
+        ],
+        "USNDAQ100": [
+            30.26,
+            30.26,
+            30.26
+        ],
+        "US2000": [
+            26.86,
+            26.67
+        ],
+        "AUS200": [
+            29.95,
+            30.84
+        ]
+    },
+    "aggressiveness_mode": "BALANCED"
+}
