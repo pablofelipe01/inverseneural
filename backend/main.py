@@ -58,8 +58,8 @@ def main():
     logger.info(f"📧 Usuario: {email[:3]}***{email[-10:]}")  # Ocultar parte del email
     logger.info("=" * 60)
     logger.info("⚠️ IMPORTANTE: Esta estrategia usa lógica INVERTIDA")
-    logger.info("   - PUT cuando RSI ≤ 35 (sobreventa)")
-    logger.info("   - CALL cuando RSI ≥ 65 (sobrecompra)")
+    logger.info("   - PUT cuando Algebra Inversa ≤ 35 (sobreventa)")
+    logger.info("   - CALL cuando Algebra Inversa ≥ 65 (sobrecompra)")
     logger.info("=" * 60)
     
     try:
@@ -130,7 +130,7 @@ def main():
         
         # Ejecutar estrategia
         logger.info("🎯 Iniciando operaciones...")
-        logger.info("ℹ️ Presiona Ctrl+C para detener la estrategia")
+        logger.info("ℹ️ Para detener la estrategia, desactiva el switch en el dashboard")
         strategy.run()
         
     except KeyboardInterrupt:

@@ -43,7 +43,7 @@ def quick_summary():
         
         # RSI actual de cada activo
         if 'rsi_history' in state:
-            print("\n📈 RSI ACTUAL (última lectura):")
+            print("\n📈 ALGEBRA INVERSA ACTUAL (última lectura):")
             
             # Agrupar por tipo
             by_group = defaultdict(list)

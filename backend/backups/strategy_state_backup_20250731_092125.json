@@ -1,0 +1,97 @@
+{
+    "timestamp": "2025-07-31T09:19:36.085346",
+    "strategy_mode": "CALL_PUT",
+    "active_options": {},
+    "last_signal_time": {},
+    "consecutive_losses": {},
+    "daily_lockouts": {},
+    "wins": {},
+    "losses": {},
+    "ties": {},
+    "total_profit": 0.0,
+    "daily_profit": 0.0,
+    "monthly_profits": {},
+    "monthly_starting_capital": {
+        "2025-07": 7696.85
+    },
+    "monthly_stop_loss": false,
+    "stop_loss_triggered_month": null,
+    "absolute_stop_loss_activated": false,
+    "min_capital": 7696.85,
+    "last_date": "2025-07-31",
+    "current_month": "2025-07",
+    "daily_consecutive_wins": 0,
+    "daily_consecutive_losses": 0,
+    "daily_lock": false,
+    "daily_lock_time": null,
+    "daily_lock_reason": null,
+    "max_daily_consecutive": 2,
+    "recent_results": [],
+    "day_start_balance": 7696.85,
+    "rsi_history": {
+        "NVDA/AMD": [
+            49.37,
+            49.73,
+            49.21,
+            49.11,
+            49.48
+        ],
+        "TESLA/FORD": [
+            66.15,
+            66.34,
+            66.11,
+            64.81,
+            65.94
+        ],
+        "META/GOOGLE": [
+            57.41,
+            57.58,
+            58.19,
+            57.34,
+            55.45
+        ],
+        "AMZN/ALIBABA": [
+            57.99,
+            57.75,
+            57.62,
+            57.22,
+            56.97
+        ],
+        "MSFT/AAPL": [
+            63.9,
+            62.31,
+            62.72,
+            62.69,
+            61.61
+        ],
+        "AMZN/EBAY": [
+            44.46,
+            45.93,
+            46.42,
+            46.32,
+            47.59
+        ],
+        "NFLX/AMZN": [
+            52.25,
+            52.84,
+            52.16,
+            51.85,
+            52.22
+        ],
+        "GOOGLE/MSFT": [
+            50.74,
+            50.39,
+            49.86,
+            51.74,
+            52.05
+        ],
+        "INTEL/IBM": [
+            47.09,
+            44.99,
+            44.9,
+            44.99,
+            44.81
+        ]
+    },
+    "aggressiveness_mode": "AGGRESSIVE"
+}

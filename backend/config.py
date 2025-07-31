@@ -304,7 +304,7 @@ def print_asset_configuration():
             position_size = POSITION_SIZE_PERCENT_BY_GROUP.get(group, POSITION_SIZE_PERCENT)
             print(f"\n{group}:")
             print(f"  Activos: {', '.join(assets)}")
-            print(f"  RSI: {levels['OVERSOLD']}/{levels['OVERBOUGHT']}")
+            print(f"  Algebra Inversa: {levels['OVERSOLD']}/{levels['OVERBOUGHT']}")
             print(f"  Momentum mínimo: {momentum} puntos")
             print(f"  Tamaño posición: {position_size*100}%")
             print(f"  Descripción: {levels['DESCRIPTION']}")
@@ -337,6 +337,6 @@ def print_aggressiveness_configuration():
     print(f"  - Permitir rebotes: {'Sí' if ACTIVE_CONFIG['allow_rebounds'] else 'No'}")
     if ACTIVE_CONFIG['allow_rebounds']:
         print(f"  - Máximo rebotes: {ACTIVE_CONFIG['max_rebounds']}")
-        print(f"  - Tolerancia rebote: {ACTIVE_CONFIG['rebound_tolerance']} puntos RSI")
+        print(f"  - Tolerancia rebote: {ACTIVE_CONFIG['rebound_tolerance']} puntos Algebra Inversa")
     print(f"\n🎯 LÍMITE DE TRADES SIMULTÁNEOS: {MAX_SIMULTANEOUS_TRADES}")
     print("=" * 60)

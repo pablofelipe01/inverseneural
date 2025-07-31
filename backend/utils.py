@@ -75,7 +75,7 @@ def calculate_rsi(candles, period=14):
         return round(rsi, 2)
         
     except Exception as e:
-        logging.error(f"Error calculando RSI: {str(e)}")
+        logging.error(f"Error calculando Algebra Inversa: {str(e)}")
         return None
 
 def is_market_open():

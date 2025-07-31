@@ -56,7 +56,7 @@ class MultiAssetRSIBinaryOptionsStrategy:
         # Configurar logger
         self.logger = setup_logger(__name__, LOG_FILE, getattr(logging, LOG_LEVEL))
         self.logger.info("🎯 INICIANDO ESTRATEGIA ALGEBRA MULTI-ACTIVOS (LÓGICA INVERTIDA)")
-        self.logger.info("📊 Configuración: Niveles RSI dinámicos por grupo de activos")
+        self.logger.info("📊 Configuración: Niveles Algebra Inversa dinámicos por grupo de activos")
         self.logger.info("⚡ LÓGICA INVERTIDA: PUT en sobreventa, CALL en sobrecompra")
         self.logger.info(f"🎯 LÍMITE DE TRADES SIMULTÁNEOS: {MAX_SIMULTANEOUS_TRADES}")
         
@@ -229,7 +229,7 @@ class MultiAssetRSIBinaryOptionsStrategy:
         
     def _print_group_configuration(self):
         """Mostrar la configuración de niveles por grupo"""
-        self.logger.info("\n📊 CONFIGURACIÓN DE NIVELES RSI POR GRUPO:")
+        self.logger.info("\n📊 CONFIGURACIÓN DE NIVELES ALGEBRA INVERSA POR GRUPO:")
         self.logger.info("=" * 60)
         
         # Agrupar activos válidos por tipo
@@ -254,7 +254,7 @@ class MultiAssetRSIBinaryOptionsStrategy:
                 
                 self.logger.info(f"\n{group}:")
                 self.logger.info(f"  Activos: {', '.join(assets)}")
-                self.logger.info(f"  RSI Sobreventa/Sobrecompra: {levels['OVERSOLD']}/{levels['OVERBOUGHT']}")
+                self.logger.info(f"  Algebra Inversa Sobreventa/Sobrecompra: {levels['OVERSOLD']}/{levels['OVERBOUGHT']}")
                 self.logger.info(f"  Momentum mínimo: {momentum} puntos")
                 self.logger.info(f"  Tamaño posición: {position_display}")
         
@@ -506,14 +506,14 @@ class MultiAssetRSIBinaryOptionsStrategy:
             if candles and len(candles) >= self.rsi_period:
                 rsi = calculate_rsi(candles, self.rsi_period)
                 if rsi is not None:
-                    self.logger.debug(f"📊 {asset} - RSI({self.candle_timeframe//60}min): {rsi:.2f}")
+                    self.logger.debug(f"📊 {asset} - Algebra Inversa({self.candle_timeframe//60}min): {rsi:.2f}")
                 return rsi
             
-            self.logger.warning(f"⚠️ No se pudo calcular RSI para {asset}")
+            self.logger.warning(f"⚠️ No se pudo calcular Algebra Inversa para {asset}")
             return None
             
         except Exception as e:
-            self.logger.error(f"❌ Error obteniendo RSI para {asset}: {str(e)}")
+            self.logger.error(f"❌ Error obteniendo Algebra Inversa para {asset}: {str(e)}")
             return None
     
     def place_option(self, asset, direction, amount):
@@ -656,7 +656,7 @@ class MultiAssetRSIBinaryOptionsStrategy:
                 self.logger.debug(f"📉 {asset} - Cruce fresco ACTUAL: {history[-1]:.1f} → {current_rsi:.1f}")
             
             if not cross_found:
-                self.logger.debug(f"⏭️ {asset} - RSI en sobreventa pero sin cruce fresco (señal gastada)")
+                self.logger.debug(f"⏭️ {asset} - Algebra Inversa en sobreventa pero sin cruce fresco (señal gastada)")
                 return False
             
             # Verificar tendencia con tolerancia a rebotes
@@ -716,7 +716,7 @@ class MultiAssetRSIBinaryOptionsStrategy:
                 self.logger.debug(f"📈 {asset} - Cruce fresco ACTUAL: {history[-1]:.1f} → {current_rsi:.1f}")
             
             if not cross_found:
-                self.logger.debug(f"⏭️ {asset} - RSI en sobrecompra pero sin cruce fresco (señal gastada)")
+                self.logger.debug(f"⏭️ {asset} - Algebra Inversa en sobrecompra pero sin cruce fresco (señal gastada)")
                 return False
             
             # Verificar tendencia con tolerancia a rebotes
@@ -802,7 +802,7 @@ class MultiAssetRSIBinaryOptionsStrategy:
             if (all_oversold and current_rsi <= oversold_level) or \
                (all_overbought and current_rsi >= overbought_level):
                 # RSI ha estado en zona extrema por mucho tiempo, limpiar historial
-                self.logger.debug(f"🔄 {asset} - RSI en zona extrema por mucho tiempo, limpiando historial")
+                self.logger.debug(f"🔄 {asset} - Algebra Inversa en zona extrema por mucho tiempo, limpiando historial")
                 self.rsi_history[asset].clear()
         
         # Actualizar historial de RSI
@@ -810,7 +810,7 @@ class MultiAssetRSIBinaryOptionsStrategy:
         
         # Si no tenemos suficiente historial, esperar
         if len(self.rsi_history[asset]) < 3:
-            self.logger.debug(f"📊 {asset} ({group}) - Construyendo historial RSI: {len(self.rsi_history[asset])}/3")
+            self.logger.debug(f"📊 {asset} ({group}) - Construyendo historial Algebra Inversa: {len(self.rsi_history[asset])}/3")
             return
         
         # Detectar señales con validación de momentum
@@ -820,17 +820,17 @@ class MultiAssetRSIBinaryOptionsStrategy:
         if current_rsi <= oversold_level:
             if self.has_valid_momentum(asset, current_rsi, "PUT", min_momentum_points):
                 signal = "PUT"
-                self.logger.info(f"🔴 {asset} ({group}) - Señal PUT con momentum válido (RSI: {current_rsi:.2f} ≤ {oversold_level})")
+                self.logger.info(f"🔴 {asset} ({group}) - Señal PUT con momentum válido (Algebra Inversa: {current_rsi:.2f} ≤ {oversold_level})")
             else:
-                self.logger.debug(f"⏭️ {asset} ({group}) - RSI en sobreventa ({current_rsi:.2f} ≤ {oversold_level}) pero sin señal válida")
+                self.logger.debug(f"⏭️ {asset} ({group}) - Algebra Inversa en sobreventa ({current_rsi:.2f} ≤ {oversold_level}) pero sin señal válida")
         
         # Verificar condiciones para CALL
         elif current_rsi >= overbought_level:
             if self.has_valid_momentum(asset, current_rsi, "CALL", min_momentum_points):
                 signal = "CALL"
-                self.logger.info(f"🟢 {asset} ({group}) - Señal CALL con momentum válido (RSI: {current_rsi:.2f} ≥ {overbought_level})")
+                self.logger.info(f"🟢 {asset} ({group}) - Señal CALL con momentum válido (Algebra Inversa: {current_rsi:.2f} ≥ {overbought_level})")
             else:
-                self.logger.debug(f"⏭️ {asset} ({group}) - RSI en sobrecompra ({current_rsi:.2f} ≥ {overbought_level}) pero sin señal válida")
+                self.logger.debug(f"⏭️ {asset} ({group}) - Algebra Inversa en sobrecompra ({current_rsi:.2f} ≥ {overbought_level}) pero sin señal válida")
         
         # Si hay señal válida, operar
         if signal:
@@ -1412,7 +1412,7 @@ class MultiAssetRSIBinaryOptionsStrategy:
             current_mode = self.custom_aggressiveness or AGGRESSIVENESS_MODE
             if saved_mode and saved_mode != current_mode:
                 self.logger.warning(f"⚠️ Modo de agresividad cambió: {saved_mode} → {current_mode}")
-                self.logger.warning("   Limpiando historial RSI para adaptarse al nuevo modo")
+                self.logger.warning("   Limpiando historial Algebra Inversa para adaptarse al nuevo modo")
                 # No cargar historial RSI si cambió el modo
                 state["rsi_history"] = {}
             
@@ -1498,7 +1498,7 @@ class MultiAssetRSIBinaryOptionsStrategy:
         self.logger.info("=" * 60)
         self.logger.info("📊 RESUMEN DE LA ESTRATEGIA ALGEBRA MULTI-ACTIVOS (LÓGICA INVERTIDA)")
         self.logger.info("=" * 60)
-        self.logger.info("⚡ Estrategia: PUT en sobreventa (RSI dinámico), CALL en sobrecompra (RSI dinámico)")
+        self.logger.info("⚡ Estrategia: PUT en sobreventa (Algebra Inversa dinámico), CALL en sobrecompra (Algebra Inversa dinámico)")
         self.logger.info(f"⚙️ Modo: {AGGRESSIVENESS_MODE} - {ACTIVE_CONFIG['description']}")
         self.logger.info(f"🎯 Límite de trades simultáneos: {MAX_SIMULTANEOUS_TRADES}")
         self.logger.info(f"💰 Capital Inicial: {format_currency(self.initial_capital)}")
@@ -1578,16 +1578,20 @@ class MultiAssetRSIBinaryOptionsStrategy:
     
     def run(self):
         """Ejecutar la estrategia principal"""
+        # Obtener configuración activa (personalizada o por defecto)
+        active_config, active_mode = self.get_aggressiveness_config()
+        
         self.logger.info("🚀 Iniciando estrategia ALGEBRA Multi-Activos (LÓGICA INVERTIDA)")
         self.logger.info(f"📊 Configuración: {len(self.valid_assets)} activos disponibles")
-        self.logger.info(f"⚙️ Modo: {AGGRESSIVENESS_MODE} - {ACTIVE_CONFIG['description']}")
-        self.logger.info(f"📊 RSI en timeframe de {self.candle_timeframe//60} minutos")
+        mode_display = f"{active_mode} (personalizado)" if self.custom_aggressiveness else active_mode
+        self.logger.info(f"⚙️ Modo: {mode_display} - {active_config['description']}")
+        self.logger.info(f"📊 Algebra Inversa en timeframe de {self.candle_timeframe//60} minutos")
         self.logger.info(f"⏱️ Expiración de opciones: {self.expiry_minutes} minutos")
         self.logger.info(f"⏰ Tiempo entre señales: {self.min_time_between_signals} minutos")
         self.logger.info(f"🔄 Bloqueo diario después de {self.max_daily_consecutive} operaciones consecutivas (wins o losses)")
         self.logger.info(f"🎯 Máximo {MAX_SIMULTANEOUS_TRADES} trade(s) simultáneo(s)")
-        self.logger.info(f"💪 Fuerza mínima de señal: {ACTIVE_CONFIG['min_strength']}%")
-        self.logger.info(f"🆕 Solo cruces frescos en últimas {ACTIVE_CONFIG.get('max_candles_for_cross', 2)} velas")
+        self.logger.info(f"💪 Fuerza mínima de señal: {active_config['min_strength']}%")
+        self.logger.info(f"🆕 Solo cruces frescos en últimas {active_config.get('max_candles_for_cross', 2)} velas")
         
         cycle_count = 0
         
