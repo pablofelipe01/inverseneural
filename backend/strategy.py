@@ -266,7 +266,7 @@ class MultiAssetRSIBinaryOptionsStrategy:
         mode_display = f"{active_mode} (personalizado)" if self.custom_aggressiveness else active_mode
         self.logger.info(f"  Modo: {mode_display}")
         self.logger.info(f"  Fuerza mínima: {active_config['min_strength']}%")
-        self.logger.info(f"  Cruces válidos: últimas {active_config.get('max_candles_for_cross', 2)} velas")
+        self.logger.info(f"  Cruces válidos: últimas {active_config.get('max_candles_for_cross', 2)} niveles dinámicos")
         self.logger.info(f"  Permitir rebotes: {'Sí' if active_config['allow_rebounds'] else 'No'}")
         if active_config['allow_rebounds']:
             self.logger.info(f"  Máx rebotes: {active_config['max_rebounds']} de hasta {active_config['rebound_tolerance']} puntos")
@@ -647,7 +647,7 @@ class MultiAssetRSIBinaryOptionsStrategy:
             for i in range(min(max_candles_back, len(history)-1)):
                 if history[i] > oversold_level and history[i+1] <= oversold_level:
                     cross_found = True
-                    self.logger.debug(f"📉 {asset} - Cruce fresco detectado hace {i+1} vela(s): {history[i]:.1f} → {history[i+1]:.1f}")
+                    self.logger.debug(f"📉 {asset} - Cruce fresco detectado hace {i+1} nivel(es) dinámico(s): {history[i]:.1f} → {history[i+1]:.1f}")
                     break
             
             # Si el RSI actual cruza el nivel, también es válido
@@ -707,7 +707,7 @@ class MultiAssetRSIBinaryOptionsStrategy:
             for i in range(min(max_candles_back, len(history)-1)):
                 if history[i] < overbought_level and history[i+1] >= overbought_level:
                     cross_found = True
-                    self.logger.debug(f"📈 {asset} - Cruce fresco detectado hace {i+1} vela(s): {history[i]:.1f} → {history[i+1]:.1f}")
+                    self.logger.debug(f"📈 {asset} - Cruce fresco detectado hace {i+1} nivel(es) dinámico(s): {history[i]:.1f} → {history[i+1]:.1f}")
                     break
             
             # Si el RSI actual cruza el nivel, también es válido
@@ -1591,7 +1591,7 @@ class MultiAssetRSIBinaryOptionsStrategy:
         self.logger.info(f"🔄 Bloqueo diario después de {self.max_daily_consecutive} operaciones consecutivas (wins o losses)")
         self.logger.info(f"🎯 Máximo {MAX_SIMULTANEOUS_TRADES} trade(s) simultáneo(s)")
         self.logger.info(f"💪 Fuerza mínima de señal: {active_config['min_strength']}%")
-        self.logger.info(f"🆕 Solo cruces frescos en últimas {active_config.get('max_candles_for_cross', 2)} velas")
+        self.logger.info(f"🆕 Solo cruces frescos en últimas {active_config.get('max_candles_for_cross', 2)} niveles dinámicos")
         
         cycle_count = 0
         

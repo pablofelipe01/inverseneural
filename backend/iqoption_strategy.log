@@ -1,113 +1,91 @@
-2025-07-31 09:22:07 | INFO | ============================================================
-2025-07-31 09:22:07 | INFO |    ESTRATEGIA ALGEBRA MULTI-ACTIVOS PARA OPTION
-2025-07-31 09:22:07 | INFO |    ⚡ LÓGICA INVERTIDA ⚡
-2025-07-31 09:22:07 | INFO | ============================================================
-2025-07-31 09:22:07 | INFO | 📅 Fecha/Hora: 2025-07-31 09:22:07
-2025-07-31 09:22:07 | INFO | 📧 Usuario: syl***@gmail.com
-2025-07-31 09:22:07 | INFO | ============================================================
-2025-07-31 09:22:07 | INFO | ⚠️ IMPORTANTE: Esta estrategia usa lógica INVERTIDA
-2025-07-31 09:22:07 | INFO |    - PUT cuando Algebra Inversa ≤ 35 (sobreventa)
-2025-07-31 09:22:07 | INFO |    - CALL cuando Algebra Inversa ≥ 65 (sobrecompra)
-2025-07-31 09:22:07 | INFO | ============================================================
-2025-07-31 09:22:07 | INFO | 🚀 Inicializando estrategia...
-2025-07-31 09:22:07 | INFO | 🎯 Pares seleccionados: NVDA/AMD, TESLA/FORD, META/GOOGLE, AMZN/ALIBABA, MSFT/AAPL, AMZN/EBAY, NFLX/AMZN, GOOGLE/MSFT, INTEL/IBM
-2025-07-31 09:22:07 | INFO | 💰 Tamaño de posición: 7%
-2025-07-31 09:22:07 | INFO | ⚡ Nivel de agresividad: agresivo
-2025-07-31 09:22:07 | INFO | 🎯 INICIANDO ESTRATEGIA ALGEBRA MULTI-ACTIVOS (LÓGICA INVERTIDA)
-2025-07-31 09:22:07 | INFO | 📊 Configuración: Niveles Algebra Inversa dinámicos por grupo de activos
-2025-07-31 09:22:07 | INFO | ⚡ LÓGICA INVERTIDA: PUT en sobreventa, CALL en sobrecompra
-2025-07-31 09:22:07 | INFO | 🎯 LÍMITE DE TRADES SIMULTÁNEOS: 1
-2025-07-31 09:22:07 | INFO | 🎯 PARES SELECCIONADOS: ['NVDA/AMD', 'TESLA/FORD', 'META/GOOGLE', 'AMZN/ALIBABA', 'MSFT/AAPL', 'AMZN/EBAY', 'NFLX/AMZN', 'GOOGLE/MSFT', 'INTEL/IBM']
-2025-07-31 09:22:07 | INFO | ✅ Par habilitado: NVDA/AMD
-2025-07-31 09:22:07 | INFO | ✅ Par habilitado: TESLA/FORD
-2025-07-31 09:22:07 | INFO | ✅ Par habilitado: META/GOOGLE
-2025-07-31 09:22:07 | INFO | ✅ Par habilitado: AMZN/ALIBABA
-2025-07-31 09:22:07 | INFO | ✅ Par habilitado: MSFT/AAPL
-2025-07-31 09:22:07 | INFO | ✅ Par habilitado: AMZN/EBAY
-2025-07-31 09:22:07 | INFO | ✅ Par habilitado: NFLX/AMZN
-2025-07-31 09:22:07 | INFO | ✅ Par habilitado: GOOGLE/MSFT
-2025-07-31 09:22:07 | INFO | ✅ Par habilitado: INTEL/IBM
-2025-07-31 09:22:07 | INFO | 🎯 Operando con 9 pares seleccionados
-2025-07-31 09:22:07 | INFO | 💰 Tamaño de posición personalizado: 7%
-2025-07-31 09:22:07 | INFO | ⚡ Agresividad personalizada: agresivo → AGGRESSIVE
-2025-07-31 09:22:07 | INFO | ⚙️ Modo de agresividad: AGGRESSIVE (personalizado)
-2025-07-31 09:22:07 | INFO | 📊 Timeframe: 5 min | Expiración: 5 min | Fuerza mínima: 50%
-2025-07-31 09:22:07 | INFO | 🔗 Conectando a IQ Option...
-2025-07-31 09:22:09 | INFO | ✅ Conexión exitosa
-2025-07-31 09:22:10 | INFO | 💰 Balance actual: $7,696.85
-2025-07-31 09:22:10 | INFO | 💰 Capital inicial: $7,696.85
-2025-07-31 09:22:10 | INFO | 📂 No hay archivo de estado previo
-2025-07-31 09:22:10 | INFO | 🔍 Verificando activos disponibles...
-2025-07-31 09:22:18 | INFO | ✅ NVDA/AMD: Encontrado como NVDA/AMD-OTC (turbo) - Grupo: PAIR
-2025-07-31 09:22:18 | INFO | ✅ NVDA/AMD: Encontrado como NVDA/AMD-OTC (binary) - Grupo: PAIR
-2025-07-31 09:22:18 | INFO | ✅ TESLA/FORD: Encontrado como TESLA/FORD-OTC (turbo) - Grupo: PAIR
-2025-07-31 09:22:18 | INFO | ✅ TESLA/FORD: Encontrado como TESLA/FORD-OTC (binary) - Grupo: PAIR
-2025-07-31 09:22:18 | INFO | ✅ META/GOOGLE: Encontrado como META/GOOGLE-OTC (turbo) - Grupo: PAIR
-2025-07-31 09:22:18 | INFO | ✅ META/GOOGLE: Encontrado como META/GOOGLE-OTC (binary) - Grupo: PAIR
-2025-07-31 09:22:18 | INFO | ✅ AMZN/ALIBABA: Encontrado como AMZN/ALIBABA-OTC (turbo) - Grupo: PAIR
-2025-07-31 09:22:18 | INFO | ✅ AMZN/ALIBABA: Encontrado como AMZN/ALIBABA-OTC (binary) - Grupo: PAIR
-2025-07-31 09:22:18 | INFO | ✅ MSFT/AAPL: Encontrado como MSFT/AAPL-OTC (turbo) - Grupo: PAIR
-2025-07-31 09:22:18 | INFO | ✅ MSFT/AAPL: Encontrado como MSFT/AAPL-OTC (binary) - Grupo: PAIR
-2025-07-31 09:22:18 | INFO | ✅ AMZN/EBAY: Encontrado como AMZN/EBAY-OTC (turbo) - Grupo: PAIR
-2025-07-31 09:22:18 | INFO | ✅ AMZN/EBAY: Encontrado como AMZN/EBAY-OTC (binary) - Grupo: PAIR
-2025-07-31 09:22:18 | INFO | ✅ NFLX/AMZN: Encontrado como NFLX/AMZN-OTC (turbo) - Grupo: PAIR
-2025-07-31 09:22:18 | INFO | ✅ NFLX/AMZN: Encontrado como NFLX/AMZN-OTC (binary) - Grupo: PAIR
-2025-07-31 09:22:18 | INFO | ✅ GOOGLE/MSFT: Encontrado como GOOGLE/MSFT-OTC (turbo) - Grupo: PAIR
-2025-07-31 09:22:18 | INFO | ✅ GOOGLE/MSFT: Encontrado como GOOGLE/MSFT-OTC (binary) - Grupo: PAIR
-2025-07-31 09:22:18 | INFO | ✅ INTEL/IBM: Encontrado como INTEL/IBM-OTC (turbo) - Grupo: PAIR
-2025-07-31 09:22:18 | INFO | ✅ INTEL/IBM: Encontrado como INTEL/IBM-OTC (binary) - Grupo: PAIR
-2025-07-31 09:22:18 | INFO | 📊 Total activos disponibles: 9
-2025-07-31 09:22:18 | INFO | 
+2025-07-31 09:38:41 | INFO | ============================================================
+2025-07-31 09:38:41 | INFO |    ESTRATEGIA ALGEBRA MULTI-ACTIVOS PARA OPTION
+2025-07-31 09:38:41 | INFO |    ⚡ LÓGICA INVERTIDA ⚡
+2025-07-31 09:38:41 | INFO | ============================================================
+2025-07-31 09:38:41 | INFO | 📅 Fecha/Hora: 2025-07-31 09:38:41
+2025-07-31 09:38:41 | INFO | 📧 Usuario: syl***@gmail.com
+2025-07-31 09:38:41 | INFO | ============================================================
+2025-07-31 09:38:41 | INFO | ⚠️ IMPORTANTE: Esta estrategia usa lógica INVERTIDA
+2025-07-31 09:38:41 | INFO |    - PUT cuando Algebra Inversa ≤ 35 (sobreventa)
+2025-07-31 09:38:41 | INFO |    - CALL cuando Algebra Inversa ≥ 65 (sobrecompra)
+2025-07-31 09:38:41 | INFO | ============================================================
+2025-07-31 09:38:41 | INFO | 🚀 Inicializando estrategia...
+2025-07-31 09:38:41 | INFO | 🎯 Pares seleccionados: NVDA/AMD, TESLA/FORD, META/GOOGLE, AMZN/ALIBABA, MSFT/AAPL, AMZN/EBAY, NFLX/AMZN, GOOGLE/MSFT, INTEL/IBM
+2025-07-31 09:38:41 | INFO | 💰 Tamaño de posición: 7%
+2025-07-31 09:38:41 | INFO | ⚡ Nivel de agresividad: agresivo
+2025-07-31 09:38:41 | INFO | 🎯 INICIANDO ESTRATEGIA ALGEBRA MULTI-ACTIVOS (LÓGICA INVERTIDA)
+2025-07-31 09:38:41 | INFO | 📊 Configuración: Niveles Algebra Inversa dinámicos por grupo de activos
+2025-07-31 09:38:41 | INFO | ⚡ LÓGICA INVERTIDA: PUT en sobreventa, CALL en sobrecompra
+2025-07-31 09:38:41 | INFO | 🎯 LÍMITE DE TRADES SIMULTÁNEOS: 1
+2025-07-31 09:38:41 | INFO | 🎯 PARES SELECCIONADOS: ['NVDA/AMD', 'TESLA/FORD', 'META/GOOGLE', 'AMZN/ALIBABA', 'MSFT/AAPL', 'AMZN/EBAY', 'NFLX/AMZN', 'GOOGLE/MSFT', 'INTEL/IBM']
+2025-07-31 09:38:41 | INFO | ✅ Par habilitado: NVDA/AMD
+2025-07-31 09:38:41 | INFO | ✅ Par habilitado: TESLA/FORD
+2025-07-31 09:38:41 | INFO | ✅ Par habilitado: META/GOOGLE
+2025-07-31 09:38:41 | INFO | ✅ Par habilitado: AMZN/ALIBABA
+2025-07-31 09:38:41 | INFO | ✅ Par habilitado: MSFT/AAPL
+2025-07-31 09:38:41 | INFO | ✅ Par habilitado: AMZN/EBAY
+2025-07-31 09:38:41 | INFO | ✅ Par habilitado: NFLX/AMZN
+2025-07-31 09:38:41 | INFO | ✅ Par habilitado: GOOGLE/MSFT
+2025-07-31 09:38:41 | INFO | ✅ Par habilitado: INTEL/IBM
+2025-07-31 09:38:41 | INFO | 🎯 Operando con 9 pares seleccionados
+2025-07-31 09:38:41 | INFO | 💰 Tamaño de posición personalizado: 7%
+2025-07-31 09:38:41 | INFO | ⚡ Agresividad personalizada: agresivo → AGGRESSIVE
+2025-07-31 09:38:41 | INFO | ⚙️ Modo de agresividad: AGGRESSIVE (personalizado)
+2025-07-31 09:38:41 | INFO | 📊 Timeframe: 5 min | Expiración: 5 min | Fuerza mínima: 50%
+2025-07-31 09:38:41 | INFO | 🔗 Conectando a IQ Option...
+2025-07-31 09:38:43 | INFO | ✅ Conexión exitosa
+2025-07-31 09:38:44 | INFO | 💰 Balance actual: $7,696.85
+2025-07-31 09:38:44 | INFO | 💰 Capital inicial: $7,696.85
+2025-07-31 09:38:44 | INFO | 📂 No hay archivo de estado previo
+2025-07-31 09:38:44 | INFO | 🔍 Verificando activos disponibles...
+2025-07-31 09:38:51 | INFO | ✅ NVDA/AMD: Encontrado como NVDA/AMD-OTC (turbo) - Grupo: PAIR
+2025-07-31 09:38:51 | INFO | ✅ NVDA/AMD: Encontrado como NVDA/AMD-OTC (binary) - Grupo: PAIR
+2025-07-31 09:38:51 | INFO | ✅ TESLA/FORD: Encontrado como TESLA/FORD-OTC (turbo) - Grupo: PAIR
+2025-07-31 09:38:51 | INFO | ✅ TESLA/FORD: Encontrado como TESLA/FORD-OTC (binary) - Grupo: PAIR
+2025-07-31 09:38:51 | INFO | ✅ META/GOOGLE: Encontrado como META/GOOGLE-OTC (turbo) - Grupo: PAIR
+2025-07-31 09:38:51 | INFO | ✅ META/GOOGLE: Encontrado como META/GOOGLE-OTC (binary) - Grupo: PAIR
+2025-07-31 09:38:51 | INFO | ✅ AMZN/ALIBABA: Encontrado como AMZN/ALIBABA-OTC (turbo) - Grupo: PAIR
+2025-07-31 09:38:51 | INFO | ✅ AMZN/ALIBABA: Encontrado como AMZN/ALIBABA-OTC (binary) - Grupo: PAIR
+2025-07-31 09:38:51 | INFO | ✅ MSFT/AAPL: Encontrado como MSFT/AAPL-OTC (turbo) - Grupo: PAIR
+2025-07-31 09:38:51 | INFO | ✅ MSFT/AAPL: Encontrado como MSFT/AAPL-OTC (binary) - Grupo: PAIR
+2025-07-31 09:38:51 | INFO | ✅ AMZN/EBAY: Encontrado como AMZN/EBAY-OTC (turbo) - Grupo: PAIR
+2025-07-31 09:38:51 | INFO | ✅ AMZN/EBAY: Encontrado como AMZN/EBAY-OTC (binary) - Grupo: PAIR
+2025-07-31 09:38:51 | INFO | ✅ NFLX/AMZN: Encontrado como NFLX/AMZN-OTC (turbo) - Grupo: PAIR
+2025-07-31 09:38:51 | INFO | ✅ NFLX/AMZN: Encontrado como NFLX/AMZN-OTC (binary) - Grupo: PAIR
+2025-07-31 09:38:51 | INFO | ✅ GOOGLE/MSFT: Encontrado como GOOGLE/MSFT-OTC (turbo) - Grupo: PAIR
+2025-07-31 09:38:51 | INFO | ✅ GOOGLE/MSFT: Encontrado como GOOGLE/MSFT-OTC (binary) - Grupo: PAIR
+2025-07-31 09:38:51 | INFO | ✅ INTEL/IBM: Encontrado como INTEL/IBM-OTC (turbo) - Grupo: PAIR
+2025-07-31 09:38:51 | INFO | ✅ INTEL/IBM: Encontrado como INTEL/IBM-OTC (binary) - Grupo: PAIR
+2025-07-31 09:38:51 | INFO | 📊 Total activos disponibles: 9
+2025-07-31 09:38:51 | INFO | 
 📊 CONFIGURACIÓN DE NIVELES ALGEBRA INVERSA POR GRUPO:
-2025-07-31 09:22:18 | INFO | ============================================================
-2025-07-31 09:22:18 | INFO | 
+2025-07-31 09:38:51 | INFO | ============================================================
+2025-07-31 09:38:51 | INFO | 
 PAIR:
-2025-07-31 09:22:18 | INFO |   Activos: NVDA/AMD, TESLA/FORD, META/GOOGLE, AMZN/ALIBABA, MSFT/AAPL, AMZN/EBAY, NFLX/AMZN, GOOGLE/MSFT, INTEL/IBM
-2025-07-31 09:22:18 | INFO |   Algebra Inversa Sobreventa/Sobrecompra: 32/68
-2025-07-31 09:22:18 | INFO |   Momentum mínimo: 4 puntos
-2025-07-31 09:22:18 | INFO |   Tamaño posición: 7% (personalizado)
-2025-07-31 09:22:18 | INFO | ============================================================
-2025-07-31 09:22:18 | INFO | 
+2025-07-31 09:38:51 | INFO |   Activos: NVDA/AMD, TESLA/FORD, META/GOOGLE, AMZN/ALIBABA, MSFT/AAPL, AMZN/EBAY, NFLX/AMZN, GOOGLE/MSFT, INTEL/IBM
+2025-07-31 09:38:51 | INFO |   Algebra Inversa Sobreventa/Sobrecompra: 32/68
+2025-07-31 09:38:51 | INFO |   Momentum mínimo: 4 puntos
+2025-07-31 09:38:51 | INFO |   Tamaño posición: 7% (personalizado)
+2025-07-31 09:38:51 | INFO | ============================================================
+2025-07-31 09:38:51 | INFO | 
 ⚡ CONFIGURACIÓN DE SEÑALES:
-2025-07-31 09:22:18 | INFO |   Modo: AGGRESSIVE (personalizado)
-2025-07-31 09:22:18 | INFO |   Fuerza mínima: 50%
-2025-07-31 09:22:18 | INFO |   Cruces válidos: últimas 3 velas
-2025-07-31 09:22:18 | INFO |   Permitir rebotes: Sí
-2025-07-31 09:22:18 | INFO |   Máx rebotes: 2 de hasta 3 puntos
-2025-07-31 09:22:18 | INFO |   🎯 Máximo trades simultáneos: 1
-2025-07-31 09:22:18 | INFO | ============================================================
-2025-07-31 09:22:18 | INFO | ✅ Sistema iniciado - Detectando momentum real con validación dinámica
-2025-07-31 09:22:18 | INFO | 🎯 Iniciando operaciones...
-2025-07-31 09:22:18 | INFO | ℹ️ Presiona Ctrl+C para detener la estrategia
-2025-07-31 09:22:18 | INFO | 🚀 Iniciando estrategia ALGEBRA Multi-Activos (LÓGICA INVERTIDA)
-2025-07-31 09:22:18 | INFO | 📊 Configuración: 9 activos disponibles
-2025-07-31 09:22:18 | INFO | ⚙️ Modo: AGGRESSIVE (personalizado) - Más señales, menor filtro
-2025-07-31 09:22:18 | INFO | 📊 Algebra Inversa en timeframe de 5 minutos
-2025-07-31 09:22:18 | INFO | ⏱️ Expiración de opciones: 5 minutos
-2025-07-31 09:22:18 | INFO | ⏰ Tiempo entre señales: 60 minutos
-2025-07-31 09:22:18 | INFO | 🔄 Bloqueo diario después de 2 operaciones consecutivas (wins o losses)
-2025-07-31 09:22:18 | INFO | 🎯 Máximo 1 trade(s) simultáneo(s)
-2025-07-31 09:22:18 | INFO | 💪 Fuerza mínima de señal: 50%
-2025-07-31 09:22:18 | INFO | 🆕 Solo cruces frescos en últimas 3 velas
-2025-07-31 09:24:33 | INFO | 🔄 Ciclo #10 - 2025-07-31 09:24:33 - Trades activos: 0/1
-2025-07-31 09:25:06 | INFO | ⏹️ Estrategia detenida por el usuario
-2025-07-31 09:25:06 | INFO | 🏁 Finalizando estrategia...
-2025-07-31 09:25:06 | INFO | ============================================================
-2025-07-31 09:25:06 | INFO | 📊 RESUMEN DE LA ESTRATEGIA ALGEBRA MULTI-ACTIVOS (LÓGICA INVERTIDA)
-2025-07-31 09:25:06 | INFO | ============================================================
-2025-07-31 09:25:06 | INFO | ⚡ Estrategia: PUT en sobreventa (Algebra Inversa dinámico), CALL en sobrecompra (Algebra Inversa dinámico)
-2025-07-31 09:25:06 | INFO | ⚙️ Modo: BALANCED - Balance entre cantidad y calidad
-2025-07-31 09:25:06 | INFO | 🎯 Límite de trades simultáneos: 1
-2025-07-31 09:25:06 | INFO | 💰 Capital Inicial: $7,696.85
-2025-07-31 09:25:06 | INFO | 💰 Balance Final: $7,696.85
-2025-07-31 09:25:06 | INFO | 📈 Rendimiento Total: 0.00%
-2025-07-31 09:25:06 | INFO | 🎯 Total Operaciones: 0
-2025-07-31 09:25:06 | INFO | 💵 Beneficio Neto: $0.00
-2025-07-31 09:25:06 | INFO | 📉 Capital Mínimo: $7,696.85
-2025-07-31 09:25:06 | INFO | 
-📊 Estadísticas por Activo (agrupadas por tipo):
-2025-07-31 09:25:06 | INFO | 
-📅 Rendimiento Mensual:
-2025-07-31 09:25:06 | INFO | ============================================================
-2025-07-31 09:25:06 | INFO | 👋 Estrategia finalizada
-2025-07-31 09:25:06 | INFO | 👋 Programa finalizado
+2025-07-31 09:38:51 | INFO |   Modo: AGGRESSIVE (personalizado)
+2025-07-31 09:38:51 | INFO |   Fuerza mínima: 50%
+2025-07-31 09:38:51 | INFO |   Cruces válidos: últimas 3 niveles dinámicos
+2025-07-31 09:38:51 | INFO |   Permitir rebotes: Sí
+2025-07-31 09:38:51 | INFO |   Máx rebotes: 2 de hasta 3 puntos
+2025-07-31 09:38:51 | INFO |   🎯 Máximo trades simultáneos: 1
+2025-07-31 09:38:51 | INFO | ============================================================
+2025-07-31 09:38:51 | INFO | ✅ Sistema iniciado - Detectando momentum real con validación dinámica
+2025-07-31 09:38:51 | INFO | 🎯 Iniciando operaciones...
+2025-07-31 09:38:51 | INFO | ℹ️ Para detener la estrategia, desactiva el switch en el dashboard
+2025-07-31 09:38:51 | INFO | 🚀 Iniciando estrategia ALGEBRA Multi-Activos (LÓGICA INVERTIDA)
+2025-07-31 09:38:51 | INFO | 📊 Configuración: 9 activos disponibles
+2025-07-31 09:38:51 | INFO | ⚙️ Modo: AGGRESSIVE (personalizado) - Más señales, menor filtro
+2025-07-31 09:38:51 | INFO | 📊 Algebra Inversa en timeframe de 5 minutos
+2025-07-31 09:38:51 | INFO | ⏱️ Expiración de opciones: 5 minutos
+2025-07-31 09:38:51 | INFO | ⏰ Tiempo entre señales: 60 minutos
+2025-07-31 09:38:51 | INFO | 🔄 Bloqueo diario después de 2 operaciones consecutivas (wins o losses)
+2025-07-31 09:38:51 | INFO | 🎯 Máximo 1 trade(s) simultáneo(s)
+2025-07-31 09:38:51 | INFO | 💪 Fuerza mínima de señal: 50%
+2025-07-31 09:38:51 | INFO | 🆕 Solo cruces frescos en últimas 3 niveles dinámicos
