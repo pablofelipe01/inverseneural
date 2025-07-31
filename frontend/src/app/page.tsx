@@ -359,20 +359,20 @@ export default function InverseNeuralDashboard() {
   return (
     <div className="min-h-screen bg-gray-900 text-white font-sans">
       {/* Header */}
-      <header className="bg-gray-800 border-b border-gray-700 px-6 py-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent">
+      <header className="bg-gray-800 border-b border-gray-700 px-4 sm:px-6 py-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex-shrink-0">
+            <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent">
               InverseNeural Lab
             </h1>
-            <p className="text-gray-400 text-sm">Algoritmos de Álgebra Lineal Inversa • Análisis Estadístico Cuantitativo</p>
+            <p className="text-gray-400 text-xs sm:text-sm hidden sm:block">Algoritmos de Álgebra Lineal Inversa • Análisis Estadístico Cuantitativo</p>
           </div>
           
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
             {/* User Info */}
             <div className="flex items-center gap-3">
               <div className="text-right">
-                <div className="text-sm font-medium text-white">
+                <div className="text-sm font-medium text-white truncate max-w-[200px] sm:max-w-none">
                   {profile?.full_name || user?.email}
                 </div>
                 <div className="text-xs text-gray-400 flex items-center gap-2">
@@ -392,24 +392,24 @@ export default function InverseNeuralDashboard() {
               
               <button
                 onClick={signOut}
-                className="text-xs bg-red-600 hover:bg-red-700 px-3 py-1 rounded transition-colors"
+                className="text-xs bg-red-600 hover:bg-red-700 px-2 sm:px-3 py-1 rounded transition-colors"
               >
                 Salir
               </button>
             </div>
 
             {/* Connection Status */}
-            <div className="flex items-center gap-2 border-l border-gray-700 pl-4">
+            <div className="flex items-center gap-2 border-l border-gray-700 pl-3 sm:pl-4">
               <div className={`w-2 h-2 rounded-full ${
                 healthStatus === 'healthy' ? 'bg-green-400' : 
                 healthStatus === 'error' ? 'bg-red-400' : 'bg-yellow-400'
               } ${healthStatus === 'healthy' ? 'animate-pulse' : ''}`}></div>
-              <span className="text-sm text-gray-300">
+              <span className="text-xs sm:text-sm text-gray-300">
                 {healthStatus === 'healthy' ? 'Conectado' : 
-                 healthStatus === 'error' ? `Desconectado ${connectionRetries > 0 ? `(${connectionRetries} intentos)` : ''}` : 'Verificando...'}
+                 healthStatus === 'error' ? `Desconectado${connectionRetries > 0 ? ` (${connectionRetries})` : ''}` : 'Verificando...'}
               </span>
               {lastError && (
-                <div className="hidden sm:block text-xs text-red-400 max-w-xs truncate" title={lastError}>
+                <div className="hidden lg:block text-xs text-red-400 max-w-xs truncate" title={lastError}>
                   {lastError}
                 </div>
               )}
@@ -699,29 +699,8 @@ export default function InverseNeuralDashboard() {
           </div>
         </div>
 
-        {/* Statistics and Logs */}
+        {/* Logs */}
         <div className="space-y-6">
-          {/* Statistics */}
-          <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
-            <h2 className="text-xl font-semibold mb-4 text-green-300">Estadísticas</h2>
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="text-gray-400">Beneficio Total:</span>
-                <span className={`font-semibold ${status.profit >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                  ${status.profit.toFixed(2)}
-                </span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-400">Operaciones:</span>
-                <span className="font-semibold text-blue-400">{status.trades}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-400">Tasa de Éxito:</span>
-                <span className="font-semibold text-purple-400">{status.win_rate.toFixed(1)}%</span>
-              </div>
-            </div>
-          </div>
-
           {/* Logs */}
           <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
             <h2 className="text-xl font-semibold mb-4 text-yellow-300">
@@ -730,7 +709,7 @@ export default function InverseNeuralDashboard() {
             </h2>
             <div 
               ref={logsContainerRef}
-              className="h-64 overflow-y-auto space-y-2 bg-gray-900 rounded p-3 logs-container scroll-smooth"
+              className="h-96 overflow-y-auto space-y-2 bg-gray-900 rounded p-3 logs-container scroll-smooth"
             >
               {logs.map((log, index) => (
                 <div key={`${log.timestamp}-${index}`} className="text-xs">
