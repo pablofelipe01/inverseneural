@@ -17,6 +17,10 @@ export async function middleware(request: NextRequest) {
 
     const { pathname } = request.nextUrl
 
+    // Páginas que no requieren validación de trial
+    const publicPaths = ['/auth/login', '/auth/register', '/api/auth', '/upgrade']
+    const isPublicPath = publicPaths.some(path => pathname.startsWith(path))
+
     // Si el usuario está autenticado y trata de acceder a páginas de auth, redirigir al dashboard
     if (session && (pathname.startsWith('/auth/login') || pathname.startsWith('/auth/register'))) {
       return NextResponse.redirect(new URL('/', request.url))
@@ -25,6 +29,39 @@ export async function middleware(request: NextRequest) {
     // Si el usuario NO está autenticado y trata de acceder a páginas protegidas, redirigir al login
     if (!session && pathname === '/') {
       return NextResponse.redirect(new URL('/auth/login', request.url))
+    }
+
+    // Si está autenticado, validar trial
+    if (session && !isPublicPath) {
+      try {
+        // Obtener perfil del usuario
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('subscription_status, trial_ends_at, plan_type')
+          .eq('id', session.user.id)
+          .single()
+
+        if (profileError) {
+          console.error('Error getting profile:', profileError)
+          return response
+        }
+
+        if (profile) {
+          const now = new Date()
+          const trialEndsAt = new Date(profile.trial_ends_at)
+
+          // Si el trial expiró y no tiene subscripción activa
+          if (profile.subscription_status === 'trial' && trialEndsAt < now) {
+            // Redirigir a página de upgrade, excepto si ya está en ella
+            if (!pathname.startsWith('/upgrade')) {
+              return NextResponse.redirect(new URL('/upgrade', request.url))
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Trial validation error:', error)
+        // En caso de error, permitir continuar
+      }
     }
 
     return response

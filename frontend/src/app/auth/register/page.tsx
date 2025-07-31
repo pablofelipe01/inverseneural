@@ -63,7 +63,7 @@ export default function RegisterPage() {
               Hemos enviado un email de confirmación a <strong className="text-white">{email}</strong>
             </p>
             <p className="text-sm text-yellow-400 mb-6">
-              🎉 <strong>Trial gratuito de 15 días activado</strong>
+              🎉 <strong>Al confirmar tu email, activarás tu trial gratuito de 15 días</strong>
             </p>
             <Link 
               href="/auth/login"

@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     })
 
     if (error) {
-      console.error('Registration error:', error)
+      console.error('❌ Registration error:', error)
       
       if (error.message.includes('User already registered')) {
         return NextResponse.json(
@@ -57,40 +57,26 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    console.log('✅ User registration successful:', {
+      userId: data.user?.id,
+      email: data.user?.email,
+      emailConfirmed: data.user?.email_confirmed_at,
+      userMetadata: data.user?.user_metadata
+    })
+
     if (!data.user) {
+      console.error('❌ No user data returned from Supabase')
       return NextResponse.json(
         { error: 'Error al crear usuario' },
         { status: 500 }
       )
     }
 
-    // Crear perfil de usuario
-    const trialEndsAt = new Date()
-    trialEndsAt.setDate(trialEndsAt.getDate() + 7) // 7 días de trial
-
-    const { error: profileError } = await supabase
-      .from('user_profiles')
-      .insert({
-        id: data.user.id,
-        email: email,
-        full_name: fullName,
-        subscription_status: 'trial',
-        trial_ends_at: trialEndsAt.toISOString(),
-        plan_type: 'trial',
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
-      })
-
-    if (profileError) {
-      console.error('Profile creation error:', profileError)
-      // No fallar el registro si el perfil no se puede crear
-    }
-
     return NextResponse.json({
       success: true,
       message: data.user.email_confirmed_at 
         ? 'Usuario registrado exitosamente' 
-        : 'Registro exitoso. Verifica tu email para confirmar la cuenta.',
+        : 'Registro exitoso. Verifica tu email para activar tu trial de 15 días.',
       user: data.user,
       needsEmailConfirmation: !data.user.email_confirmed_at
     })

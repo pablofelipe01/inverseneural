@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
 
     // Obtener perfil del usuario
     const { data: profile, error: profileError } = await supabase
-      .from('user_profiles')
+      .from('profiles')
       .select('*')
       .eq('id', data.user.id)
       .single()

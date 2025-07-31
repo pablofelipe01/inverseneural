@@ -3,35 +3,47 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
-  const code = searchParams.get('code')
   
-  console.log('🔍 CALLBACK EJECUTÁNDOSE:', {
+  console.log('🔍 AUTH CONFIRM EJECUTÁNDOSE:', {
     url: request.url,
-    code: code ? 'PRESENTE' : 'AUSENTE',
     searchParams: Object.fromEntries(searchParams),
     timestamp: new Date().toISOString()
   })
+
+  // Extraer parámetros
+  const token_hash = searchParams.get('token_hash')
+  const type = searchParams.get('type')
   
-  if (!code) {
-    console.log('❌ No authorization code found')
-    return NextResponse.redirect(new URL('/auth/login?error=No authorization code', request.url))
+  if (!token_hash || type !== 'signup') {
+    console.log('❌ Missing token_hash or invalid type')
+    return NextResponse.redirect(new URL('/auth/login?error=Invalid confirmation link', request.url))
   }
 
   try {
     const supabase = await createServerSupabaseClient()
 
-    const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+    // Verificar el token
+    const { data, error } = await supabase.auth.verifyOtp({
+      token_hash,
+      type: 'signup'
+    })
 
     if (error) {
-      console.error('Code exchange error:', error)
-      return NextResponse.redirect(new URL('/auth/login?error=Invalid authorization code', request.url))
+      console.error('❌ OTP verification error:', error)
+      return NextResponse.redirect(new URL('/auth/login?error=Invalid or expired link', request.url))
     }
 
     if (!data.user) {
-      return NextResponse.redirect(new URL('/auth/login?error=No user found', request.url))
+      console.log('❌ No user found after verification')
+      return NextResponse.redirect(new URL('/auth/login?error=User not found', request.url))
     }
 
-    // Si el usuario no tiene perfil, crearlo
+    console.log('✅ User verified successfully:', {
+      userId: data.user.id,
+      email: data.user.email
+    })
+
+    // Crear perfil si no existe
     const { data: existingProfile } = await supabase
       .from('profiles')
       .select('id')
@@ -63,25 +75,19 @@ export async function GET(request: NextRequest) {
         .select()
 
       if (profileCreateError) {
-        console.error('❌ Profile creation error in callback:', profileCreateError)
-        console.error('❌ Error details:', {
-          message: profileCreateError.message,
-          details: profileCreateError.details,
-          hint: profileCreateError.hint,
-          code: profileCreateError.code
-        })
+        console.error('❌ Profile creation error:', profileCreateError)
       } else {
-        console.log('✅ Profile created successfully in callback:', newProfile)
+        console.log('✅ Profile created successfully:', newProfile)
       }
     } else {
       console.log('✅ Usuario ya tiene perfil existente:', existingProfile.id)
     }
 
-    // Redirigir al dashboard
-    return NextResponse.redirect(new URL('/', request.url))
+    // Redirigir al dashboard con mensaje de éxito
+    return NextResponse.redirect(new URL('/?confirmed=true', request.url))
 
   } catch (error) {
-    console.error('Callback error:', error)
-    return NextResponse.redirect(new URL('/auth/login?error=Authentication failed', request.url))
+    console.error('❌ Confirmation error:', error)
+    return NextResponse.redirect(new URL('/auth/login?error=Confirmation failed', request.url))
   }
 }

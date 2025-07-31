@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase';
 
@@ -32,7 +32,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
 
   const supabase = createClient();
 
-  const fetchUser = async () => {
+  const fetchUser = useCallback(async () => {
     try {
       const response = await fetch('/api/auth/user', {
         method: 'GET',
@@ -44,6 +44,14 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
         setUser(data.user);
         setProfile(data.profile);
         setSession(data.session);
+        
+        // Si el usuario existe pero no hay perfil, intentar de nuevo después de un delay
+        if (data.user && !data.profile) {
+          console.log('🔄 Usuario sin perfil, reintentando en 1 segundo...');
+          setTimeout(async () => {
+            await fetchUser();
+          }, 1000);
+        }
       } else {
         setUser(null);
         setProfile(null);
@@ -55,7 +63,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
       setProfile(null);
       setSession(null);
     }
-  };
+  }, []);
 
   const signOut = async () => {
     try {
@@ -86,9 +94,10 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log('Auth state changed:', event, session?.user?.id);
+        console.log('🔄 Auth state changed:', event, session?.user?.id);
         
         if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+          console.log('🔄 Refrescando datos de usuario...');
           await fetchUser();
         } else if (event === 'SIGNED_OUT') {
           setUser(null);
@@ -99,7 +108,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     );
 
     return () => subscription.unsubscribe();
-  }, [supabase.auth]);
+  }, [supabase.auth, fetchUser]);
 
   return (
     <UserContext.Provider

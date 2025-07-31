@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useUser } from '@/contexts/UserContext';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -10,6 +11,7 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const { refreshUser } = useUser();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,6 +35,13 @@ export default function LoginPage() {
       }
 
       if (data.success) {
+        // Forzar actualización del contexto de usuario para obtener/crear perfil
+        await refreshUser();
+        
+        // Pequeño delay para asegurar que el estado se propague
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        // Navegar al dashboard
         router.push('/');
       } else {
         throw new Error('Error inesperado');
