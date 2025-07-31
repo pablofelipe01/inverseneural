@@ -1,0 +1,69 @@
+{
+    "timestamp": "2025-07-30T18:27:55.824361",
+    "strategy_mode": "CALL_PUT",
+    "active_options": {},
+    "last_signal_time": {
+        "INTEL/IBM": "2025-07-30T14:23:48.658064"
+    },
+    "consecutive_losses": {
+        "INTEL/IBM": 1
+    },
+    "daily_lockouts": {},
+    "wins": {},
+    "losses": {
+        "INTEL/IBM": 1
+    },
+    "ties": {},
+    "total_profit": -405.09,
+    "daily_profit": -405.09,
+    "monthly_profits": {},
+    "monthly_starting_capital": {
+        "2025-07": 8101.85
+    },
+    "monthly_stop_loss": false,
+    "stop_loss_triggered_month": null,
+    "absolute_stop_loss_activated": false,
+    "min_capital": 7696.85,
+    "last_date": "2025-07-30",
+    "current_month": "2025-07",
+    "daily_consecutive_wins": 0,
+    "daily_consecutive_losses": 1,
+    "daily_lock": false,
+    "daily_lock_time": null,
+    "daily_lock_reason": null,
+    "max_daily_consecutive": 2,
+    "recent_results": [
+        "loss"
+    ],
+    "day_start_balance": 8101.85,
+    "rsi_history": {
+        "NVDA/AMD": [
+            75.79
+        ],
+        "TESLA/FORD": [
+            49.39
+        ],
+        "META/GOOGLE": [
+            70.57
+        ],
+        "AMZN/ALIBABA": [
+            42.09
+        ],
+        "MSFT/AAPL": [
+            30.5
+        ],
+        "AMZN/EBAY": [
+            44.88
+        ],
+        "NFLX/AMZN": [
+            41.79
+        ],
+        "GOOGLE/MSFT": [
+            62.67
+        ],
+        "INTEL/IBM": [
+            58.63
+        ]
+    },
+    "aggressiveness_mode": "AGGRESSIVE"
+}

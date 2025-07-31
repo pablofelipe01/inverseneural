@@ -6,7 +6,6 @@ import {
   AlgorithmStatus,
   LogEntry,
   HealthStatus,
-  TradingPair,
   TRADING_PAIRS,
   TRADING_SYMBOLS,
   DEFAULT_CONFIG,
@@ -15,13 +14,21 @@ import {
   API_CONFIG,
   POSITION_SIZE_CONFIG
 } from '@/types';
+import { useUser } from '@/contexts/UserContext';
+import Loading from '@/components/Loading';
 
 export default function InverseNeuralDashboard() {
+  // User context
+  const { user, profile, loading, signOut } = useUser();
+
   // Refs
   const logsContainerRef = useRef<HTMLDivElement>(null);
   
   // State management
-  const [status, setStatus] = useState<AlgorithmStatus>(INITIAL_STATUS);
+  const [status, setStatus] = useState<AlgorithmStatus>({
+    ...INITIAL_STATUS,
+    user_id: user?.id || 'user123'
+  });
   const [config, setConfig] = useState<Config>(DEFAULT_CONFIG);
   const [logs, setLogs] = useState<LogEntry[]>(INITIAL_LOGS);
   const [isLoading, setIsLoading] = useState(false);
@@ -39,7 +46,7 @@ export default function InverseNeuralDashboard() {
         headers: {
           'Content-Type': 'application/json',
         },
-        signal: AbortSignal.timeout(5000), // 5 segundo timeout
+        signal: AbortSignal.timeout(5000),
       });
       
       if (response.ok) {
@@ -72,8 +79,8 @@ export default function InverseNeuralDashboard() {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
-        mode: 'cors', // Explícitamente configurar CORS
-        signal: AbortSignal.timeout(5000), // 5 segundos timeout
+        mode: 'cors',
+        signal: AbortSignal.timeout(5000),
       });
       
       if (response.ok) {
@@ -83,7 +90,6 @@ export default function InverseNeuralDashboard() {
         setConnectionRetries(0);
         setLastError(null);
         
-        // Solo mostrar log de conexión exitosa si antes había error
         if (connectionRetries > 0) {
           setLogs(prev => [...prev, {
             timestamp: new Date().toISOString(),
@@ -113,7 +119,6 @@ export default function InverseNeuralDashboard() {
       setConnectionRetries(prev => prev + 1);
       setLastError(errorMessage);
       
-      // Solo mostrar error en logs cada 3 intentos para no saturar
       if (connectionRetries % 3 === 0) {
         setLogs(prev => [...prev, {
           timestamp: new Date().toISOString(),
@@ -137,7 +142,6 @@ export default function InverseNeuralDashboard() {
       if (response.ok) {
         const data = await response.json();
         if (data.logs && Array.isArray(data.logs)) {
-          // Reemplazar todos los logs con los del servidor
           setLogs(data.logs);
         }
       } else {
@@ -145,7 +149,6 @@ export default function InverseNeuralDashboard() {
       }
     } catch (err) {
       console.error('Error fetching logs:', err);
-      // No agregar error de logs a los logs para evitar spam
     }
   }, [status.user_id]);
 
@@ -155,7 +158,6 @@ export default function InverseNeuralDashboard() {
     
     try {
       if (status.status === 'running') {
-        // STOP: Solo necesita user_id
         const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.STOP}?user_id=${status.user_id}`, {
           method: 'GET',
           headers: {
@@ -176,25 +178,19 @@ export default function InverseNeuralDashboard() {
           throw new Error(`HTTP ${response.status}: ${errorText || response.statusText}`);
         }
       } else {
-        // START: Validar configuración antes de enviar
         if (config.selectedPairs.length === 0) {
           throw new Error('Debes seleccionar al menos un par de activos');
-        }
-        
-        if (!config.email || config.email === 'tu_email@example.com') {
-          throw new Error('Debes configurar tu email de IQ Option');
         }
         
         if (!config.password || config.password === 'tu_password_aqui') {
           throw new Error('Debes configurar tu contraseña de IQ Option');
         }
         
-        // Usar endpoint POST para enviar configuración completa
         const configPayload = {
           selectedPairs: config.selectedPairs,
           positionSize: config.positionSize,
           aggressiveness: config.aggressiveness.toLowerCase(),
-          email: config.email,
+          email: user?.email || '',
           password: config.password,
           accountType: config.accountType
         };
@@ -253,14 +249,13 @@ export default function InverseNeuralDashboard() {
         headers: {
           'Content-Type': 'application/json',
         },
-        signal: AbortSignal.timeout(10000), // 10 segundos para reset
+        signal: AbortSignal.timeout(10000),
       });
       
       if (response.ok) {
         const data = await response.json();
         
         if (data.success) {
-          // Resetear estadísticas en el estado local
           setStatus(prev => ({ 
             ...prev, 
             profit: 0, 
@@ -310,17 +305,12 @@ export default function InverseNeuralDashboard() {
     }
   }, [status.status, fetchStatus]);
 
-  // Polling de logs en tiempo real
   useEffect(() => {
-    // Cargar logs iniciales
     fetchLogs();
-    
-    // Configurar polling de logs
     const logsInterval = setInterval(fetchLogs, API_CONFIG.POLLING_INTERVALS.LOGS);
     return () => clearInterval(logsInterval);
   }, [fetchLogs]);
 
-  // Auto-scroll de logs a los más recientes
   useEffect(() => {
     if (logsContainerRef.current) {
       logsContainerRef.current.scrollTop = logsContainerRef.current.scrollHeight;
@@ -335,7 +325,7 @@ export default function InverseNeuralDashboard() {
     if (size >= BALANCED.min && size <= BALANCED.max) return BALANCED.class;
     if (size >= AGGRESSIVE.min && size <= AGGRESSIVE.max) return AGGRESSIVE.class;
     
-    return 'text-gray-400'; // fallback
+    return 'text-gray-400';
   };
 
   const formatTime = (timestamp: string) => {
@@ -346,11 +336,25 @@ export default function InverseNeuralDashboard() {
     setConfig(prev => {
       const newPairs = prev.selectedPairs.includes(pair)
         ? prev.selectedPairs.filter(p => p !== pair)
-        : [...prev.selectedPairs, pair]; // Sin limitación - Plan Elite
+        : [...prev.selectedPairs, pair];
       
       return { ...prev, selectedPairs: newPairs };
     });
   };
+
+  const getTrialDaysLeft = () => {
+    if (!profile?.trial_ends_at) return 0;
+    const trialEnd = new Date(profile.trial_ends_at);
+    const now = new Date();
+    const diffTime = trialEnd.getTime() - now.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return Math.max(0, diffDays);
+  };
+
+  // Loading check after all hooks
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-900 text-white font-sans">
@@ -363,8 +367,39 @@ export default function InverseNeuralDashboard() {
             </h1>
             <p className="text-gray-400 text-sm">Algoritmos de Álgebra Lineal Inversa • Análisis Estadístico Cuantitativo</p>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2">
+          
+          <div className="flex items-center gap-4">
+            {/* User Info */}
+            <div className="flex items-center gap-3">
+              <div className="text-right">
+                <div className="text-sm font-medium text-white">
+                  {profile?.full_name || user?.email}
+                </div>
+                <div className="text-xs text-gray-400 flex items-center gap-2">
+                  <span className={`px-2 py-0.5 rounded text-xs font-medium ${
+                    profile?.subscription_status === 'trial' 
+                      ? 'bg-yellow-600 text-yellow-100' 
+                      : profile?.subscription_status === 'active'
+                      ? 'bg-green-600 text-green-100'
+                      : 'bg-gray-600 text-gray-100'
+                  }`}>
+                    {profile?.subscription_status === 'trial' 
+                      ? `Trial: ${getTrialDaysLeft()} días` 
+                      : profile?.plan_type?.toUpperCase() || 'FREE'}
+                  </span>
+                </div>
+              </div>
+              
+              <button
+                onClick={signOut}
+                className="text-xs bg-red-600 hover:bg-red-700 px-3 py-1 rounded transition-colors"
+              >
+                Salir
+              </button>
+            </div>
+
+            {/* Connection Status */}
+            <div className="flex items-center gap-2 border-l border-gray-700 pl-4">
               <div className={`w-2 h-2 rounded-full ${
                 healthStatus === 'healthy' ? 'bg-green-400' : 
                 healthStatus === 'error' ? 'bg-red-400' : 'bg-yellow-400'
@@ -373,20 +408,20 @@ export default function InverseNeuralDashboard() {
                 {healthStatus === 'healthy' ? 'Conectado' : 
                  healthStatus === 'error' ? `Desconectado ${connectionRetries > 0 ? `(${connectionRetries} intentos)` : ''}` : 'Verificando...'}
               </span>
+              {lastError && (
+                <div className="hidden sm:block text-xs text-red-400 max-w-xs truncate" title={lastError}>
+                  {lastError}
+                </div>
+              )}
+              {healthStatus === 'error' && (
+                <button
+                  onClick={checkHealth}
+                  className="text-xs bg-blue-600 hover:bg-blue-700 px-2 py-1 rounded transition-colors"
+                >
+                  Reconectar
+                </button>
+              )}
             </div>
-            {lastError && (
-              <div className="hidden sm:block text-xs text-red-400 max-w-xs truncate" title={lastError}>
-                {lastError}
-              </div>
-            )}
-            {healthStatus === 'error' && (
-              <button
-                onClick={checkHealth}
-                className="text-xs bg-blue-600 hover:bg-blue-700 px-2 py-1 rounded transition-colors"
-              >
-                Reconectar
-              </button>
-            )}
           </div>
         </div>
       </header>
@@ -545,13 +580,17 @@ export default function InverseNeuralDashboard() {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    Email
+                    <span className="ml-2 text-xs text-blue-400">(Vinculado a tu cuenta)</span>
+                  </label>
                   <input
                     type="email"
-                    value={config.email}
-                    onChange={(e) => setConfig(prev => ({ ...prev, email: e.target.value }))}
-                    placeholder="tu_email@example.com"
-                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={user?.email || ''}
+                    readOnly
+                    disabled
+                    className="w-full px-3 py-2 bg-gray-600 border border-gray-500 rounded-lg text-gray-300 cursor-not-allowed"
+                    title="El email está vinculado a tu cuenta y no se puede cambiar"
                   />
                 </div>
                 
@@ -581,6 +620,7 @@ export default function InverseNeuralDashboard() {
                 </div>
                 <div className="hidden md:block text-xs text-gray-400 max-w-xs">
                   <p className="mb-1">🔒 Tus credenciales están seguras</p>
+                  <p className="mb-1">Email vinculado a tu cuenta de usuario</p>
                   <p>Solo se usan para conectar al broker</p>
                 </div>
               </div>
@@ -588,6 +628,7 @@ export default function InverseNeuralDashboard() {
               {/* Mensaje de seguridad para móvil */}
               <div className="md:hidden mt-3 text-xs text-gray-400 text-center">
                 <p className="mb-1">🔒 Tus credenciales están seguras</p>
+                <p className="mb-1">Email vinculado a tu cuenta de usuario</p>
                 <p>Solo se usan para conectar al broker</p>
               </div>
             </div>

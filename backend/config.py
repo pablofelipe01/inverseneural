@@ -182,7 +182,7 @@ AGGRESSIVENESS_CONFIG = {
     },
     "AGGRESSIVE": {
         "candle_timeframe": 300,      # 5 minutos
-        "expiry_minutes": 1,          # 1 minutos de expiración
+        "expiry_minutes": 5,          # 5 minutos de expiración
         "min_strength": 50,           # Señal más débil aceptada
         "allow_rebounds": True,       # Permitir rebotes
         "max_rebounds": 2,            # Hasta 2 rebotes

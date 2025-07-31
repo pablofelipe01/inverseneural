@@ -1,0 +1,250 @@
+2025-07-30 09:58:24 | INFO | ============================================================
+2025-07-30 09:58:24 | INFO |    ESTRATEGIA ALGEBRA MULTI-ACTIVOS PARA OPTION
+2025-07-30 09:58:24 | INFO |    ⚡ LÓGICA INVERTIDA ⚡
+2025-07-30 09:58:24 | INFO | ============================================================
+2025-07-30 09:58:24 | INFO | 📅 Fecha/Hora: 2025-07-30 09:58:24
+2025-07-30 09:58:24 | INFO | 📧 Usuario: syl***@gmail.com
+2025-07-30 09:58:24 | INFO | ============================================================
+2025-07-30 09:58:24 | INFO | ⚠️ IMPORTANTE: Esta estrategia usa lógica INVERTIDA
+2025-07-30 09:58:24 | INFO |    - PUT cuando RSI ≤ 35 (sobreventa)
+2025-07-30 09:58:24 | INFO |    - CALL cuando RSI ≥ 65 (sobrecompra)
+2025-07-30 09:58:24 | INFO | ============================================================
+2025-07-30 09:58:24 | INFO | 🚀 Inicializando estrategia...
+2025-07-30 09:58:24 | INFO | 🎯 Pares seleccionados: NVDA/AMD, TESLA/FORD, META/GOOGLE, AMZN/ALIBABA, MSFT/AAPL, AMZN/EBAY, NFLX/AMZN, GOOGLE/MSFT, INTEL/IBM
+2025-07-30 09:58:24 | INFO | 💰 Tamaño de posición: 10%
+2025-07-30 09:58:24 | INFO | ⚡ Nivel de agresividad: agresivo
+2025-07-30 09:58:24 | INFO | 🎯 INICIANDO ESTRATEGIA ALGEBRA MULTI-ACTIVOS (LÓGICA INVERTIDA)
+2025-07-30 09:58:24 | INFO | 📊 Configuración: Niveles RSI dinámicos por grupo de activos
+2025-07-30 09:58:24 | INFO | ⚡ LÓGICA INVERTIDA: PUT en sobreventa, CALL en sobrecompra
+2025-07-30 09:58:24 | INFO | 🎯 LÍMITE DE TRADES SIMULTÁNEOS: 1
+2025-07-30 09:58:24 | INFO | 🎯 PARES SELECCIONADOS: ['NVDA/AMD', 'TESLA/FORD', 'META/GOOGLE', 'AMZN/ALIBABA', 'MSFT/AAPL', 'AMZN/EBAY', 'NFLX/AMZN', 'GOOGLE/MSFT', 'INTEL/IBM']
+2025-07-30 09:58:24 | INFO | ✅ Par habilitado: NVDA/AMD
+2025-07-30 09:58:24 | INFO | ✅ Par habilitado: TESLA/FORD
+2025-07-30 09:58:24 | INFO | ✅ Par habilitado: META/GOOGLE
+2025-07-30 09:58:24 | INFO | ✅ Par habilitado: AMZN/ALIBABA
+2025-07-30 09:58:24 | INFO | ✅ Par habilitado: MSFT/AAPL
+2025-07-30 09:58:24 | INFO | ✅ Par habilitado: AMZN/EBAY
+2025-07-30 09:58:24 | INFO | ✅ Par habilitado: NFLX/AMZN
+2025-07-30 09:58:24 | INFO | ✅ Par habilitado: GOOGLE/MSFT
+2025-07-30 09:58:24 | INFO | ✅ Par habilitado: INTEL/IBM
+2025-07-30 09:58:24 | INFO | 🎯 Operando con 9 pares seleccionados
+2025-07-30 09:58:24 | INFO | 💰 Tamaño de posición personalizado: 10%
+2025-07-30 09:58:24 | INFO | ⚡ Agresividad personalizada: agresivo → AGGRESSIVE
+2025-07-30 09:58:24 | INFO | ⚙️ Modo de agresividad: AGGRESSIVE (personalizado)
+2025-07-30 09:58:24 | INFO | 📊 Timeframe: 5 min | Expiración: 1 min
+2025-07-30 09:58:24 | INFO | 🔗 Conectando a IQ Option...
+2025-07-30 09:58:27 | INFO | ✅ Conexión exitosa
+2025-07-30 09:58:27 | INFO | 💰 Balance actual: $10,001.85
+2025-07-30 09:58:27 | INFO | 💰 Capital inicial: $10,001.85
+2025-07-30 09:58:27 | INFO | 📂 No hay archivo de estado previo
+2025-07-30 09:58:27 | INFO | 🔍 Verificando activos disponibles...
+2025-07-30 09:58:34 | INFO | ✅ NVDA/AMD: Encontrado como NVDA/AMD-OTC (turbo) - Grupo: PAIR
+2025-07-30 09:58:34 | INFO | ✅ NVDA/AMD: Encontrado como NVDA/AMD-OTC (binary) - Grupo: PAIR
+2025-07-30 09:58:34 | INFO | ✅ TESLA/FORD: Encontrado como TESLA/FORD-OTC (turbo) - Grupo: PAIR
+2025-07-30 09:58:34 | INFO | ✅ TESLA/FORD: Encontrado como TESLA/FORD-OTC (binary) - Grupo: PAIR
+2025-07-30 09:58:34 | INFO | ✅ META/GOOGLE: Encontrado como META/GOOGLE-OTC (turbo) - Grupo: PAIR
+2025-07-30 09:58:34 | INFO | ✅ META/GOOGLE: Encontrado como META/GOOGLE-OTC (binary) - Grupo: PAIR
+2025-07-30 09:58:34 | INFO | ✅ AMZN/ALIBABA: Encontrado como AMZN/ALIBABA-OTC (turbo) - Grupo: PAIR
+2025-07-30 09:58:34 | INFO | ✅ AMZN/ALIBABA: Encontrado como AMZN/ALIBABA-OTC (binary) - Grupo: PAIR
+2025-07-30 09:58:34 | INFO | ✅ MSFT/AAPL: Encontrado como MSFT/AAPL-OTC (turbo) - Grupo: PAIR
+2025-07-30 09:58:34 | INFO | ✅ MSFT/AAPL: Encontrado como MSFT/AAPL-OTC (binary) - Grupo: PAIR
+2025-07-30 09:58:34 | INFO | ✅ AMZN/EBAY: Encontrado como AMZN/EBAY-OTC (turbo) - Grupo: PAIR
+2025-07-30 09:58:34 | INFO | ✅ AMZN/EBAY: Encontrado como AMZN/EBAY-OTC (binary) - Grupo: PAIR
+2025-07-30 09:58:34 | INFO | ✅ NFLX/AMZN: Encontrado como NFLX/AMZN-OTC (turbo) - Grupo: PAIR
+2025-07-30 09:58:34 | INFO | ✅ NFLX/AMZN: Encontrado como NFLX/AMZN-OTC (binary) - Grupo: PAIR
+2025-07-30 09:58:34 | INFO | ✅ GOOGLE/MSFT: Encontrado como GOOGLE/MSFT-OTC (turbo) - Grupo: PAIR
+2025-07-30 09:58:34 | INFO | ✅ GOOGLE/MSFT: Encontrado como GOOGLE/MSFT-OTC (binary) - Grupo: PAIR
+2025-07-30 09:58:34 | INFO | ✅ INTEL/IBM: Encontrado como INTEL/IBM-OTC (turbo) - Grupo: PAIR
+2025-07-30 09:58:34 | INFO | ✅ INTEL/IBM: Encontrado como INTEL/IBM-OTC (binary) - Grupo: PAIR
+2025-07-30 09:58:34 | INFO | 📊 Total activos disponibles: 9
+2025-07-30 09:58:34 | INFO | 
+📊 CONFIGURACIÓN DE NIVELES RSI POR GRUPO:
+2025-07-30 09:58:34 | INFO | ============================================================
+2025-07-30 09:58:34 | INFO | 
+PAIR:
+2025-07-30 09:58:34 | INFO |   Activos: NVDA/AMD, TESLA/FORD, META/GOOGLE, AMZN/ALIBABA, MSFT/AAPL, AMZN/EBAY, NFLX/AMZN, GOOGLE/MSFT, INTEL/IBM
+2025-07-30 09:58:34 | INFO |   RSI Sobreventa/Sobrecompra: 32/68
+2025-07-30 09:58:34 | INFO |   Momentum mínimo: 4 puntos
+2025-07-30 09:58:34 | INFO |   Tamaño posición: 10% (personalizado)
+2025-07-30 09:58:34 | INFO | ============================================================
+2025-07-30 09:58:34 | INFO | 
+⚡ CONFIGURACIÓN DE SEÑALES:
+2025-07-30 09:58:34 | INFO |   Modo: AGGRESSIVE (personalizado)
+2025-07-30 09:58:34 | INFO |   Fuerza mínima: 50%
+2025-07-30 09:58:34 | INFO |   Cruces válidos: últimas 3 velas
+2025-07-30 09:58:34 | INFO |   Permitir rebotes: Sí
+2025-07-30 09:58:34 | INFO |   Máx rebotes: 2 de hasta 3 puntos
+2025-07-30 09:58:34 | INFO |   🎯 Máximo trades simultáneos: 1
+2025-07-30 09:58:34 | INFO | ============================================================
+2025-07-30 09:58:34 | INFO | ✅ Sistema iniciado - Detectando momentum real con validación dinámica
+2025-07-30 09:58:34 | INFO | 🎯 Iniciando operaciones...
+2025-07-30 09:58:34 | INFO | ℹ️ Presiona Ctrl+C para detener la estrategia
+2025-07-30 09:58:34 | INFO | 🚀 Iniciando estrategia ALGEBRA Multi-Activos (LÓGICA INVERTIDA)
+2025-07-30 09:58:34 | INFO | 📊 Configuración: 9 activos disponibles
+2025-07-30 09:58:34 | INFO | ⚙️ Modo: BALANCED - Balance entre cantidad y calidad
+2025-07-30 09:58:34 | INFO | 📊 RSI en timeframe de 5 minutos
+2025-07-30 09:58:34 | INFO | ⏱️ Expiración de opciones: 1 minutos
+2025-07-30 09:58:34 | INFO | ⏰ Tiempo entre señales: 60 minutos
+2025-07-30 09:58:34 | INFO | 🔄 Bloqueo diario después de 2 operaciones consecutivas (wins o losses)
+2025-07-30 09:58:34 | INFO | 🎯 Máximo 1 trade(s) simultáneo(s)
+2025-07-30 09:58:34 | INFO | 💪 Fuerza mínima de señal: 60%
+2025-07-30 09:58:34 | INFO | 🆕 Solo cruces frescos en últimas 2 velas
+2025-07-30 10:00:50 | INFO | 🔄 Ciclo #10 - 2025-07-30 10:00:50 - Trades activos: 0/1
+2025-07-30 10:03:20 | INFO | 🔄 Ciclo #20 - 2025-07-30 10:03:20 - Trades activos: 0/1
+2025-07-30 10:05:50 | INFO | 🔄 Ciclo #30 - 2025-07-30 10:05:50 - Trades activos: 0/1
+2025-07-30 10:08:20 | INFO | 🔄 Ciclo #40 - 2025-07-30 10:08:20 - Trades activos: 0/1
+2025-07-30 10:10:50 | INFO | 🔄 Ciclo #50 - 2025-07-30 10:10:50 - Trades activos: 0/1
+2025-07-30 10:13:20 | INFO | 🔄 Ciclo #60 - 2025-07-30 10:13:20 - Trades activos: 0/1
+2025-07-30 10:15:50 | INFO | 🔄 Ciclo #70 - 2025-07-30 10:15:50 - Trades activos: 0/1
+2025-07-30 10:16:53 | INFO | ✅ NFLX/AMZN - Momentum PUT confirmado: 32.0 → 26.9
+2025-07-30 10:16:53 | INFO |    Caída: 5.1 puntos | Fuerza: 60% | Cruce FRESCO ✓
+2025-07-30 10:16:53 | INFO | 🔴 NFLX/AMZN (PAIR) - Señal PUT con momentum válido (RSI: 26.94 ≤ 32)
+2025-07-30 10:16:53 | INFO | 📊 Trades activos antes de abrir: 0/1
+2025-07-30 10:16:53 | INFO | 📈 Colocando PUT en NFLX/AMZN (NFLX/AMZN-OTC), cantidad: $1,000.19
+2025-07-30 10:16:54 | INFO | ✅ Orden colocada exitosamente. ID: 12906121296
+2025-07-30 10:16:54 | INFO | 📝 Orden registrada para NFLX/AMZN - Total trades activos: 1/1
+2025-07-30 10:17:05 | INFO | 📉 Nuevo mínimo: $9,001.85 (10.00% pérdida)
+2025-07-30 10:18:20 | INFO | 🔄 Ciclo #80 - 2025-07-30 10:18:20 - Trades activos: 1/1
+2025-07-30 10:18:50 | INFO | 🔄 Verificando orden 12906121296...
+2025-07-30 10:18:50 | INFO | 📋 Orden encontrada en order_binary
+2025-07-30 10:18:50 | INFO |    Result: LOOSE
+2025-07-30 10:18:50 | INFO | ❌ Pérdida detectada
+2025-07-30 10:18:50 | INFO | ❌ NFLX/AMZN (PAIR) - PUT PERDIDA. Pérdida: $1,000.19
+2025-07-30 10:18:50 | INFO | 📊 Trades activos restantes: 0/1
+2025-07-30 10:18:50 | INFO | 📊 NFLX/AMZN - Pérdidas consecutivas: 1
+2025-07-30 10:18:50 | INFO | 📊 Pérdidas consecutivas del día: 1/2
+2025-07-30 10:20:50 | INFO | 🔄 Ciclo #90 - 2025-07-30 10:20:50 - Trades activos: 0/1
+2025-07-30 10:23:20 | INFO | 🔄 Ciclo #100 - 2025-07-30 10:23:20 - Trades activos: 0/1
+2025-07-30 10:23:23 | INFO | 🔄 Re-verificando activos disponibles...
+2025-07-30 10:23:23 | INFO | 🔍 Verificando activos disponibles...
+2025-07-30 10:23:39 | INFO | ✅ NVDA/AMD: Encontrado como NVDA/AMD-OTC (turbo) - Grupo: PAIR
+2025-07-30 10:23:39 | INFO | ✅ NVDA/AMD: Encontrado como NVDA/AMD-OTC (binary) - Grupo: PAIR
+2025-07-30 10:23:39 | INFO | ✅ TESLA/FORD: Encontrado como TESLA/FORD-OTC (turbo) - Grupo: PAIR
+2025-07-30 10:23:39 | INFO | ✅ TESLA/FORD: Encontrado como TESLA/FORD-OTC (binary) - Grupo: PAIR
+2025-07-30 10:23:39 | INFO | ✅ META/GOOGLE: Encontrado como META/GOOGLE-OTC (turbo) - Grupo: PAIR
+2025-07-30 10:23:39 | INFO | ✅ META/GOOGLE: Encontrado como META/GOOGLE-OTC (binary) - Grupo: PAIR
+2025-07-30 10:23:39 | INFO | ✅ AMZN/ALIBABA: Encontrado como AMZN/ALIBABA-OTC (turbo) - Grupo: PAIR
+2025-07-30 10:23:39 | INFO | ✅ AMZN/ALIBABA: Encontrado como AMZN/ALIBABA-OTC (binary) - Grupo: PAIR
+2025-07-30 10:23:39 | INFO | ✅ MSFT/AAPL: Encontrado como MSFT/AAPL-OTC (turbo) - Grupo: PAIR
+2025-07-30 10:23:39 | INFO | ✅ MSFT/AAPL: Encontrado como MSFT/AAPL-OTC (binary) - Grupo: PAIR
+2025-07-30 10:23:39 | INFO | ✅ AMZN/EBAY: Encontrado como AMZN/EBAY-OTC (turbo) - Grupo: PAIR
+2025-07-30 10:23:39 | INFO | ✅ AMZN/EBAY: Encontrado como AMZN/EBAY-OTC (binary) - Grupo: PAIR
+2025-07-30 10:23:39 | INFO | ✅ NFLX/AMZN: Encontrado como NFLX/AMZN-OTC (turbo) - Grupo: PAIR
+2025-07-30 10:23:39 | INFO | ✅ NFLX/AMZN: Encontrado como NFLX/AMZN-OTC (binary) - Grupo: PAIR
+2025-07-30 10:23:39 | INFO | ✅ GOOGLE/MSFT: Encontrado como GOOGLE/MSFT-OTC (turbo) - Grupo: PAIR
+2025-07-30 10:23:39 | INFO | ✅ GOOGLE/MSFT: Encontrado como GOOGLE/MSFT-OTC (binary) - Grupo: PAIR
+2025-07-30 10:23:39 | INFO | ✅ INTEL/IBM: Encontrado como INTEL/IBM-OTC (turbo) - Grupo: PAIR
+2025-07-30 10:23:39 | INFO | ✅ INTEL/IBM: Encontrado como INTEL/IBM-OTC (binary) - Grupo: PAIR
+2025-07-30 10:23:39 | INFO | 📊 Total activos disponibles: 9
+2025-07-30 10:25:59 | INFO | 🔄 Ciclo #110 - 2025-07-30 10:25:59 - Trades activos: 0/1
+2025-07-30 10:28:29 | INFO | 🔄 Ciclo #120 - 2025-07-30 10:28:29 - Trades activos: 0/1
+2025-07-30 10:30:59 | INFO | 🔄 Ciclo #130 - 2025-07-30 10:30:59 - Trades activos: 0/1
+2025-07-30 10:33:29 | INFO | 🔄 Ciclo #140 - 2025-07-30 10:33:29 - Trades activos: 0/1
+2025-07-30 10:35:59 | INFO | 🔄 Ciclo #150 - 2025-07-30 10:35:59 - Trades activos: 0/1
+2025-07-30 10:38:29 | INFO | 🔄 Ciclo #160 - 2025-07-30 10:38:29 - Trades activos: 0/1
+2025-07-30 10:40:59 | INFO | 🔄 Ciclo #170 - 2025-07-30 10:40:59 - Trades activos: 0/1
+2025-07-30 10:43:29 | INFO | 🔄 Ciclo #180 - 2025-07-30 10:43:29 - Trades activos: 0/1
+2025-07-30 10:45:59 | INFO | 🔄 Ciclo #190 - 2025-07-30 10:45:59 - Trades activos: 0/1
+2025-07-30 10:48:29 | INFO | 🔄 Ciclo #200 - 2025-07-30 10:48:29 - Trades activos: 0/1
+2025-07-30 10:48:32 | INFO | 🔄 Re-verificando activos disponibles...
+2025-07-30 10:48:32 | INFO | 🔍 Verificando activos disponibles...
+2025-07-30 10:48:45 | INFO | ✅ NVDA/AMD: Encontrado como NVDA/AMD-OTC (turbo) - Grupo: PAIR
+2025-07-30 10:48:45 | INFO | ✅ NVDA/AMD: Encontrado como NVDA/AMD-OTC (binary) - Grupo: PAIR
+2025-07-30 10:48:45 | INFO | ✅ TESLA/FORD: Encontrado como TESLA/FORD-OTC (turbo) - Grupo: PAIR
+2025-07-30 10:48:45 | INFO | ✅ TESLA/FORD: Encontrado como TESLA/FORD-OTC (binary) - Grupo: PAIR
+2025-07-30 10:48:45 | INFO | ✅ META/GOOGLE: Encontrado como META/GOOGLE-OTC (turbo) - Grupo: PAIR
+2025-07-30 10:48:45 | INFO | ✅ META/GOOGLE: Encontrado como META/GOOGLE-OTC (binary) - Grupo: PAIR
+2025-07-30 10:48:45 | INFO | ✅ AMZN/ALIBABA: Encontrado como AMZN/ALIBABA-OTC (turbo) - Grupo: PAIR
+2025-07-30 10:48:45 | INFO | ✅ AMZN/ALIBABA: Encontrado como AMZN/ALIBABA-OTC (binary) - Grupo: PAIR
+2025-07-30 10:48:45 | INFO | ✅ MSFT/AAPL: Encontrado como MSFT/AAPL-OTC (turbo) - Grupo: PAIR
+2025-07-30 10:48:45 | INFO | ✅ MSFT/AAPL: Encontrado como MSFT/AAPL-OTC (binary) - Grupo: PAIR
+2025-07-30 10:48:45 | INFO | ✅ AMZN/EBAY: Encontrado como AMZN/EBAY-OTC (turbo) - Grupo: PAIR
+2025-07-30 10:48:45 | INFO | ✅ AMZN/EBAY: Encontrado como AMZN/EBAY-OTC (binary) - Grupo: PAIR
+2025-07-30 10:48:45 | INFO | ✅ NFLX/AMZN: Encontrado como NFLX/AMZN-OTC (turbo) - Grupo: PAIR
+2025-07-30 10:48:45 | INFO | ✅ NFLX/AMZN: Encontrado como NFLX/AMZN-OTC (binary) - Grupo: PAIR
+2025-07-30 10:48:45 | INFO | ✅ GOOGLE/MSFT: Encontrado como GOOGLE/MSFT-OTC (turbo) - Grupo: PAIR
+2025-07-30 10:48:45 | INFO | ✅ GOOGLE/MSFT: Encontrado como GOOGLE/MSFT-OTC (binary) - Grupo: PAIR
+2025-07-30 10:48:45 | INFO | ✅ INTEL/IBM: Encontrado como INTEL/IBM-OTC (turbo) - Grupo: PAIR
+2025-07-30 10:48:45 | INFO | ✅ INTEL/IBM: Encontrado como INTEL/IBM-OTC (binary) - Grupo: PAIR
+2025-07-30 10:48:45 | INFO | 📊 Total activos disponibles: 9
+2025-07-30 10:51:05 | INFO | 🔄 Ciclo #210 - 2025-07-30 10:51:05 - Trades activos: 0/1
+2025-07-30 10:53:35 | INFO | 🔄 Ciclo #220 - 2025-07-30 10:53:35 - Trades activos: 0/1
+2025-07-30 10:56:05 | INFO | 🔄 Ciclo #230 - 2025-07-30 10:56:05 - Trades activos: 0/1
+2025-07-30 10:58:35 | INFO | 🔄 Ciclo #240 - 2025-07-30 10:58:35 - Trades activos: 0/1
+2025-07-30 11:01:05 | INFO | 🔄 Ciclo #250 - 2025-07-30 11:01:05 - Trades activos: 0/1
+2025-07-30 11:03:35 | INFO | 🔄 Ciclo #260 - 2025-07-30 11:03:35 - Trades activos: 0/1
+2025-07-30 11:06:05 | INFO | 🔄 Ciclo #270 - 2025-07-30 11:06:05 - Trades activos: 0/1
+2025-07-30 11:08:35 | INFO | 🔄 Ciclo #280 - 2025-07-30 11:08:35 - Trades activos: 0/1
+2025-07-30 11:09:37 | INFO | ✅ META/GOOGLE - Momentum PUT confirmado: 32.2 → 26.7
+2025-07-30 11:09:37 | INFO |    Caída: 5.5 puntos | Fuerza: 62% | Cruce FRESCO ✓
+2025-07-30 11:09:37 | INFO | 🔴 META/GOOGLE (PAIR) - Señal PUT con momentum válido (RSI: 26.66 ≤ 32)
+2025-07-30 11:09:37 | INFO | 📊 Trades activos antes de abrir: 0/1
+2025-07-30 11:09:37 | INFO | 📈 Colocando PUT en META/GOOGLE (META/GOOGLE-OTC), cantidad: $900.19
+2025-07-30 11:09:38 | INFO | ✅ Orden colocada exitosamente. ID: 12906303646
+2025-07-30 11:09:38 | INFO | 📝 Orden registrada para META/GOOGLE - Total trades activos: 1/1
+2025-07-30 11:09:51 | INFO | 📉 Nuevo mínimo: $8,101.85 (19.00% pérdida)
+2025-07-30 11:11:05 | INFO | 🔄 Ciclo #290 - 2025-07-30 11:11:05 - Trades activos: 1/1
+2025-07-30 11:11:36 | INFO | 🔄 Verificando orden 12906303646...
+2025-07-30 11:11:36 | INFO | 📋 Orden encontrada en order_binary
+2025-07-30 11:11:36 | INFO |    Result: LOOSE
+2025-07-30 11:11:36 | INFO | ❌ Pérdida detectada
+2025-07-30 11:11:36 | INFO | ❌ META/GOOGLE (PAIR) - PUT PERDIDA. Pérdida: $900.19
+2025-07-30 11:11:36 | INFO | 📊 Trades activos restantes: 0/1
+2025-07-30 11:11:36 | INFO | 📊 META/GOOGLE - Pérdidas consecutivas: 1
+2025-07-30 11:11:36 | INFO | 📊 Pérdidas consecutivas del día: 2/2
+2025-07-30 11:11:36 | INFO | ============================================================
+2025-07-30 11:11:36 | INFO | ❌ 2 PÉRDIDAS CONSECUTIVAS - TRADING PAUSADO
+2025-07-30 11:11:36 | INFO | ============================================================
+2025-07-30 11:11:36 | INFO | ❌ Pérdidas consecutivas: 2
+2025-07-30 11:11:36 | INFO | 💰 Profit del día: $-1,900.38
+2025-07-30 11:11:36 | INFO | 📊 Balance actual: $8,101.85
+2025-07-30 11:11:36 | INFO | 🕐 Hora: 11:11:36
+2025-07-30 11:11:36 | INFO | 🛑 No se realizarán más operaciones hoy
+2025-07-30 11:11:36 | INFO | 🔄 El trading se reanudará mañana
+2025-07-30 11:11:36 | INFO | ============================================================
+2025-07-30 11:13:37 | INFO | 🔄 Ciclo #300 - 2025-07-30 11:13:37 - Trades activos: 0/1
+2025-07-30 11:16:10 | INFO | 🔄 Ciclo #310 - 2025-07-30 11:16:10 - Trades activos: 0/1
+2025-07-30 11:18:43 | INFO | 🔄 Ciclo #320 - 2025-07-30 11:18:43 - Trades activos: 0/1
+2025-07-30 11:20:00 | INFO | 🔒 Trading pausado - 2 pérdidas consecutivas
+2025-07-30 11:21:16 | INFO | 🔄 Ciclo #330 - 2025-07-30 11:21:16 - Trades activos: 0/1
+2025-07-30 11:23:49 | INFO | 🔄 Ciclo #340 - 2025-07-30 11:23:49 - Trades activos: 0/1
+2025-07-30 11:26:22 | INFO | 🔄 Ciclo #350 - 2025-07-30 11:26:22 - Trades activos: 0/1
+2025-07-30 11:28:55 | INFO | 🔄 Ciclo #360 - 2025-07-30 11:28:55 - Trades activos: 0/1
+2025-07-30 11:30:12 | INFO | 🔒 Trading pausado - 2 pérdidas consecutivas
+2025-07-30 11:31:28 | INFO | 🔄 Ciclo #370 - 2025-07-30 11:31:28 - Trades activos: 0/1
+2025-07-30 11:34:01 | INFO | 🔄 Ciclo #380 - 2025-07-30 11:34:01 - Trades activos: 0/1
+2025-07-30 11:36:35 | INFO | 🔄 Ciclo #390 - 2025-07-30 11:36:35 - Trades activos: 0/1
+2025-07-30 11:39:08 | INFO | 🔄 Ciclo #400 - 2025-07-30 11:39:08 - Trades activos: 0/1
+2025-07-30 11:40:10 | INFO | 🔒 Trading pausado - 2 pérdidas consecutivas
+2025-07-30 11:41:41 | INFO | 🔄 Ciclo #410 - 2025-07-30 11:41:41 - Trades activos: 0/1
+2025-07-30 11:44:14 | INFO | 🔄 Ciclo #420 - 2025-07-30 11:44:14 - Trades activos: 0/1
+2025-07-30 11:44:40 | INFO | ⏹️ Estrategia detenida por el usuario
+2025-07-30 11:44:40 | INFO | 🏁 Finalizando estrategia...
+2025-07-30 11:44:40 | INFO | ============================================================
+2025-07-30 11:44:40 | INFO | 📊 RESUMEN DE LA ESTRATEGIA ALGEBRA MULTI-ACTIVOS (LÓGICA INVERTIDA)
+2025-07-30 11:44:40 | INFO | ============================================================
+2025-07-30 11:44:40 | INFO | ⚡ Estrategia: PUT en sobreventa (RSI dinámico), CALL en sobrecompra (RSI dinámico)
+2025-07-30 11:44:40 | INFO | ⚙️ Modo: BALANCED - Balance entre cantidad y calidad
+2025-07-30 11:44:40 | INFO | 🎯 Límite de trades simultáneos: 1
+2025-07-30 11:44:40 | INFO | 💰 Capital Inicial: $10,001.85
+2025-07-30 11:44:40 | INFO | 💰 Balance Final: $8,101.85
+2025-07-30 11:44:40 | INFO | 📈 Rendimiento Total: -19.00%
+2025-07-30 11:44:40 | INFO | 🎯 Total Operaciones: 2
+2025-07-30 11:44:40 | INFO | ✅ Victorias: 0 (0.0%)
+2025-07-30 11:44:40 | INFO | ❌ Derrotas: 2 (100.0%)
+2025-07-30 11:44:40 | INFO | 🟡 Empates: 0 (0.0%)
+2025-07-30 11:44:40 | INFO | 📊 Tasa de Éxito (sin empates): 0.00%
+2025-07-30 11:44:40 | INFO | 💵 Beneficio Neto: $-1,900.38
+2025-07-30 11:44:40 | INFO | 📉 Capital Mínimo: $8,101.85
+2025-07-30 11:44:40 | INFO | 🔒 Daily Lock: ACTIVO desde 11:11 (2 pérdidas)
+2025-07-30 11:44:40 | INFO | 
+📊 Estadísticas por Activo (agrupadas por tipo):
+2025-07-30 11:44:40 | INFO | 
+PAIR:
+2025-07-30 11:44:40 | INFO |   META/GOOGLE: 1 trades | 0W/1L/0T | 0.0% éxito | Pérdidas consec: 1
+2025-07-30 11:44:40 | INFO |   NFLX/AMZN: 1 trades | 0W/1L/0T | 0.0% éxito | Pérdidas consec: 1
+2025-07-30 11:44:40 | INFO | 
+📅 Rendimiento Mensual:
+2025-07-30 11:44:40 | INFO | ============================================================
+2025-07-30 11:44:40 | INFO | 👋 Estrategia finalizada
+2025-07-30 11:44:40 | INFO | 👋 Programa finalizado

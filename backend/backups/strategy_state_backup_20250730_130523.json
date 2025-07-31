@@ -1,0 +1,95 @@
+{
+    "timestamp": "2025-07-30T11:44:40.132033",
+    "strategy_mode": "CALL_PUT",
+    "active_options": {},
+    "last_signal_time": {
+        "NFLX/AMZN": "2025-07-30T10:16:54.897776",
+        "META/GOOGLE": "2025-07-30T11:09:38.466451"
+    },
+    "consecutive_losses": {
+        "NFLX/AMZN": 1,
+        "META/GOOGLE": 1
+    },
+    "daily_lockouts": {},
+    "wins": {},
+    "losses": {
+        "NFLX/AMZN": 1,
+        "META/GOOGLE": 1
+    },
+    "ties": {},
+    "total_profit": -1900.38,
+    "daily_profit": -1900.38,
+    "monthly_profits": {},
+    "monthly_starting_capital": {
+        "2025-07": 10001.85
+    },
+    "monthly_stop_loss": false,
+    "stop_loss_triggered_month": null,
+    "absolute_stop_loss_activated": false,
+    "min_capital": 8101.85,
+    "last_date": "2025-07-30",
+    "current_month": "2025-07",
+    "daily_consecutive_wins": 0,
+    "daily_consecutive_losses": 2,
+    "daily_lock": true,
+    "daily_lock_time": "2025-07-30T11:11:36.115557",
+    "daily_lock_reason": "losses",
+    "max_daily_consecutive": 2,
+    "recent_results": [
+        "loss",
+        "loss"
+    ],
+    "day_start_balance": 10001.85,
+    "rsi_history": {
+        "NVDA/AMD": [
+            57.03,
+            57.68,
+            58.25,
+            57.99,
+            62.72
+        ],
+        "TESLA/FORD": [
+            40.5,
+            41.69,
+            44.03,
+            43.83,
+            41.91
+        ],
+        "META/GOOGLE": [],
+        "AMZN/ALIBABA": [
+            49.2,
+            51.65,
+            50.01,
+            49.59,
+            49.28
+        ],
+        "MSFT/AAPL": [
+            63.95,
+            65.1,
+            65.02,
+            64.44,
+            69.63
+        ],
+        "AMZN/EBAY": [
+            68.98,
+            67.98,
+            69.76
+        ],
+        "NFLX/AMZN": [],
+        "GOOGLE/MSFT": [
+            61.55,
+            56.86,
+            56.58,
+            54.93,
+            58.15
+        ],
+        "INTEL/IBM": [
+            44.8,
+            46.29,
+            46.72,
+            45.55,
+            42.96
+        ]
+    },
+    "aggressiveness_mode": "AGGRESSIVE"
+}
