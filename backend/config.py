@@ -195,6 +195,39 @@ AGGRESSIVENESS_CONFIG = {
 # Obtener configuración activa
 ACTIVE_CONFIG = AGGRESSIVENESS_CONFIG[AGGRESSIVENESS_MODE]
 
+# FUNCIÓN PARA OBTENER CONFIGURACIÓN DINÁMICA POR MODO
+def get_aggressiveness_config(mode=None):
+    """
+    Obtener la configuración de agresividad para un modo específico
+    
+    Args:
+        mode (str): Modo de agresividad ("CONSERVATIVE", "BALANCED", "AGGRESSIVE")
+                   Si es None, usa el modo por defecto
+        
+    Returns:
+        dict: Configuración de agresividad
+    """
+    if mode is None:
+        return ACTIVE_CONFIG
+    
+    return AGGRESSIVENESS_CONFIG.get(mode, AGGRESSIVENESS_CONFIG["BALANCED"])
+
+# FUNCIÓN PARA OBTENER VALORES DE CONFIGURACIÓN ESPECÍFICOS
+def get_expiry_minutes(mode=None):
+    """Obtener minutos de expiración para un modo específico"""
+    config = get_aggressiveness_config(mode)
+    return config["expiry_minutes"]
+
+def get_candle_timeframe(mode=None):
+    """Obtener timeframe de velas para un modo específico"""
+    config = get_aggressiveness_config(mode)
+    return config["candle_timeframe"]
+
+def get_min_strength(mode=None):
+    """Obtener fuerza mínima de señal para un modo específico"""
+    config = get_aggressiveness_config(mode)
+    return config["min_strength"]
+
 # Configuración de opciones binarias (desde modo activo)
 EXPIRY_MINUTES = ACTIVE_CONFIG["expiry_minutes"]
 CANDLE_TIMEFRAME = ACTIVE_CONFIG["candle_timeframe"]

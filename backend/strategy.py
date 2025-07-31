@@ -32,6 +32,8 @@ from config import (
     RSI_LEVELS, MIN_MOMENTUM_POINTS_BY_GROUP, POSITION_SIZE_PERCENT_BY_GROUP,
     # IMPORTACIONES DE AGRESIVIDAD
     AGGRESSIVENESS_MODE, ACTIVE_CONFIG, print_aggressiveness_configuration,
+    # FUNCIONES DINÁMICAS DE AGRESIVIDAD
+    get_aggressiveness_config, get_expiry_minutes, get_candle_timeframe, get_min_strength,
     # NUEVA IMPORTACIÓN PARA LÍMITE DE TRADES
     MAX_SIMULTANEOUS_TRADES
 )
@@ -102,8 +104,12 @@ class MultiAssetRSIBinaryOptionsStrategy:
             mapped_aggressiveness = aggressiveness_mapping.get(aggressiveness.lower(), 'BALANCED')
             self.custom_aggressiveness = mapped_aggressiveness
             self.logger.info(f"⚡ Agresividad personalizada: {aggressiveness} → {mapped_aggressiveness}")
+            
+            # Obtener configuración dinámica
+            self.active_config = get_aggressiveness_config(mapped_aggressiveness)
         else:
             self.custom_aggressiveness = None
+            self.active_config = get_aggressiveness_config()  # Configuración por defecto
         
         # Mostrar configuración de agresividad
         print_aggressiveness_configuration()
@@ -114,7 +120,12 @@ class MultiAssetRSIBinaryOptionsStrategy:
         else:
             self.logger.info(f"⚙️ Modo de agresividad: {AGGRESSIVENESS_MODE} (por defecto)")
         
-        self.logger.info(f"📊 Timeframe: {CANDLE_TIMEFRAME//60} min | Expiración: {EXPIRY_MINUTES} min")
+        # Usar configuración dinámica
+        self.expiry_minutes = self.active_config["expiry_minutes"]
+        self.candle_timeframe = self.active_config["candle_timeframe"]
+        self.min_strength = self.active_config["min_strength"]
+        
+        self.logger.info(f"📊 Timeframe: {self.candle_timeframe//60} min | Expiración: {self.expiry_minutes} min | Fuerza mínima: {self.min_strength}%")
         
         # Conexión a IQ Option
         self._connect_to_iq_option(email, password, account_type)
@@ -134,11 +145,9 @@ class MultiAssetRSIBinaryOptionsStrategy:
             self.position_size_percent = POSITION_SIZE_PERCENT
         self.min_position_size = MIN_POSITION_SIZE
         
-        # Parámetros de trading - usar los assets filtrados
+        # Parámetros de trading - usar los assets filtrados y configuración dinámica
         self.asset_mapping = ASSET_IQ_MAPPING
-        self.expiry_minutes = EXPIRY_MINUTES
         self.rsi_period = RSI_PERIOD
-        self.candle_timeframe = CANDLE_TIMEFRAME
         self.min_time_between_signals = MIN_TIME_BETWEEN_SIGNALS
         
         # NUEVO: Ya no usamos valores fijos de RSI

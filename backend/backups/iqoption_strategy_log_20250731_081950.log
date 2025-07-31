@@ -1,0 +1,43 @@
+2025-07-31 08:19:17 | INFO | ============================================================
+2025-07-31 08:19:17 | INFO |    ESTRATEGIA ALGEBRA MULTI-ACTIVOS PARA OPTION
+2025-07-31 08:19:17 | INFO |    ⚡ LÓGICA INVERTIDA ⚡
+2025-07-31 08:19:17 | INFO | ============================================================
+2025-07-31 08:19:17 | INFO | 📅 Fecha/Hora: 2025-07-31 08:19:17
+2025-07-31 08:19:17 | INFO | 📧 Usuario: syl***@gmail.com
+2025-07-31 08:19:17 | INFO | ============================================================
+2025-07-31 08:19:17 | INFO | ⚠️ IMPORTANTE: Esta estrategia usa lógica INVERTIDA
+2025-07-31 08:19:17 | INFO |    - PUT cuando RSI ≤ 35 (sobreventa)
+2025-07-31 08:19:17 | INFO |    - CALL cuando RSI ≥ 65 (sobrecompra)
+2025-07-31 08:19:17 | INFO | ============================================================
+2025-07-31 08:19:17 | INFO | 🚀 Inicializando estrategia...
+2025-07-31 08:19:17 | INFO | 🎯 Pares seleccionados: NVDA/AMD, TESLA/FORD, META/GOOGLE, AMZN/ALIBABA, MSFT/AAPL, AMZN/EBAY, NFLX/AMZN, GOOGLE/MSFT, INTEL/IBM
+2025-07-31 08:19:17 | INFO | 💰 Tamaño de posición: 8%
+2025-07-31 08:19:17 | INFO | ⚡ Nivel de agresividad: balanceado
+2025-07-31 08:19:17 | INFO | 🎯 INICIANDO ESTRATEGIA ALGEBRA MULTI-ACTIVOS (LÓGICA INVERTIDA)
+2025-07-31 08:19:17 | INFO | 📊 Configuración: Niveles RSI dinámicos por grupo de activos
+2025-07-31 08:19:17 | INFO | ⚡ LÓGICA INVERTIDA: PUT en sobreventa, CALL en sobrecompra
+2025-07-31 08:19:17 | INFO | 🎯 LÍMITE DE TRADES SIMULTÁNEOS: 1
+2025-07-31 08:19:17 | INFO | 🎯 PARES SELECCIONADOS: ['NVDA/AMD', 'TESLA/FORD', 'META/GOOGLE', 'AMZN/ALIBABA', 'MSFT/AAPL', 'AMZN/EBAY', 'NFLX/AMZN', 'GOOGLE/MSFT', 'INTEL/IBM']
+2025-07-31 08:19:17 | INFO | ✅ Par habilitado: NVDA/AMD
+2025-07-31 08:19:17 | INFO | ✅ Par habilitado: TESLA/FORD
+2025-07-31 08:19:17 | INFO | ✅ Par habilitado: META/GOOGLE
+2025-07-31 08:19:17 | INFO | ✅ Par habilitado: AMZN/ALIBABA
+2025-07-31 08:19:17 | INFO | ✅ Par habilitado: MSFT/AAPL
+2025-07-31 08:19:17 | INFO | ✅ Par habilitado: AMZN/EBAY
+2025-07-31 08:19:17 | INFO | ✅ Par habilitado: NFLX/AMZN
+2025-07-31 08:19:17 | INFO | ✅ Par habilitado: GOOGLE/MSFT
+2025-07-31 08:19:17 | INFO | ✅ Par habilitado: INTEL/IBM
+2025-07-31 08:19:17 | INFO | 🎯 Operando con 9 pares seleccionados
+2025-07-31 08:19:17 | INFO | 💰 Tamaño de posición personalizado: 8%
+2025-07-31 08:19:17 | INFO | ⚡ Agresividad personalizada: balanceado → BALANCED
+2025-07-31 08:19:17 | INFO | ⚙️ Modo de agresividad: BALANCED (personalizado)
+2025-07-31 08:19:17 | INFO | 📊 Timeframe: 5 min | Expiración: 5 min
+2025-07-31 08:19:17 | INFO | 🔗 Conectando a IQ Option...
+2025-07-31 08:19:20 | INFO | ✅ Conexión exitosa
+2025-07-31 08:19:20 | INFO | 💰 Balance actual: $7,696.85
+2025-07-31 08:19:21 | INFO | 💰 Capital inicial: $7,696.85
+2025-07-31 08:19:21 | INFO | 📂 No hay archivo de estado previo
+2025-07-31 08:19:21 | INFO | 🔍 Verificando activos disponibles...
+2025-07-31 08:19:27 | INFO | 
+⏹️ Estrategia detenida por el usuario
+2025-07-31 08:19:27 | INFO | 👋 Programa finalizado
