@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useSearchParams } from 'next/navigation';
 import {
   Config,
   AlgorithmStatus,
@@ -19,7 +20,40 @@ import Loading from '@/components/Loading';
 
 export default function DashboardPage() {
   // User context
-  const { user, profile, loading, signOut } = useUser();
+  const { user, profile, loading, signOut, refreshUser } = useUser();
+  
+  // Check for success message from Stripe
+  const searchParams = useSearchParams();
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [successPlan, setSuccessPlan] = useState<string | null>(null);
+  const [processedParams, setProcessedParams] = useState(false);
+
+  useEffect(() => {
+    const success = searchParams.get('success');
+    const plan = searchParams.get('plan');
+    
+    if (success === 'true' && plan && !processedParams) {
+      setShowSuccessMessage(true);
+      setSuccessPlan(plan);
+      setProcessedParams(true);
+      
+      // Refresh user data ONCE to get updated subscription status
+      refreshUser();
+      
+      // Hide success message after 5 seconds
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 5000);
+
+      // Clear URL parameters after processing to prevent reload issues
+      setTimeout(() => {
+        const url = new URL(window.location.href);
+        url.searchParams.delete('success');
+        url.searchParams.delete('plan');
+        window.history.replaceState({}, '', url.toString());
+      }, 100);
+    }
+  }, [searchParams, processedParams, refreshUser]);
 
   // Refs
   const logsContainerRef = useRef<HTMLDivElement>(null);
@@ -370,12 +404,43 @@ export default function DashboardPage() {
 
   const handlePairSelection = (pair: string) => {
     setConfig(prev => {
-      const newPairs = prev.selectedPairs.includes(pair)
-        ? prev.selectedPairs.filter(p => p !== pair)
-        : [...prev.selectedPairs, pair];
+      const isCurrentlySelected = prev.selectedPairs.includes(pair);
+      const maxAllowed = profile?.max_active_assets || 5;
       
-      return { ...prev, selectedPairs: newPairs };
+      if (isCurrentlySelected) {
+        // Remover par seleccionado
+        const newPairs = prev.selectedPairs.filter(p => p !== pair);
+        return { ...prev, selectedPairs: newPairs };
+      } else {
+        // Agregar par si no se ha alcanzado el límite
+        if (prev.selectedPairs.length >= maxAllowed) {
+          // Mostrar mensaje de límite alcanzado
+          return prev; // No hacer cambios
+        }
+        const newPairs = [...prev.selectedPairs, pair];
+        return { ...prev, selectedPairs: newPairs };
+      }
     });
+  };
+
+  const getPlanInfo = () => {
+    if (!profile) return { name: 'CARGANDO...', color: 'bg-gray-500', limit: 0 };
+    
+    const planType = profile.plan_type?.toUpperCase() || 'TRIAL';
+    const maxAssets = profile.max_active_assets || 5;
+    
+    switch (planType) {
+      case 'BASIC':
+        return { name: 'PLAN BÁSICO', color: 'bg-blue-500', limit: maxAssets };
+      case 'PRO':
+        return { name: 'PLAN PRO', color: 'bg-purple-500', limit: maxAssets };
+      case 'ELITE':
+        return { name: 'PLAN ELITE', color: 'bg-gradient-to-r from-yellow-400 to-orange-400 text-black', limit: maxAssets };
+      case 'TRIAL':
+        return { name: 'PLAN TRIAL', color: 'bg-green-500', limit: maxAssets };
+      default:
+        return { name: 'PLAN TRIAL', color: 'bg-green-500', limit: maxAssets };
+    }
   };
 
   const getTrialDaysLeft = () => {
@@ -461,6 +526,38 @@ export default function DashboardPage() {
           </div>
         </div>
       </header>
+
+      {/* Success Message after payment */}
+      {showSuccessMessage && (
+        <div className="bg-green-900/20 border border-green-700 rounded-lg p-4 mx-6 mt-6">
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-green-300">
+                ¡Pago procesado exitosamente!
+              </h3>
+              <div className="mt-1 text-sm text-green-200">
+                Tu suscripción al plan <span className="font-semibold capitalize">{successPlan}</span> ha sido activada. 
+                ¡Bienvenido a InverseNeural Lab!
+              </div>
+            </div>
+            <div className="ml-auto pl-3">
+              <button
+                onClick={() => setShowSuccessMessage(false)}
+                className="text-green-400 hover:text-green-300"
+              >
+                <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Debug Panel - Solo visible cuando hay errores */}
@@ -673,29 +770,43 @@ export default function DashboardPage() {
             <div className="mb-6">
               <div className="flex items-center justify-between mb-2">
                 <label className="text-sm font-medium text-gray-300">
-                  Pares de Activos ({config.selectedPairs.length}/9)
+                  Pares de Activos ({config.selectedPairs.length}/{profile?.max_active_assets || 5})
                 </label>
-                <span className="text-xs bg-gradient-to-r from-yellow-400 to-orange-400 text-black px-2 py-1 rounded font-bold">
-                  PLAN ELITE
+                <span className={`text-xs px-2 py-1 rounded font-bold ${getPlanInfo().color}`}>
+                  {getPlanInfo().name}
                 </span>
               </div>
-              <p className="text-xs text-green-400 mb-3">✨ Acceso completo a todos los pares premium</p>
+              <p className="text-xs text-blue-400 mb-3">
+                {config.selectedPairs.length === 0 
+                  ? '🔸 Selecciona los pares que quieres operar'
+                  : `✨ ${config.selectedPairs.length} de ${profile?.max_active_assets || 5} pares seleccionados`
+                }
+              </p>
               <div className="grid grid-cols-3 gap-2">
-                {TRADING_PAIRS.map(pair => (
-                  <button
-                    key={pair}
-                    onClick={() => handlePairSelection(pair)}
-                    className={`
-                      px-1 py-1 rounded text-xs font-medium transition-colors
-                      ${config.selectedPairs.includes(pair)
-                        ? 'bg-blue-600 text-white border border-blue-400 shadow-lg'
-                        : 'bg-gray-700 text-gray-300 border border-gray-600 hover:bg-gray-600'
-                      }
-                    `}
-                  >
-                    <span className="block leading-tight text-2xs">{TRADING_SYMBOLS[pair]}</span>
-                  </button>
-                ))}
+                {TRADING_PAIRS.map(pair => {
+                  const isSelected = config.selectedPairs.includes(pair);
+                  const maxAllowed = profile?.max_active_assets || 5;
+                  const isLimitReached = config.selectedPairs.length >= maxAllowed && !isSelected;
+                  
+                  return (
+                    <button
+                      key={pair}
+                      onClick={() => handlePairSelection(pair)}
+                      disabled={isLimitReached}
+                      className={`
+                        px-1 py-1 rounded text-xs font-medium transition-colors
+                        ${isSelected
+                          ? 'bg-blue-600 text-white border border-blue-400 shadow-lg'
+                          : isLimitReached
+                          ? 'bg-gray-800 text-gray-500 border border-gray-700 cursor-not-allowed opacity-50'
+                          : 'bg-gray-700 text-gray-300 border border-gray-600 hover:bg-gray-600 cursor-pointer'
+                        }
+                      `}
+                    >
+                      <span className="block leading-tight text-2xs">{TRADING_SYMBOLS[pair]}</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 

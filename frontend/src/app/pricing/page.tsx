@@ -7,15 +7,41 @@ import Link from 'next/link'
 export default function PricingPage() {
   const { user } = useUser()
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
 
   const handlePlanSelection = async (planType: 'basic' | 'pro' | 'elite') => {
+    if (loading) return
+    
     setSelectedPlan(planType)
+    setLoading(true)
     
-    // TODO: Integrar con Stripe
-    console.log(`Plan seleccionado: ${planType}`)
-    
-    // Por ahora, simular selección exitosa
-    alert(`Has seleccionado el plan ${planType.toUpperCase()}. Integración con Stripe próximamente.`)
+    try {
+      const response = await fetch('/api/stripe/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ planType }),
+      })
+
+      const { url, error } = await response.json()
+
+      if (error) {
+        alert(`Error: ${error}`)
+        return
+      }
+
+      if (url) {
+        // Redirigir a Stripe Checkout
+        window.location.href = url
+      }
+    } catch (error) {
+      console.error('Error creating checkout session:', error)
+      alert('Error al procesar el pago. Inténtalo de nuevo.')
+    } finally {
+      setLoading(false)
+      setSelectedPlan(null)
+    }
   }
 
   return (
@@ -86,10 +112,18 @@ export default function PricingPage() {
             
             <button
               onClick={() => handlePlanSelection('basic')}
-              disabled={selectedPlan === 'basic'}
+              disabled={loading || selectedPlan === 'basic'}
               className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white rounded-lg font-medium transition-colors disabled:cursor-not-allowed"
             >
-              {selectedPlan === 'basic' ? 'Seleccionado' : 'Seleccionar Básico'}
+              {loading && selectedPlan === 'basic' ? (
+                <span className="flex items-center justify-center">
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Procesando...
+                </span>
+              ) : selectedPlan === 'basic' ? 'Seleccionado' : 'Seleccionar Básico'}
             </button>
           </div>
 
@@ -123,10 +157,18 @@ export default function PricingPage() {
             
             <button
               onClick={() => handlePlanSelection('pro')}
-              disabled={selectedPlan === 'pro'}
+              disabled={loading || selectedPlan === 'pro'}
               className="w-full py-3 px-4 bg-green-600 hover:bg-green-700 disabled:bg-green-800 text-white rounded-lg font-medium transition-colors disabled:cursor-not-allowed"
             >
-              {selectedPlan === 'pro' ? 'Seleccionado' : 'Seleccionar Pro'}
+              {loading && selectedPlan === 'pro' ? (
+                <span className="flex items-center justify-center">
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Procesando...
+                </span>
+              ) : selectedPlan === 'pro' ? 'Seleccionado' : 'Seleccionar Pro'}
             </button>
           </div>
 
@@ -164,10 +206,18 @@ export default function PricingPage() {
             
             <button
               onClick={() => handlePlanSelection('elite')}
-              disabled={selectedPlan === 'elite'}
+              disabled={loading || selectedPlan === 'elite'}
               className="w-full py-3 px-4 bg-orange-600 hover:bg-orange-700 disabled:bg-orange-800 text-white rounded-lg font-medium transition-colors disabled:cursor-not-allowed"
             >
-              {selectedPlan === 'elite' ? 'Seleccionado' : 'Seleccionar Elite'}
+              {loading && selectedPlan === 'elite' ? (
+                <span className="flex items-center justify-center">
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Procesando...
+                </span>
+              ) : selectedPlan === 'elite' ? 'Seleccionado' : 'Seleccionar Elite'}
             </button>
           </div>
         </div>

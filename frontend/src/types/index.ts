@@ -90,7 +90,7 @@ export const TRADING_SYMBOLS: Record<TradingPair, string> = {
 
 // Configuración por defecto
 export const DEFAULT_CONFIG: Config = {
-  selectedPairs: ['NVDA/AMD', 'TESLA/FORD', 'META/GOOGLE', 'AMZN/ALIBABA', 'MSFT/AAPL', 'AMZN/EBAY', 'NFLX/AMZN', 'GOOGLE/MSFT', 'INTEL/IBM'],
+  selectedPairs: [], // Empezar sin pares seleccionados
   positionSize: 5,
   aggressiveness: 'balanceado',
   email: '',
