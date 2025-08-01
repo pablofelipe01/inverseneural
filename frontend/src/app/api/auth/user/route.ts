@@ -69,29 +69,27 @@ export async function GET() {
 
       if (createError) {
         console.error('❌ Auto profile creation error:', createError)
-      } else {
-        console.log('✅ Profile auto-created:', newProfile)
-        // Usar el nuevo perfil creado
-        const finalProfile = newProfile
         
-        // Obtener sesión
-        const { data: { session } } = await supabase.auth.getSession()
-
         return NextResponse.json({
           user,
-          profile: finalProfile,
-          session
+          profile: null,
+          session: null
+        })
+      } else {
+        console.log('✅ Profile auto-created:', newProfile)
+        
+        return NextResponse.json({
+          user,
+          profile: newProfile,
+          session: null // No necesitamos la sesión para seguridad
         })
       }
     }
 
-    // Obtener sesión
-    const { data: { session } } = await supabase.auth.getSession()
-
     return NextResponse.json({
       user,
       profile: profile || null,
-      session
+      session: null // No necesitamos la sesión para seguridad
     })
 
   } catch (error) {

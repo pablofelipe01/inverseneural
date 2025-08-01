@@ -78,7 +78,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Redirigir al dashboard
-    return NextResponse.redirect(new URL('/', request.url))
+    return NextResponse.redirect(new URL('/dashboard', request.url))
 
   } catch (error) {
     console.error('Callback error:', error)

@@ -42,7 +42,7 @@ export default function LoginPage() {
         await new Promise(resolve => setTimeout(resolve, 500));
         
         // Navegar al dashboard
-        router.push('/');
+        router.push('/dashboard');
       } else {
         throw new Error('Error inesperado');
       }

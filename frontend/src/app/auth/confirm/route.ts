@@ -84,7 +84,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Redirigir al dashboard con mensaje de éxito
-    return NextResponse.redirect(new URL('/?confirmed=true', request.url))
+    return NextResponse.redirect(new URL('/dashboard?confirmed=true', request.url))
 
   } catch (error) {
     console.error('❌ Confirmation error:', error)
