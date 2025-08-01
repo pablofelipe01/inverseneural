@@ -1,0 +1,97 @@
+{
+    "timestamp": "2025-07-31T18:44:52.661068",
+    "strategy_mode": "CALL_PUT",
+    "active_options": {},
+    "last_signal_time": {
+        "INTEL/IBM": "2025-07-31T18:12:47.208677"
+    },
+    "consecutive_losses": {
+        "INTEL/IBM": 0
+    },
+    "daily_lockouts": {},
+    "wins": {
+        "INTEL/IBM": 1
+    },
+    "losses": {},
+    "ties": {},
+    "total_profit": 925.0,
+    "daily_profit": 2728.1499999999996,
+    "monthly_profits": {},
+    "monthly_starting_capital": {
+        "2025-07": 7696.85
+    },
+    "monthly_stop_loss": false,
+    "stop_loss_triggered_month": null,
+    "absolute_stop_loss_activated": false,
+    "min_capital": 7696.85,
+    "last_date": "2025-07-31",
+    "current_month": "2025-07",
+    "daily_consecutive_wins": 1,
+    "daily_consecutive_losses": 0,
+    "daily_lock": false,
+    "daily_lock_time": null,
+    "daily_lock_reason": null,
+    "max_daily_consecutive": 2,
+    "recent_results": [
+        "win"
+    ],
+    "day_start_balance": 7696.85,
+    "rsi_history": {
+        "NVDA/AMD": [
+            23.64,
+            23.76,
+            24.6
+        ],
+        "TESLA/FORD": [
+            56.79,
+            55.47,
+            56.21,
+            56.79,
+            56.93
+        ],
+        "META/GOOGLE": [
+            58.74,
+            58.91,
+            58.86,
+            58.13,
+            60.52
+        ],
+        "AMZN/ALIBABA": [
+            55.27,
+            54.84,
+            55.29,
+            55.01,
+            55.02
+        ],
+        "MSFT/AAPL": [
+            54.98,
+            54.36,
+            54.32,
+            53.01,
+            53.62
+        ],
+        "AMZN/EBAY": [
+            43.69,
+            43.2,
+            42.74,
+            43.51,
+            43.57
+        ],
+        "NFLX/AMZN": [
+            60.9,
+            60.19,
+            60.25,
+            60.57,
+            59.81
+        ],
+        "GOOGLE/MSFT": [
+            43.44,
+            45.72,
+            46.22,
+            45.55,
+            45.47
+        ],
+        "INTEL/IBM": []
+    },
+    "aggressiveness_mode": "BALANCED"
+}

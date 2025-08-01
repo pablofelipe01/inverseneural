@@ -1,5 +1,5 @@
 {
-    "timestamp": "2025-08-01T09:06:31.444101",
+    "timestamp": "2025-07-31T18:59:58.599941",
     "strategy_mode": "CALL_PUT",
     "active_options": {},
     "last_signal_time": {},
@@ -12,14 +12,14 @@
     "daily_profit": 0.0,
     "monthly_profits": {},
     "monthly_starting_capital": {
-        "2025-08": 10425
+        "2025-07": 10425
     },
     "monthly_stop_loss": false,
     "stop_loss_triggered_month": null,
     "absolute_stop_loss_activated": false,
     "min_capital": 10425,
-    "last_date": "2025-08-01",
-    "current_month": "2025-08",
+    "last_date": "2025-07-31",
+    "current_month": "2025-07",
     "daily_consecutive_wins": 0,
     "daily_consecutive_losses": 0,
     "daily_lock": false,
@@ -30,65 +30,65 @@
     "day_start_balance": 10425,
     "rsi_history": {
         "NVDA/AMD": [
-            44.69,
-            44.86,
-            43.9,
-            44.06,
-            43.06
+            19.75,
+            19.47
         ],
         "TESLA/FORD": [
-            70.79,
-            69.59,
-            67.34,
-            70.4
+            58.17,
+            58.51,
+            58.22,
+            57.61,
+            59.12
         ],
         "META/GOOGLE": [
-            65.89,
-            67.13,
-            68.11,
-            67.43,
-            66.79
+            41.55,
+            42.47,
+            41.09,
+            41.91,
+            41.95
         ],
         "AMZN/ALIBABA": [
-            47.76,
-            48.62,
-            47.93,
-            47.62,
-            47.59
+            52.56,
+            53.04,
+            53.79,
+            55.13,
+            56.12
         ],
         "MSFT/AAPL": [
-            41.89,
-            42.43,
-            43.8,
-            43.83,
-            44.46
+            48.64,
+            48.14,
+            48.0,
+            47.14,
+            47.61
         ],
         "AMZN/EBAY": [
-            31.65,
-            32.75,
-            33.0
+            48.41,
+            48.92,
+            49.97,
+            49.64,
+            50.75
         ],
         "NFLX/AMZN": [
-            44.12,
-            43.46,
-            44.65,
-            44.92,
-            44.78
+            57.59,
+            57.62,
+            57.69,
+            57.46,
+            58.57
         ],
         "GOOGLE/MSFT": [
-            57.1,
-            56.53,
-            57.21,
-            56.76,
-            56.04
+            37.91,
+            37.7,
+            37.45,
+            37.7,
+            37.95
         ],
         "INTEL/IBM": [
-            61.11,
-            60.64,
-            62.05,
-            62.19,
-            62.55
+            64.22,
+            63.59,
+            64.35,
+            63.71,
+            63.09
         ]
     },
-    "aggressiveness_mode": "AGGRESSIVE"
+    "aggressiveness_mode": "BALANCED"
 }

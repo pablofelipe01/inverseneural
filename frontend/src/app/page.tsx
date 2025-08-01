@@ -37,6 +37,10 @@ export default function InverseNeuralDashboard() {
   const [lastError, setLastError] = useState<string | null>(null);
   const [isResetting, setIsResetting] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
+  
+  // Smart scroll state
+  const [isUserScrolling, setIsUserScrolling] = useState(false);
+  const [hasNewLogs, setHasNewLogs] = useState(false);
 
   // API functions
   const fetchStatus = useCallback(async () => {
@@ -311,11 +315,43 @@ export default function InverseNeuralDashboard() {
     return () => clearInterval(logsInterval);
   }, [fetchLogs]);
 
-  useEffect(() => {
+  // Smart scroll functions
+  const isNearBottom = () => {
+    if (!logsContainerRef.current) return true;
+    const { scrollTop, scrollHeight, clientHeight } = logsContainerRef.current;
+    return scrollTop + clientHeight >= scrollHeight - 50; // 50px tolerance
+  };
+
+  const scrollToBottom = () => {
     if (logsContainerRef.current) {
       logsContainerRef.current.scrollTop = logsContainerRef.current.scrollHeight;
+      setHasNewLogs(false);
     }
-  }, [logs]);
+  };
+
+  const handleScroll = () => {
+    if (!logsContainerRef.current) return;
+    
+    const isAtBottom = isNearBottom();
+    setIsUserScrolling(!isAtBottom);
+    
+    if (isAtBottom) {
+      setHasNewLogs(false);
+    }
+  };
+
+  // Smart auto-scroll effect
+  useEffect(() => {
+    if (logsContainerRef.current) {
+      if (!isUserScrolling) {
+        // Auto-scroll only if user is not manually scrolling
+        logsContainerRef.current.scrollTop = logsContainerRef.current.scrollHeight;
+      } else {
+        // User is scrolling manually, show indicator for new logs
+        setHasNewLogs(true);
+      }
+    }
+  }, [logs, isUserScrolling]);
 
   // Helper functions
   const getPositionSizeColor = (size: number) => {
@@ -702,13 +738,30 @@ export default function InverseNeuralDashboard() {
         {/* Logs */}
         <div className="space-y-6">
           {/* Logs */}
-          <div className="bg-gray-800 rounded-lg border border-gray-700 p-6">
-            <h2 className="text-xl font-semibold mb-4 text-yellow-300">
-              Registro de Actividad 
-              <span className="text-sm text-gray-400 ml-2">({logs.length} entradas)</span>
-            </h2>
+          <div className="bg-gray-800 rounded-lg border border-gray-700 p-6 relative">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-yellow-300">
+                Registro de Actividad 
+                <span className="text-sm text-gray-400 ml-2">({logs.length} entradas)</span>
+              </h2>
+              
+              {/* New logs indicator and scroll to bottom button */}
+              {hasNewLogs && (
+                <button
+                  onClick={scrollToBottom}
+                  className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1 rounded-full flex items-center space-x-1 animate-pulse"
+                >
+                  <span>Nuevos logs</span>
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                  </svg>
+                </button>
+              )}
+            </div>
+            
             <div 
               ref={logsContainerRef}
+              onScroll={handleScroll}
               className="h-96 overflow-y-auto space-y-2 bg-gray-900 rounded p-3 logs-container scroll-smooth"
             >
               {logs.map((log, index) => (
