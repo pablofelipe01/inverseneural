@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useUser } from '@/contexts/UserContext';
 
 export default function LoginPage() {
@@ -59,9 +60,18 @@ export default function LoginPage() {
       <div className="max-w-md w-full">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent mb-2">
-            InverseNeural Lab
-          </h1>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <Image 
+              src="/logo.png" 
+              alt="InverseNeural Lab" 
+              width={40}
+              height={40}
+              className="w-10 h-10"
+            />
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent">
+              InverseNeural Lab
+            </h1>
+          </div>
           <p className="text-gray-400 text-sm">Algoritmos de Álgebra Lineal Inversa</p>
         </div>
 

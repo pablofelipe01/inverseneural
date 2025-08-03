@@ -16,10 +16,10 @@ export async function middleware(req: NextRequest) {
           return req.cookies.get(name)?.value
         },
         set(name: string, value: string, options: unknown) {
-          response.cookies.set({ name, value, ...options })
+          response.cookies.set({ name, value, ...(options as Record<string, unknown>) })
         },
         remove(name: string, options: unknown) {
-          response.cookies.set({ name, value: '', ...options })
+          response.cookies.set({ name, value: '', ...(options as Record<string, unknown>) })
         },
       },
     }

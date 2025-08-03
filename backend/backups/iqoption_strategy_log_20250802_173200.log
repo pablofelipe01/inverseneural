@@ -1,0 +1,98 @@
+2025-08-01 18:00:59 | INFO | ============================================================
+2025-08-01 18:00:59 | INFO |    ESTRATEGIA ALGEBRA MULTI-ACTIVOS PARA OPTION
+2025-08-01 18:00:59 | INFO |    ⚡ LÓGICA INVERTIDA ⚡
+2025-08-01 18:00:59 | INFO | ============================================================
+2025-08-01 18:00:59 | INFO | 📅 Fecha/Hora: 2025-08-01 18:00:59
+2025-08-01 18:00:59 | INFO | 📧 Usuario: pab***@gmail.com
+2025-08-01 18:00:59 | INFO | ============================================================
+2025-08-01 18:00:59 | INFO | ⚠️ IMPORTANTE: Esta estrategia usa lógica INVERTIDA
+2025-08-01 18:00:59 | INFO |    - PUT cuando Algebra Inversa ≤ 35 (sobreventa)
+2025-08-01 18:00:59 | INFO |    - CALL cuando Algebra Inversa ≥ 65 (sobrecompra)
+2025-08-01 18:00:59 | INFO | ============================================================
+2025-08-01 18:00:59 | INFO | 🚀 Inicializando estrategia...
+2025-08-01 18:00:59 | INFO | 🎯 Pares seleccionados: NVDA/AMD, AMZN/ALIBABA, NFLX/AMZN
+2025-08-01 18:00:59 | INFO | 💰 Tamaño de posición: 5%
+2025-08-01 18:00:59 | INFO | ⚡ Nivel de agresividad: balanceado
+2025-08-01 18:00:59 | INFO | 🎯 INICIANDO ESTRATEGIA ALGEBRA MULTI-ACTIVOS (LÓGICA INVERTIDA)
+2025-08-01 18:00:59 | INFO | 📊 Configuración: Niveles Algebra Inversa dinámicos por grupo de activos
+2025-08-01 18:00:59 | INFO | ⚡ LÓGICA INVERTIDA: PUT en sobreventa, CALL en sobrecompra
+2025-08-01 18:00:59 | INFO | 🎯 LÍMITE DE TRADES SIMULTÁNEOS: 1
+2025-08-01 18:00:59 | INFO | 🎯 PARES SELECCIONADOS: ['NVDA/AMD', 'AMZN/ALIBABA', 'NFLX/AMZN']
+2025-08-01 18:00:59 | INFO | ✅ Par habilitado: NVDA/AMD
+2025-08-01 18:00:59 | INFO | ✅ Par habilitado: AMZN/ALIBABA
+2025-08-01 18:00:59 | INFO | ✅ Par habilitado: NFLX/AMZN
+2025-08-01 18:00:59 | INFO | 🎯 Operando con 3 pares seleccionados
+2025-08-01 18:00:59 | INFO | 💰 Tamaño de posición personalizado: 5%
+2025-08-01 18:00:59 | INFO | ⚡ Agresividad personalizada: balanceado → BALANCED
+2025-08-01 18:00:59 | INFO | ⚙️ Modo de agresividad: BALANCED (personalizado)
+2025-08-01 18:00:59 | INFO | 📊 Timeframe: 5 min | Expiración: 1 min | Fuerza mínima: 60%
+2025-08-01 18:00:59 | INFO | 🔗 Conectando a IQ Option...
+2025-08-01 18:01:00 | INFO | ✅ Conexión exitosa
+2025-08-01 18:01:01 | INFO | 💰 Balance actual: $10,425.00
+2025-08-01 18:01:01 | INFO | 💰 Capital inicial: $10,425.00
+2025-08-01 18:01:01 | INFO | 📂 No hay archivo de estado previo
+2025-08-01 18:01:01 | INFO | 🔍 Verificando activos disponibles...
+2025-08-01 18:01:07 | INFO | ✅ NVDA/AMD: Encontrado como NVDA/AMD-OTC (turbo) - Grupo: PAIR
+2025-08-01 18:01:07 | INFO | ✅ NVDA/AMD: Encontrado como NVDA/AMD-OTC (binary) - Grupo: PAIR
+2025-08-01 18:01:07 | INFO | ✅ AMZN/ALIBABA: Encontrado como AMZN/ALIBABA-OTC (turbo) - Grupo: PAIR
+2025-08-01 18:01:07 | INFO | ✅ AMZN/ALIBABA: Encontrado como AMZN/ALIBABA-OTC (binary) - Grupo: PAIR
+2025-08-01 18:01:07 | INFO | ✅ NFLX/AMZN: Encontrado como NFLX/AMZN-OTC (turbo) - Grupo: PAIR
+2025-08-01 18:01:07 | INFO | ✅ NFLX/AMZN: Encontrado como NFLX/AMZN-OTC (binary) - Grupo: PAIR
+2025-08-01 18:01:07 | INFO | 📊 Total activos disponibles: 3
+2025-08-01 18:01:07 | INFO | 
+📊 CONFIGURACIÓN DE NIVELES ALGEBRA INVERSA POR GRUPO:
+2025-08-01 18:01:07 | INFO | ============================================================
+2025-08-01 18:01:07 | INFO | 
+PAIR:
+2025-08-01 18:01:07 | INFO |   Activos: NVDA/AMD, AMZN/ALIBABA, NFLX/AMZN
+2025-08-01 18:01:07 | INFO |   Algebra Inversa Sobreventa/Sobrecompra: 32/68
+2025-08-01 18:01:07 | INFO |   Momentum mínimo: 4 puntos
+2025-08-01 18:01:07 | INFO |   Tamaño posición: 5% (personalizado)
+2025-08-01 18:01:07 | INFO | ============================================================
+2025-08-01 18:01:07 | INFO | 
+⚡ CONFIGURACIÓN DE SEÑALES:
+2025-08-01 18:01:07 | INFO |   Modo: BALANCED (personalizado)
+2025-08-01 18:01:07 | INFO |   Fuerza mínima: 60%
+2025-08-01 18:01:07 | INFO |   Cruces válidos: últimas 2 niveles dinámicos
+2025-08-01 18:01:07 | INFO |   Permitir rebotes: Sí
+2025-08-01 18:01:07 | INFO |   Máx rebotes: 1 de hasta 2 puntos
+2025-08-01 18:01:07 | INFO |   🎯 Máximo trades simultáneos: 1
+2025-08-01 18:01:07 | INFO | ============================================================
+2025-08-01 18:01:07 | INFO | ✅ Sistema iniciado - Detectando momentum real con validación dinámica
+2025-08-01 18:01:07 | INFO | 🎯 Iniciando operaciones...
+2025-08-01 18:01:07 | INFO | ℹ️ Para detener la estrategia, desactiva el switch en el dashboard
+2025-08-01 18:01:07 | INFO | 🚀 Iniciando estrategia ALGEBRA Multi-Activos (LÓGICA INVERTIDA)
+2025-08-01 18:01:07 | INFO | 📊 Configuración: 3 activos disponibles
+2025-08-01 18:01:07 | INFO | ⚙️ Modo: BALANCED (personalizado) - Balance entre cantidad y calidad
+2025-08-01 18:01:07 | INFO | 📊 Algebra Inversa en timeframe de 5 minutos
+2025-08-01 18:01:07 | INFO | ⏱️ Expiración de opciones: 1 minutos
+2025-08-01 18:01:07 | INFO | ⏰ Tiempo entre señales: 60 minutos
+2025-08-01 18:01:07 | INFO | 🔄 Bloqueo diario después de 2 operaciones consecutivas (wins o losses)
+2025-08-01 18:01:07 | INFO | 🎯 Máximo 1 trade(s) simultáneo(s)
+2025-08-01 18:01:07 | INFO | 💪 Fuerza mínima de señal: 60%
+2025-08-01 18:01:07 | INFO | 🆕 Solo cruces frescos en últimas 2 niveles dinámicos
+2025-08-01 18:03:22 | INFO | 🔄 Ciclo #10 - 2025-08-01 18:03:22 - Trades activos: 0/1
+2025-08-01 18:05:53 | INFO | 🔄 Ciclo #20 - 2025-08-01 18:05:53 - Trades activos: 0/1
+2025-08-01 18:08:23 | INFO | 🔄 Ciclo #30 - 2025-08-01 18:08:23 - Trades activos: 0/1
+2025-08-01 18:10:53 | INFO | 🔄 Ciclo #40 - 2025-08-01 18:10:53 - Trades activos: 0/1
+2025-08-01 18:12:12 | INFO | ⏹️ Estrategia detenida por el usuario
+2025-08-01 18:12:12 | INFO | 🏁 Finalizando estrategia...
+2025-08-01 18:12:12 | INFO | ============================================================
+2025-08-01 18:12:12 | INFO | 📊 RESUMEN DE LA ESTRATEGIA ALGEBRA MULTI-ACTIVOS (LÓGICA INVERTIDA)
+2025-08-01 18:12:12 | INFO | ============================================================
+2025-08-01 18:12:12 | INFO | ⚡ Estrategia: PUT en sobreventa (Algebra Inversa dinámico), CALL en sobrecompra (Algebra Inversa dinámico)
+2025-08-01 18:12:12 | INFO | ⚙️ Modo: BALANCED - Balance entre cantidad y calidad
+2025-08-01 18:12:12 | INFO | 🎯 Límite de trades simultáneos: 1
+2025-08-01 18:12:12 | INFO | 💰 Capital Inicial: $10,425.00
+2025-08-01 18:12:12 | INFO | 💰 Balance Final: $10,425.00
+2025-08-01 18:12:12 | INFO | 📈 Rendimiento Total: 0.00%
+2025-08-01 18:12:12 | INFO | 🎯 Total Operaciones: 0
+2025-08-01 18:12:12 | INFO | 💵 Beneficio Neto: $0.00
+2025-08-01 18:12:12 | INFO | 📉 Capital Mínimo: $10,425.00
+2025-08-01 18:12:12 | INFO | 
+📊 Estadísticas por Activo (agrupadas por tipo):
+2025-08-01 18:12:12 | INFO | 
+📅 Rendimiento Mensual:
+2025-08-01 18:12:12 | INFO | ============================================================
+2025-08-01 18:12:12 | INFO | 👋 Estrategia finalizada
+2025-08-01 18:12:12 | INFO | 👋 Programa finalizado

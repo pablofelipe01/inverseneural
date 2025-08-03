@@ -1,0 +1,55 @@
+{
+    "timestamp": "2025-08-01T18:12:12.263756",
+    "strategy_mode": "CALL_PUT",
+    "active_options": {},
+    "last_signal_time": {},
+    "consecutive_losses": {},
+    "daily_lockouts": {},
+    "wins": {},
+    "losses": {},
+    "ties": {},
+    "total_profit": 0.0,
+    "daily_profit": 0.0,
+    "monthly_profits": {},
+    "monthly_starting_capital": {
+        "2025-08": 10425
+    },
+    "monthly_stop_loss": false,
+    "stop_loss_triggered_month": null,
+    "absolute_stop_loss_activated": false,
+    "min_capital": 10425,
+    "last_date": "2025-08-01",
+    "current_month": "2025-08",
+    "daily_consecutive_wins": 0,
+    "daily_consecutive_losses": 0,
+    "daily_lock": false,
+    "daily_lock_time": null,
+    "daily_lock_reason": null,
+    "max_daily_consecutive": 2,
+    "recent_results": [],
+    "day_start_balance": 10425,
+    "rsi_history": {
+        "NVDA/AMD": [
+            39.16,
+            39.02,
+            39.37,
+            42.15,
+            41.74
+        ],
+        "AMZN/ALIBABA": [
+            46.74,
+            48.32,
+            47.18,
+            45.66,
+            46.43
+        ],
+        "NFLX/AMZN": [
+            53.57,
+            53.98,
+            52.87,
+            51.9,
+            50.94
+        ]
+    },
+    "aggressiveness_mode": "BALANCED"
+}

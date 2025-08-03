@@ -11,6 +11,8 @@ interface UserProfile {
   subscription_status: string;
   trial_ends_at: string;
   plan_type: string;
+  stripe_customer_id?: string;
+  stripe_subscription_id?: string;
 }
 
 interface UserContextType {

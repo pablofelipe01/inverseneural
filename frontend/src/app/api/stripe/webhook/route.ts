@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
       }
 
       case 'invoice.payment_succeeded': {
-        const invoice = event.data.object as Stripe.Invoice
+        const invoice = event.data.object as Stripe.Invoice & { subscription?: string }
         
         console.log('💰 Pago exitoso:', {
           subscriptionId: invoice.subscription,
@@ -84,14 +84,14 @@ export async function POST(req: NextRequest) {
         })
 
         // Mantener activa la suscripción
-        if (invoice.subscription) {
+        if (invoice.subscription && typeof invoice.subscription === 'string') {
           const { error } = await supabase
             .from('profiles')
             .update({
               subscription_status: 'active',
               updated_at: new Date().toISOString(),
             })
-            .eq('stripe_subscription_id', invoice.subscription as string)
+            .eq('stripe_subscription_id', invoice.subscription)
 
           if (error) {
             console.error('Error updating profile after payment:', error)
@@ -101,7 +101,7 @@ export async function POST(req: NextRequest) {
       }
 
       case 'invoice.payment_failed': {
-        const invoice = event.data.object as Stripe.Invoice
+        const invoice = event.data.object as Stripe.Invoice & { subscription?: string }
         
         console.log('❌ Pago fallido:', {
           subscriptionId: invoice.subscription,
@@ -116,7 +116,7 @@ export async function POST(req: NextRequest) {
               subscription_status: 'trial',
               updated_at: new Date().toISOString(),
             })
-            .eq('stripe_subscription_id', invoice.subscription as string)
+            .eq('stripe_subscription_id', invoice.subscription)
 
           if (error) {
             console.error('Error updating profile after failed payment:', error)
