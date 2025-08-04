@@ -18,8 +18,17 @@ INDEX_ASSETS = []
 STOCK_ASSETS = []
 COMMODITY_ASSETS = []
 
-# Criptomonedas desactivadas por gaps grandes
-CRYPTO_ASSETS = []  # Vacío - No usar cripto por alta volatilidad y gaps
+# Criptomonedas - Activos de alta volatilidad con niveles ajustados
+CRYPTO_ASSETS = [
+    "BTCUSD",     # Bitcoin - Rey de las crypto
+    "ETHUSD",     # Ethereum - Smart contracts
+    "MATICUSD",   # Polygon - Layer 2 
+    "NEARUSD",    # NEAR Protocol - Web3
+    "ATOMUSD",    # Cosmos - Interoperability
+    "DOTUSD",     # Polkadot - Parachains
+    "ARBUSD",     # Arbitrum - L2 scaling
+    "LINKUSD"     # Chainlink - Oracles
+]
 
 PAIR_ASSETS = [
     # Pares existentes
@@ -35,8 +44,8 @@ PAIR_ASSETS = [
 ]
     
 
-# Lista consolidada de activos para trading (AHORA INCLUYE FOREX)
-TRADING_ASSETS = FOREX_ASSETS + INDEX_ASSETS + STOCK_ASSETS + COMMODITY_ASSETS + PAIR_ASSETS
+# Lista consolidada de activos para trading (INCLUYE CRYPTO)
+TRADING_ASSETS = FOREX_ASSETS + INDEX_ASSETS + STOCK_ASSETS + COMMODITY_ASSETS + PAIR_ASSETS + CRYPTO_ASSETS
 
 # NIVELES  PERSONALIZADOS POR GRUPO
 RSI_LEVELS = {
@@ -61,9 +70,9 @@ RSI_LEVELS = {
         "DESCRIPTION": "Niveles ajustados para oro y plata"
     },
     "CRYPTO": {
-        "OVERSOLD": 30,
-        "OVERBOUGHT": 70,
-        "DESCRIPTION": "Niveles extremos para alta volatilidad cripto (DESACTIVADO)"
+        "OVERSOLD": 35,
+        "OVERBOUGHT": 65,
+        "DESCRIPTION": "Niveles ajustados para alta volatilidad crypto"
     },
     "PAIR": {
         "OVERSOLD": 32,
@@ -83,7 +92,7 @@ MIN_MOMENTUM_POINTS_BY_GROUP = {
     "INDEX": 5,        # Reducido de 8
     "STOCK": 7,        # Reducido de 10
     "COMMODITY": 5,    # Reducido de 7
-    "CRYPTO": 8,       # Reducido de 12 (no se usa)
+    "CRYPTO": 5,       # Reducido para crypto activo
     "PAIR": 4,         # Reducido de 6 (más estable)
     "DEFAULT": 5       # Reducido de 8
 }
@@ -238,7 +247,7 @@ EXPIRY_MINUTES_BY_GROUP = {
     "INDEX": ACTIVE_CONFIG["expiry_minutes"],
     "STOCK": ACTIVE_CONFIG["expiry_minutes"],
     "COMMODITY": ACTIVE_CONFIG["expiry_minutes"],
-    "CRYPTO": max(2, ACTIVE_CONFIG["expiry_minutes"] - 1),  # No se usa
+    "CRYPTO": max(2, ACTIVE_CONFIG["expiry_minutes"] - 1),  # Mínimo 2 minutos para crypto
     "PAIR": ACTIVE_CONFIG["expiry_minutes"],
     "DEFAULT": ACTIVE_CONFIG["expiry_minutes"]
 }
@@ -257,7 +266,7 @@ POSITION_SIZE_PERCENT_BY_GROUP = {
     "INDEX": 0.05,      # 5% para índices
     "STOCK": 0.05,      # 5% para acciones
     "COMMODITY": 0.05,  # 5% para commodities
-    "CRYPTO": 0.05,     # 5% para crypto (no se usa)
+    "CRYPTO": 0.02,     # 2% para crypto (más conservador)
     "PAIR": 0.05,       # 5% para pares
     "DEFAULT": 0.05     # 5% por defecto
 }
@@ -296,7 +305,7 @@ def print_asset_configuration():
     print("\n📊 CONFIGURACIÓN DE ACTIVOS POR GRUPO:")
     print("=" * 60)
     
-    for group in ["FOREX", "INDEX", "STOCK", "COMMODITY", "PAIR"]:  # Ahora incluye FOREX
+    for group in ["FOREX", "INDEX", "STOCK", "COMMODITY", "CRYPTO", "PAIR"]:
         assets = globals()[f"{group}_ASSETS"]
         if assets:
             levels = RSI_LEVELS[group]
@@ -320,7 +329,7 @@ def print_asset_configuration():
     print(f"  - Acciones: {len(STOCK_ASSETS)}")
     print(f"  - Commodities: {len(COMMODITY_ASSETS)}")
     print(f"  - Pares: {len(PAIR_ASSETS)}")
-    print(f"  - Crypto: 0 (DESACTIVADO)")
+    print(f"  - Crypto: {len(CRYPTO_ASSETS)} (ACTIVO)")
     print("=" * 60)
 
 def print_aggressiveness_configuration():

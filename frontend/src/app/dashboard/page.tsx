@@ -10,11 +10,15 @@ import {
   HealthStatus,
   TRADING_PAIRS,
   TRADING_SYMBOLS,
+  CRYPTO_ASSETS,
+  CRYPTO_SYMBOLS,
   DEFAULT_CONFIG,
   INITIAL_STATUS,
   INITIAL_LOGS,
   API_CONFIG,
-  POSITION_SIZE_CONFIG
+  POSITION_SIZE_CONFIG,
+  CRYPTO_POSITION_SIZE_CONFIG,
+  ASSET_GROUP_STYLING
 } from '@/types';
 import { useUser } from '@/contexts/UserContext';
 import Loading from '@/components/Loading';
@@ -76,6 +80,16 @@ function SuccessHandler() {
 function DashboardContent() {
   // User context
   const { user, profile, loading, signOut } = useUser();
+
+  // Debug: Log profile state for banner debugging
+  console.log('🔍 Dashboard Profile Debug:', {
+    subscriptionStatus: profile?.subscription_status,
+    trialEndsAt: profile?.trial_ends_at,
+    gracePeriodEnd: profile?.grace_period_end,
+    isTrialExpired: profile?.trial_ends_at ? new Date(profile.trial_ends_at) < new Date() : false,
+    shouldShowBanner: profile?.subscription_status === 'payment_failed' || 
+      (profile?.subscription_status === 'trial' && profile?.trial_ends_at && new Date(profile.trial_ends_at) < new Date())
+  });
 
   // Refs
   const logsContainerRef = useRef<HTMLDivElement>(null);
@@ -238,8 +252,8 @@ function DashboardContent() {
           throw new Error(`HTTP ${response.status}: ${errorText || response.statusText}`);
         }
       } else {
-        if (config.selectedPairs.length === 0) {
-          throw new Error('Debes seleccionar al menos un par de activos');
+        if (config.selectedPairs.length === 0 && config.selectedCrypto.length === 0) {
+          throw new Error('Debes seleccionar al menos un activo (par o crypto)');
         }
         
         if (!config.password || config.password === 'tu_password_aqui') {
@@ -248,7 +262,10 @@ function DashboardContent() {
         
         const configPayload = {
           selectedPairs: config.selectedPairs,
+          selectedCrypto: config.selectedCrypto,
           positionSize: config.positionSize,
+          pairsPositionSize: config.pairsPositionSize,
+          cryptoPositionSize: config.cryptoPositionSize,
           aggressiveness: config.aggressiveness.toLowerCase(),
           email: user?.email || '',
           password: config.password,
@@ -269,16 +286,26 @@ function DashboardContent() {
           
           const selectedPairsText = config.selectedPairs.length === 9 
             ? 'todos los pares premium' 
-            : `${config.selectedPairs.length} pares: ${config.selectedPairs.slice(0, 3).join(', ')}${config.selectedPairs.length > 3 ? '...' : ''}`;
+            : config.selectedPairs.length > 0 
+              ? `${config.selectedPairs.length} pares: ${config.selectedPairs.slice(0, 3).join(', ')}${config.selectedPairs.length > 3 ? '...' : ''}`
+              : '';
+          
+          const selectedCryptoText = config.selectedCrypto.length === 8
+            ? 'todas las crypto'
+            : config.selectedCrypto.length > 0
+              ? `${config.selectedCrypto.length} crypto: ${config.selectedCrypto.slice(0, 3).join(', ')}${config.selectedCrypto.length > 3 ? '...' : ''}`
+              : '';
+          
+          const assetsText = [selectedPairsText, selectedCryptoText].filter(Boolean).join(' + ');
           
           setLogs(prev => [...prev, {
             timestamp: new Date().toISOString(),
             level: 'success',
-            message: `🚀 Algoritmo iniciado con ${selectedPairsText}`
+            message: `🚀 Algoritmo iniciado con ${assetsText}`
           }, {
             timestamp: new Date().toISOString(),
             level: 'info',
-            message: `⚙️ Configuración: Posición ${config.positionSize}%, Modo ${config.aggressiveness}`
+            message: `⚙️ Configuración: Pares ${config.pairsPositionSize}%, Crypto ${config.cryptoPositionSize}%, Modo ${config.aggressiveness}`
           }]);
         } else {
           const errorText = await response.text();
@@ -371,6 +398,32 @@ function DashboardContent() {
     return () => clearInterval(logsInterval);
   }, [fetchLogs]);
 
+  // Manejar pago exitoso
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const isSuccessfulPayment = urlParams.get('success') === 'true';
+    const planType = urlParams.get('plan');
+    
+    if (isSuccessfulPayment && planType) {
+      // Mostrar mensaje de éxito
+      setLogs(prev => [...prev, {
+        timestamp: new Date().toISOString(),
+        level: 'success',
+        message: `🎉 ¡Pago exitoso! Bienvenido al Plan ${planType.toUpperCase()}`
+      }]);
+      
+      // Limpiar URL después de mostrar el mensaje
+      const cleanUrl = window.location.pathname;
+      window.history.replaceState({}, '', cleanUrl);
+      
+      // Forzar refresh del perfil del usuario después de 2 segundos
+      // para dar tiempo al webhook de Stripe
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    }
+  }, []); // Solo ejecutar una vez al montar el componente
+
   // Smart scroll functions
   const isNearBottom = () => {
     if (!logsContainerRef.current) return true;
@@ -409,6 +462,41 @@ function DashboardContent() {
     }
   }, [logs, isUserScrolling]);
 
+  // Payment update handler
+  const handlePaymentUpdate = async () => {
+    try {
+      setLogs(prev => [...prev, {
+        timestamp: new Date().toISOString(),
+        level: 'info',
+        message: '🔄 Redirigiendo al portal de pagos...'
+      }]);
+
+      const response = await fetch('/api/stripe/update-payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        window.location.href = data.url;
+      } else {
+        const error = await response.json();
+        throw new Error(error.details || error.error || 'Error al procesar la solicitud');
+      }
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Error desconocido';
+      console.error('Error updating payment:', errorMessage);
+      
+      setLogs(prev => [...prev, {
+        timestamp: new Date().toISOString(),
+        level: 'error',
+        message: `❌ Error al actualizar método de pago: ${errorMessage}`
+      }]);
+    }
+  };
+
   // Helper functions
   const getPositionSizeColor = (size: number) => {
     const { CONSERVATIVE, BALANCED, AGGRESSIVE } = POSITION_SIZE_CONFIG.COLORS;
@@ -427,8 +515,8 @@ function DashboardContent() {
   const handlePairSelection = (pair: string) => {
     setConfig(prev => {
       const isCurrentlySelected = prev.selectedPairs.includes(pair);
-      // Usar límite basado en getPlanInfo() para consistencia
-      const maxAllowed = getPlanInfo().limit;
+      // Usar límite específico para pares
+      const maxAllowed = getPlanInfo().pairsLimit;
       
       if (isCurrentlySelected) {
         // Remover par seleccionado
@@ -446,22 +534,53 @@ function DashboardContent() {
     });
   };
 
+  const handleCryptoSelection = (crypto: string) => {
+    setConfig(prev => {
+      const isCurrentlySelected = prev.selectedCrypto.includes(crypto);
+      // Para trial, permitimos todos los crypto assets
+      const maxAllowed = getPlanInfo().cryptoLimit; // Limit specific to crypto
+      
+      if (isCurrentlySelected) {
+        // Remover crypto seleccionado
+        const newCrypto = prev.selectedCrypto.filter(c => c !== crypto);
+        return { ...prev, selectedCrypto: newCrypto };
+      } else {
+        // Agregar crypto si no se ha alcanzado el límite
+        if (prev.selectedCrypto.length >= maxAllowed) {
+          return prev; // No hacer cambios
+        }
+        const newCrypto = [...prev.selectedCrypto, crypto];
+        return { ...prev, selectedCrypto: newCrypto };
+      }
+    });
+  };
+
+  const getCryptoPositionSizeColor = (size: number) => {
+    const { CONSERVATIVE, BALANCED, AGGRESSIVE } = CRYPTO_POSITION_SIZE_CONFIG.COLORS;
+    
+    if (size >= CONSERVATIVE.min && size <= CONSERVATIVE.max) return CONSERVATIVE.class;
+    if (size >= BALANCED.min && size <= BALANCED.max) return BALANCED.class;
+    if (size >= AGGRESSIVE.min && size <= AGGRESSIVE.max) return AGGRESSIVE.class;
+    
+    return 'text-gray-400';
+  };
+
   const getPlanInfo = () => {
-    if (!profile) return { name: 'CARGANDO...', color: 'bg-gray-500', limit: 0 };
+    if (!profile) return { name: 'CARGANDO...', color: 'bg-gray-500', limit: 0, pairsLimit: 0, cryptoLimit: 0 };
     
     const planType = profile.plan_type?.toUpperCase() || 'TRIAL';
     
     switch (planType) {
       case 'BASIC':
-        return { name: 'PLAN BÁSICO', color: 'bg-blue-500', limit: 5 };
+        return { name: 'PLAN BÁSICO', color: 'bg-blue-500', limit: 4, pairsLimit: 4, cryptoLimit: 3 };
       case 'PRO':
-        return { name: 'PLAN PRO', color: 'bg-purple-500', limit: 7 };
+        return { name: 'PLAN PRO', color: 'bg-purple-500', limit: 7, pairsLimit: 7, cryptoLimit: 5 };
       case 'ELITE':
-        return { name: 'PLAN ELITE', color: 'bg-gradient-to-r from-yellow-400 to-orange-400 text-black', limit: 9 };
+        return { name: 'PLAN ELITE', color: 'bg-gradient-to-r from-yellow-400 to-orange-400 text-black', limit: 9, pairsLimit: 9, cryptoLimit: 8 };
       case 'TRIAL':
-        return { name: 'PLAN TRIAL', color: 'bg-green-500', limit: 9 }; // Trial tiene acceso completo a los 9 activos
+        return { name: 'PLAN TRIAL', color: 'bg-green-500', limit: 9, pairsLimit: 9, cryptoLimit: 8 }; // Trial tiene acceso completo
       default:
-        return { name: 'PLAN TRIAL', color: 'bg-green-500', limit: 9 }; // Trial tiene acceso completo a los 9 activos
+        return { name: 'PLAN TRIAL', color: 'bg-green-500', limit: 9, pairsLimit: 9, cryptoLimit: 8 }; // Trial tiene acceso completo
     }
   };
 
@@ -559,6 +678,66 @@ function DashboardContent() {
           </div>
         </div>
       </header>
+
+      {/* Payment Warning Banner */}
+      {(profile?.subscription_status === 'payment_failed' || 
+        (profile?.subscription_status === 'trial' && profile?.trial_ends_at && new Date(profile.trial_ends_at) < new Date())) && (
+        <div className="bg-gradient-to-r from-red-900/80 to-orange-900/80 border-b border-red-600/50 px-4 sm:px-6 py-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="flex items-center gap-3 flex-1">
+              <svg className="w-6 h-6 text-red-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <div>
+                <h3 className="text-red-200 font-semibold">
+                  {profile?.subscription_status === 'payment_failed' 
+                    ? 'Problema con tu método de pago' 
+                    : 'Tu período de prueba ha expirado'}
+                </h3>
+                <p className="text-red-300 text-sm">
+                  {(() => {
+                    if (profile.grace_period_end) {
+                      const gracePeriodEnd = new Date(profile.grace_period_end)
+                      const now = new Date()
+                      const diffTime = gracePeriodEnd.getTime() - now.getTime()
+                      const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+                      
+                      if (daysLeft > 0) {
+                        if (profile.subscription_status === 'payment_failed') {
+                          return `Tu suscripción sigue activa por ${daysLeft} día${daysLeft !== 1 ? 's' : ''} más. Actualiza tu método de pago para evitar la suspensión.`
+                        } else {
+                          return `Te quedan ${daysLeft} día${daysLeft !== 1 ? 's' : ''} para suscribirte antes de perder acceso a tu cuenta.`
+                        }
+                      } else {
+                        return profile.subscription_status === 'payment_failed'
+                          ? 'El período de gracia ha expirado. Actualiza tu método de pago para reactivar tu suscripción.'
+                          : 'El período de gracia ha expirado. Selecciona un plan para continuar.'
+                      }
+                    }
+                    return profile.subscription_status === 'payment_failed'
+                      ? 'No pudimos procesar tu último pago. Por favor, actualiza tu método de pago.'
+                      : 'Tu período de prueba ha expirado. Selecciona un plan para continuar.'
+                  })()}
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => {
+                  if (profile?.subscription_status === 'payment_failed') {
+                    handlePaymentUpdate();
+                  } else {
+                    window.location.href = '/pricing';
+                  }
+                }}
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors"
+              >
+                {profile?.subscription_status === 'payment_failed' ? 'Actualizar Pago' : 'Ver Planes'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Debug Panel - Solo visible cuando hay errores */}
@@ -771,7 +950,7 @@ function DashboardContent() {
             <div className="mb-6">
               <div className="flex items-center justify-between mb-2">
                 <label className="text-sm font-medium text-gray-300">
-                  Pares de Activos ({config.selectedPairs.length}/{getPlanInfo().limit})
+                  Pares de Activos ({config.selectedPairs.length}/{getPlanInfo().pairsLimit})
                 </label>
                 <span className={`text-xs px-2 py-1 rounded font-bold ${getPlanInfo().color}`}>
                   {getPlanInfo().name}
@@ -780,13 +959,13 @@ function DashboardContent() {
               <p className="text-xs text-blue-400 mb-3">
                 {config.selectedPairs.length === 0 
                   ? '🔸 Selecciona los pares que quieres operar'
-                  : `✨ ${config.selectedPairs.length} de ${getPlanInfo().limit} pares seleccionados`
+                  : `✨ ${config.selectedPairs.length} de ${getPlanInfo().pairsLimit} pares seleccionados`
                 }
               </p>
               <div className="grid grid-cols-3 gap-2">
                 {TRADING_PAIRS.map(pair => {
                   const isSelected = config.selectedPairs.includes(pair);
-                  const maxAllowed = getPlanInfo().limit;
+                  const maxAllowed = getPlanInfo().pairsLimit;
                   const isLimitReached = config.selectedPairs.length >= maxAllowed && !isSelected;
                   
                   return (
@@ -811,10 +990,59 @@ function DashboardContent() {
               </div>
             </div>
 
-            {/* Position Size */}
+            {/* Crypto Assets Selection */}
+            <div className="mb-6">
+              <div className={`rounded-lg border p-4 ${ASSET_GROUP_STYLING.crypto.bgColor} ${ASSET_GROUP_STYLING.crypto.borderColor}`}>
+                <div className="flex items-center justify-between mb-2">
+                  <label className={`text-sm font-medium ${ASSET_GROUP_STYLING.crypto.textColor}`}>
+                    🪙 {ASSET_GROUP_STYLING.crypto.title} ({config.selectedCrypto.length}/{getPlanInfo().cryptoLimit})
+                  </label>
+                  {/* <span className={`text-xs px-2 py-1 rounded font-bold bg-purple-600 text-purple-100`}>
+                    Riesgo: {ASSET_GROUP_STYLING.crypto.riskLevel}
+                  </span> */}
+                </div>
+                <p className={`text-xs ${ASSET_GROUP_STYLING.crypto.textColor} mb-3 opacity-80`}>
+                  {ASSET_GROUP_STYLING.crypto.description}
+                </p>
+                <p className={`text-xs text-purple-400 mb-3`}>
+                  {config.selectedCrypto.length === 0 
+                    ? '🔸 Selecciona las criptomonedas que quieres operar'
+                    : `✨ ${config.selectedCrypto.length} de ${getPlanInfo().cryptoLimit} cryptos seleccionados`
+                  }
+                </p>
+                <div className="grid grid-cols-3 gap-2">
+                  {CRYPTO_ASSETS.map(crypto => {
+                    const isSelected = config.selectedCrypto.includes(crypto);
+                    const maxAllowed = getPlanInfo().cryptoLimit;
+                    const isLimitReached = config.selectedCrypto.length >= maxAllowed && !isSelected;
+                    
+                    return (
+                      <button
+                        key={crypto}
+                        onClick={() => handleCryptoSelection(crypto)}
+                        disabled={isLimitReached}
+                        className={`
+                          px-1 py-1 rounded text-xs font-medium transition-colors
+                          ${isSelected
+                            ? `${ASSET_GROUP_STYLING.crypto.selectedColor} text-white shadow-lg`
+                            : isLimitReached
+                            ? 'bg-gray-800 text-gray-500 border border-gray-700 cursor-not-allowed opacity-50'
+                            : 'bg-gray-700 text-gray-300 border border-gray-600 hover:bg-purple-700 cursor-pointer'
+                          }
+                        `}
+                      >
+                        <span className="block leading-tight text-2xs">{CRYPTO_SYMBOLS[crypto]}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            {/* Position Size for Traditional Pairs */}
             <div className="mb-6">
               <label className="block text-sm font-medium text-gray-300 mb-2">
-                Tamaño de Posición: <span className={getPositionSizeColor(config.positionSize)}>{config.positionSize}%</span>
+                Tamaño de Posición Pares: <span className={getPositionSizeColor(config.positionSize)}>{config.positionSize}%</span>
               </label>
               <input
                 type="range"
@@ -828,6 +1056,29 @@ function DashboardContent() {
                 <span>{POSITION_SIZE_CONFIG.MIN}% (Conservador)</span>
                 <span>8% (Equilibrado)</span>
                 <span>{POSITION_SIZE_CONFIG.MAX}% (Agresivo)</span>
+              </div>
+            </div>
+
+            {/* Position Size for Crypto */}
+            <div className="mb-6">
+              <div className={`rounded-lg border p-4 ${ASSET_GROUP_STYLING.crypto.bgColor} ${ASSET_GROUP_STYLING.crypto.borderColor}`}>
+                <label className={`block text-sm font-medium ${ASSET_GROUP_STYLING.crypto.textColor} mb-2`}>
+                  Tamaño de Posición Crypto: <span className={getCryptoPositionSizeColor(config.cryptoPositionSize)}>{config.cryptoPositionSize}%</span>
+                  <span className="text-xs text-purple-400 ml-2"></span>
+                </label>
+                <input
+                  type="range"
+                  min={CRYPTO_POSITION_SIZE_CONFIG.MIN}
+                  max={CRYPTO_POSITION_SIZE_CONFIG.MAX}
+                  value={config.cryptoPositionSize}
+                  onChange={(e) => setConfig(prev => ({ ...prev, cryptoPositionSize: parseInt(e.target.value) }))}
+                  className="w-full h-2 bg-purple-700 rounded-lg appearance-none cursor-pointer slider"
+                />
+                <div className="flex justify-between text-xs text-purple-400 mt-1">
+                  <span>{CRYPTO_POSITION_SIZE_CONFIG.MIN}% (Ultra-Conservador)</span>
+                  <span>3% (Equilibrado)</span>
+                  <span>{CRYPTO_POSITION_SIZE_CONFIG.MAX}% (Agresivo)</span>
+                </div>
               </div>
             </div>
 

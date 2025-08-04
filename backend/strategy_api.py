@@ -93,6 +93,12 @@ async def start_strategy_post(user_id: str, request: Request):
             selected_pairs = config['selectedPairs']
             cmd.extend(['--pairs'] + selected_pairs)
             print(f"📊 Pares seleccionados: {selected_pairs}")
+        
+        # Procesar crypto assets
+        if 'selectedCrypto' in config and config['selectedCrypto']:
+            selected_crypto = config['selectedCrypto']
+            cmd.extend(['--crypto'] + selected_crypto)
+            print(f"🪙 Crypto seleccionados: {selected_crypto}")
             
         # Agregar credenciales IQ Option
         if 'email' in config and config['email']:
@@ -107,10 +113,19 @@ async def start_strategy_post(user_id: str, request: Request):
             cmd.extend(['--account', config['accountType']])
             print(f"🏦 Tipo de cuenta: {config['accountType']}")
             
-        # Agregar tamaño de posición
+        # Agregar tamaño de posición (legacy para compatibilidad)
         if 'positionSize' in config:
             cmd.extend(['--position-size', str(config['positionSize'])])
-            print(f"💰 Tamaño de posición: {config['positionSize']}%")
+            print(f"💰 Tamaño de posición (legacy): {config['positionSize']}%")
+        
+        # Agregar tamaños de posición separados
+        if 'pairsPositionSize' in config:
+            cmd.extend(['--pairs-position-size', str(config['pairsPositionSize'])])
+            print(f"📊 Tamaño de posición pares: {config['pairsPositionSize']}%")
+        
+        if 'cryptoPositionSize' in config:
+            cmd.extend(['--crypto-position-size', str(config['cryptoPositionSize'])])
+            print(f"🪙 Tamaño de posición crypto: {config['cryptoPositionSize']}%")
         
         # Agregar nivel de agresividad
         if 'aggressiveness' in config:

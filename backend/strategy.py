@@ -40,7 +40,8 @@ from config import (
 from utils import calculate_rsi, is_market_open, format_currency, calculate_win_rate, setup_logger
 
 class MultiAssetRSIBinaryOptionsStrategy:
-    def __init__(self, email, password, account_type="PRACTICE", selected_pairs=None, position_size=None, aggressiveness=None):
+    def __init__(self, email, password, account_type="PRACTICE", selected_pairs=None, selected_crypto=None, 
+                 position_size=None, pairs_position_size=None, crypto_position_size=None, aggressiveness=None):
         """
         Inicializar la estrategia de opciones con Algoritmo
         Adaptado de QuantConnect para IQ Option - Multi-Activos
@@ -50,7 +51,10 @@ class MultiAssetRSIBinaryOptionsStrategy:
             password: Contraseña de IQ Option  
             account_type: Tipo de cuenta ("PRACTICE" o "REAL")
             selected_pairs: Lista de pares específicos a operar (ej: ["NVDA/AMD", "TESLA/FORD"])
-            position_size: Tamaño de posición personalizado (1-15%)
+            selected_crypto: Lista de crypto específicos a operar (ej: ["BTCUSD", "ETHUSD"])
+            position_size: Tamaño de posición personalizado (1-15%) - legacy
+            pairs_position_size: Tamaño de posición para pares (1-15%)
+            crypto_position_size: Tamaño de posición para crypto (1-5%)
             aggressiveness: Nivel de agresividad ("conservador", "balanceado", "agresivo")
         """
         # Configurar logger
@@ -85,12 +89,46 @@ class MultiAssetRSIBinaryOptionsStrategy:
         else:
             self.trading_assets = TRADING_ASSETS
         
-        # Configuración personalizada de tamaño de posición
+        # Configuración personalizada de crypto assets
+        if selected_crypto:
+            self.logger.info(f"🪙 CRYPTO SELECCIONADOS: {selected_crypto}")
+            from config import CRYPTO_ASSETS
+            
+            # Verificar que los crypto seleccionados estén en la configuración
+            filtered_crypto = []
+            for crypto in selected_crypto:
+                if crypto in CRYPTO_ASSETS:
+                    filtered_crypto.append(crypto)
+                    self.logger.info(f"✅ Crypto habilitado: {crypto}")
+                else:
+                    self.logger.warning(f"⚠️ Crypto no encontrado en configuración: {crypto}")
+            
+            if filtered_crypto:
+                # Agregar crypto assets a la lista de trading assets
+                self.trading_assets.extend(filtered_crypto)
+                self.logger.info(f"🪙 Operando con {len(filtered_crypto)} crypto seleccionados")
+            else:
+                self.logger.warning("⚠️ Ningún crypto válido seleccionado")
+        
+        # Configuración personalizada de tamaños de posición
         if position_size:
             self.custom_position_size = position_size
-            self.logger.info(f"💰 Tamaño de posición personalizado: {position_size}%")
+            self.logger.info(f"💰 Tamaño de posición personalizado (legacy): {position_size}%")
         else:
             self.custom_position_size = None
+        
+        # Position sizes separados por tipo de asset
+        if pairs_position_size:
+            self.custom_pairs_position_size = pairs_position_size
+            self.logger.info(f"📊 Tamaño de posición pares personalizado: {pairs_position_size}%")
+        else:
+            self.custom_pairs_position_size = None
+        
+        if crypto_position_size:
+            self.custom_crypto_position_size = crypto_position_size
+            self.logger.info(f"🪙 Tamaño de posición crypto personalizado: {crypto_position_size}%")
+        else:
+            self.custom_crypto_position_size = None
         
         # Configuración personalizada de agresividad
         if aggressiveness:
@@ -455,10 +493,23 @@ class MultiAssetRSIBinaryOptionsStrategy:
         if current_capital is None:
             current_capital = self.initial_capital
         
-        # Si hay configuración personalizada, usarla siempre
-        if self.custom_position_size:
+        # Determinar si es crypto o par
+        is_crypto = False
+        if asset:
+            from config import CRYPTO_ASSETS
+            is_crypto = asset in CRYPTO_ASSETS
+        
+        # Usar position sizes específicos si están configurados
+        if is_crypto and self.custom_crypto_position_size:
+            position_percent = self.custom_crypto_position_size / 100.0
+            self.logger.debug(f"🪙 Usando tamaño personalizado crypto: {self.custom_crypto_position_size}%")
+        elif not is_crypto and self.custom_pairs_position_size:
+            position_percent = self.custom_pairs_position_size / 100.0
+            self.logger.debug(f"📊 Usando tamaño personalizado pares: {self.custom_pairs_position_size}%")
+        elif self.custom_position_size:
+            # Fallback a legacy position size
             position_percent = self.position_size_percent  # Ya convertido a decimal en el constructor
-            self.logger.debug(f"💰 Usando tamaño personalizado: {self.custom_position_size}%")
+            self.logger.debug(f"💰 Usando tamaño personalizado (legacy): {self.custom_position_size}%")
         else:
             # Solo usar configuración por grupo si NO hay configuración personalizada
             if asset:
@@ -473,7 +524,7 @@ class MultiAssetRSIBinaryOptionsStrategy:
         # Solo aplicar límite mínimo (no hay límite máximo)
         position_size = max(self.min_position_size, position_size)
         
-        self.logger.debug(f"💰 Capital: ${current_capital:,.2f} → Posición: ${position_size:,.2f} ({position_percent*100}%)")
+        self.logger.debug(f"💰 Capital: ${current_capital:,.2f} → Posición: ${position_size:,.2f} ({position_percent*100}%) {'🪙' if is_crypto else '📊'}")
         
         return position_size
     

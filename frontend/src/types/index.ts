@@ -26,12 +26,66 @@ export interface LogEntry {
 // Configuración de parámetros del algoritmo
 export interface Config {
   selectedPairs: string[];
+  selectedCrypto: string[];
   positionSize: number;
+  pairsPositionSize: number; // Separate position size for pairs (5% default)
+  cryptoPositionSize: number; // Separate position size for crypto (2% default)
   aggressiveness: 'conservador' | 'balanceado' | 'agresivo';
   // Credenciales IQ Option
   email: string;
   password: string;
   accountType: 'PRACTICE' | 'REAL';
+}
+
+// ===== ELESTIO API TYPES =====
+
+// Response types for Elestio backend
+export interface ElestioAPIResponse<T = unknown> {
+  success: boolean;
+  data?: T;
+  message?: string;
+  error?: string;
+}
+
+// Algorithm configuration for Elestio backend
+export interface AlgorithmConfig {
+  selectedPairs: string[];
+  selectedCrypto: string[];
+  positionSize: number;
+  pairsPositionSize: number;
+  cryptoPositionSize: number;
+  aggressiveness: string;
+  email: string;
+  password: string;
+  accountType: string;
+}
+
+// Health check response
+export interface HealthCheckResponse {
+  status: 'healthy' | 'error';
+  timestamp: string;
+  version?: string;
+  uptime?: number;
+}
+
+// ===== USER TYPES =====
+
+// Perfil de usuario con información de suscripción
+export interface UserProfile {
+  id: string;
+  email: string;
+  full_name?: string;
+  subscription_status: 'trial' | 'active' | 'payment_failed' | 'canceled';
+  plan_type: 'basic' | 'pro' | 'elite' | null;
+  stripe_customer_id: string | null;
+  stripe_subscription_id: string | null;
+  trial_end: string | null;
+  trial_ends_at?: string; // Legacy field for backwards compatibility
+  payment_failure_count: number | null;
+  grace_period_end: string | null;
+  last_payment_failure: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
 // ===== UNION TYPES =====
@@ -54,6 +108,20 @@ export type TradingPair =
   | 'GOOGLE/MSFT'
   | 'INTEL/IBM';
 
+// Crypto assets available
+export type CryptoAsset = 
+  | 'BTCUSD'
+  | 'ETHUSD'
+  | 'MATICUSD'
+  | 'NEARUSD'
+  | 'ATOMUSD'
+  | 'DOTUSD'
+  | 'ARBUSD'
+  | 'LINKUSD';
+
+// Asset groups
+export type AssetGroup = 'pairs' | 'crypto';
+
 // Niveles de severity para logs
 export type LogLevel = 'info' | 'success' | 'warning' | 'error';
 
@@ -75,6 +143,18 @@ export const TRADING_PAIRS: TradingPair[] = [
   'INTEL/IBM'
 ];
 
+// Crypto assets constants
+export const CRYPTO_ASSETS: CryptoAsset[] = [
+  'BTCUSD',
+  'ETHUSD',
+  'MATICUSD',
+  'NEARUSD',
+  'ATOMUSD',
+  'DOTUSD',
+  'ARBUSD',
+  'LINKUSD'
+];
+
 // Mapeo de símbolos reales del mercado para display
 export const TRADING_SYMBOLS: Record<TradingPair, string> = {
   'NVDA/AMD': 'NVDA/AMD',
@@ -88,10 +168,25 @@ export const TRADING_SYMBOLS: Record<TradingPair, string> = {
   'INTEL/IBM': 'INTC/IBM'
 };
 
+// Crypto symbols display mapping
+export const CRYPTO_SYMBOLS: Record<CryptoAsset, string> = {
+  'BTCUSD': 'BTC/USD',
+  'ETHUSD': 'ETH/USD',
+  'MATICUSD': 'MATIC/USD',
+  'NEARUSD': 'NEAR/USD',
+  'ATOMUSD': 'ATOM/USD',
+  'DOTUSD': 'DOT/USD',
+  'ARBUSD': 'ARB/USD',
+  'LINKUSD': 'LINK/USD'
+};
+
 // Configuración por defecto
 export const DEFAULT_CONFIG: Config = {
   selectedPairs: [], // Empezar sin pares seleccionados
-  positionSize: 5,
+  selectedCrypto: [], // Empezar sin crypto seleccionados
+  positionSize: 5,    // 5% for traditional pairs (legacy field)
+  pairsPositionSize: 5, // 5% for traditional pairs
+  cryptoPositionSize: 2, // 2% for crypto (more conservative)
   aggressiveness: 'balanceado',
   email: '',
   password: '',
@@ -133,6 +228,39 @@ export const POSITION_SIZE_CONFIG = {
     CONSERVATIVE: { min: 1, max: 5, class: 'text-green-400' },
     BALANCED: { min: 6, max: 10, class: 'text-yellow-400' },
     AGGRESSIVE: { min: 11, max: 15, class: 'text-red-400' }
+  }
+} as const;
+
+// Crypto-specific position size configuration
+export const CRYPTO_POSITION_SIZE_CONFIG = {
+  MIN: 1,
+  MAX: 5, // More conservative range for crypto
+  COLORS: {
+    CONSERVATIVE: { min: 1, max: 2, class: 'text-purple-400' },
+    BALANCED: { min: 3, max: 4, class: 'text-cyan-400' },
+    AGGRESSIVE: { min: 5, max: 5, class: 'text-orange-400' }
+  }
+} as const;
+
+// Asset group styling
+export const ASSET_GROUP_STYLING = {
+  pairs: {
+    bgColor: 'bg-blue-900/20',
+    borderColor: 'border-blue-500/30',
+    textColor: 'text-blue-300',
+    selectedColor: 'bg-blue-600 border-blue-400',
+    title: 'Pares Comparativos',
+    description: 'Algoritmos de comparación relativa entre activos correlacionados',
+    riskLevel: '5%'
+  },
+  crypto: {
+    bgColor: 'bg-purple-900/20',
+    borderColor: 'border-purple-500/30',
+    textColor: 'text-purple-300',
+    selectedColor: 'bg-purple-600 border-purple-400',
+    title: 'Criptomonedas',
+    description: 'Activos digitales de alta volatilidad con algoritmos especializados',
+    riskLevel: '2%'
   }
 } as const;
 

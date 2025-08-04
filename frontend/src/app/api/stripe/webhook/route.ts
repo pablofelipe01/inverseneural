@@ -83,18 +83,23 @@ export async function POST(req: NextRequest) {
           amount: invoice.amount_paid,
         })
 
-        // Mantener activa la suscripción
+        // Mantener activa la suscripción y limpiar período de gracia
         if (invoice.subscription && typeof invoice.subscription === 'string') {
           const { error } = await supabase
             .from('profiles')
             .update({
               subscription_status: 'active',
+              grace_period_end: null,
+              payment_failure_count: 0,
+              last_payment_failure: null,
               updated_at: new Date().toISOString(),
             })
             .eq('stripe_subscription_id', invoice.subscription)
 
           if (error) {
             console.error('Error updating profile after payment:', error)
+          } else {
+            console.log('✅ Suscripción reactivada y período de gracia limpiado')
           }
         }
         break
@@ -106,21 +111,88 @@ export async function POST(req: NextRequest) {
         console.log('❌ Pago fallido:', {
           subscriptionId: invoice.subscription,
           attemptCount: invoice.attempt_count,
+          dueDate: invoice.due_date,
         })
 
-        // Marcar como trial si el pago falló
+        // Sistema de gracia: dar 7 días antes de suspender
         if (invoice.subscription) {
+          const gracePeriodEnd = new Date()
+          gracePeriodEnd.setDate(gracePeriodEnd.getDate() + 7) // 7 días de gracia
+
           const { error } = await supabase
             .from('profiles')
             .update({
-              subscription_status: 'trial',
+              subscription_status: 'payment_failed', // Nuevo estado
+              payment_failure_count: invoice.attempt_count || 1,
+              grace_period_end: gracePeriodEnd.toISOString(),
+              last_payment_failure: new Date().toISOString(),
               updated_at: new Date().toISOString(),
             })
             .eq('stripe_subscription_id', invoice.subscription)
 
           if (error) {
             console.error('Error updating profile after failed payment:', error)
+          } else {
+            console.log('✅ Usuario marcado con pago fallido, período de gracia hasta:', gracePeriodEnd)
           }
+        }
+        break
+      }
+
+      case 'customer.subscription.updated': {
+        const subscription = event.data.object as Stripe.Subscription
+        
+        console.log('🔄 Suscripción actualizada:', {
+          subscriptionId: subscription.id,
+          status: subscription.status,
+        })
+
+        // Manejar diferentes estados de suscripción
+        let newStatus: string
+        switch (subscription.status) {
+          case 'past_due':
+            newStatus = 'payment_failed'
+            break
+          case 'unpaid':
+            newStatus = 'payment_failed'
+            break
+          case 'active':
+            newStatus = 'active'
+            break
+          case 'canceled':
+            newStatus = 'trial'
+            break
+          default:
+            newStatus = subscription.status
+        }
+
+        const updateData: {
+          subscription_status: string
+          updated_at: string
+          payment_failure_count?: number | null
+          grace_period_end?: string | null
+          last_payment_failure?: string | null
+        } = {
+          subscription_status: newStatus,
+          updated_at: new Date().toISOString(),
+        }
+
+        // Si vuelve a estar activa, limpiar datos de fallo de pago
+        if (subscription.status === 'active') {
+          updateData.payment_failure_count = 0
+          updateData.grace_period_end = null
+          updateData.last_payment_failure = null
+        }
+
+        const { error } = await supabase
+          .from('profiles')
+          .update(updateData)
+          .eq('stripe_subscription_id', subscription.id)
+
+        if (error) {
+          console.error('Error updating profile after subscription status change:', error)
+        } else {
+          console.log('✅ Estado de suscripción actualizado a:', newStatus)
         }
         break
       }
@@ -144,6 +216,46 @@ export async function POST(req: NextRequest) {
 
         if (error) {
           console.error('Error updating profile after subscription cancellation:', error)
+        }
+        break
+      }
+
+      case 'setup_intent.succeeded': {
+        const setupIntent = event.data.object as Stripe.SetupIntent
+        
+        console.log('💳 Método de pago actualizado exitosamente:', {
+          customerId: setupIntent.customer,
+          paymentMethodId: setupIntent.payment_method,
+        })
+
+        // Si hay metadata de suscripción, intentar reactivar la suscripción
+        if (setupIntent.metadata?.subscription_id && setupIntent.payment_method) {
+          try {
+            // Actualizar la suscripción con el nuevo método de pago
+            await stripe.subscriptions.update(setupIntent.metadata.subscription_id, {
+              default_payment_method: setupIntent.payment_method as string,
+            })
+
+            // Limpiar estado de pago fallido en la base de datos
+            const { error } = await supabase
+              .from('profiles')
+              .update({
+                subscription_status: 'active',
+                grace_period_end: null,
+                payment_failure_count: 0,
+                last_payment_failure: null,
+                updated_at: new Date().toISOString(),
+              })
+              .eq('stripe_customer_id', setupIntent.customer as string)
+
+            if (error) {
+              console.error('Error updating profile after payment method update:', error)
+            } else {
+              console.log('✅ Suscripción reactivada con nuevo método de pago')
+            }
+          } catch (err) {
+            console.error('Error updating subscription with new payment method:', err)
+          }
         }
         break
       }

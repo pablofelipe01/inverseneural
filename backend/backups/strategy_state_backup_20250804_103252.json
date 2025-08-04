@@ -1,0 +1,97 @@
+{
+    "timestamp": "2025-08-02T18:45:14.354629",
+    "strategy_mode": "CALL_PUT",
+    "active_options": {},
+    "last_signal_time": {},
+    "consecutive_losses": {},
+    "daily_lockouts": {},
+    "wins": {},
+    "losses": {},
+    "ties": {},
+    "total_profit": 0.0,
+    "daily_profit": 0.0,
+    "monthly_profits": {},
+    "monthly_starting_capital": {
+        "2025-08": 10425
+    },
+    "monthly_stop_loss": false,
+    "stop_loss_triggered_month": null,
+    "absolute_stop_loss_activated": false,
+    "min_capital": 10425,
+    "last_date": "2025-08-02",
+    "current_month": "2025-08",
+    "daily_consecutive_wins": 0,
+    "daily_consecutive_losses": 0,
+    "daily_lock": false,
+    "daily_lock_time": null,
+    "daily_lock_reason": null,
+    "max_daily_consecutive": 2,
+    "recent_results": [],
+    "day_start_balance": 10425,
+    "rsi_history": {
+        "NVDA/AMD": [
+            56.33,
+            56.55,
+            59.29,
+            59.03,
+            58.65
+        ],
+        "AMZN/ALIBABA": [
+            35.71,
+            35.98,
+            35.66,
+            36.67,
+            35.4
+        ],
+        "NFLX/AMZN": [
+            41.22,
+            39.94,
+            40.09,
+            39.68,
+            39.93
+        ],
+        "GOOGLE/MSFT": [
+            63.18,
+            61.74,
+            62.76,
+            62.9,
+            63.6
+        ],
+        "MSFT/AAPL": [
+            38.04,
+            37.89,
+            38.31,
+            39.05,
+            38.02
+        ],
+        "TESLA/FORD": [
+            45.74,
+            46.37,
+            45.67,
+            46.48,
+            46.68
+        ],
+        "META/GOOGLE": [
+            54.69,
+            55.56,
+            55.58,
+            55.17,
+            54.52
+        ],
+        "AMZN/EBAY": [
+            54.63,
+            52.64,
+            52.27,
+            53.56,
+            54.8
+        ],
+        "INTEL/IBM": [
+            47.52,
+            48.11,
+            47.86,
+            47.44,
+            47.01
+        ]
+    },
+    "aggressiveness_mode": "BALANCED"
+}

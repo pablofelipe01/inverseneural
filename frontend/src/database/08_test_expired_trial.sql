@@ -8,14 +8,14 @@ SELECT
   trial_ends_at,
   trial_ends_at < NOW() as trial_expired
 FROM profiles 
-WHERE email = 'syliconservicioalcliente+debug8@gmail.com';
+WHERE email = 'syliconservicioalcliente+testing6@gmail.com';
 
 -- Simular trial expirado (cambiar fecha para testing)
 UPDATE profiles 
 SET trial_ends_at = NOW() - INTERVAL '1 day'
-WHERE email = 'syliconservicioalcliente+debug8@gmail.com';
+WHERE email = 'syliconservicioalcliente+testing6@gmail.com';
 
 -- Para volver a normal después del testing:
 -- UPDATE profiles 
 -- SET trial_ends_at = NOW() + INTERVAL '15 days'
--- WHERE email = 'syliconservicioalcliente+debug8@gmail.com';
+-- WHERE email = 'syliconservicioalcliente+testing6@gmail.com';

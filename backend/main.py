@@ -28,8 +28,14 @@ def main():
                        help='Verificar resultados de órdenes recientes')
     parser.add_argument('--pairs', nargs='+', 
                        help='Pares específicos para operar (ej: --pairs NVDA/AMD TESLA/FORD)')
+    parser.add_argument('--crypto', nargs='+', 
+                       help='Crypto específicos para operar (ej: --crypto BTCUSD ETHUSD)')
     parser.add_argument('--position-size', type=int,
                        help='Tamaño de posición en porcentaje (1-15)')
+    parser.add_argument('--pairs-position-size', type=int,
+                       help='Tamaño de posición para pares en porcentaje (1-15)')
+    parser.add_argument('--crypto-position-size', type=int,
+                       help='Tamaño de posición para crypto en porcentaje (1-5)')
     parser.add_argument('--aggressiveness', choices=['conservador', 'balanceado', 'agresivo'],
                        help='Nivel de agresividad del algoritmo')
     
@@ -78,10 +84,23 @@ def main():
             logger.info(f"🎯 Pares seleccionados: {', '.join(args.pairs)}")
             strategy_params['selected_pairs'] = args.pairs
         
+        # Agregar crypto específicos si se proporcionaron
+        if args.crypto:
+            logger.info(f"🪙 Crypto seleccionados: {', '.join(args.crypto)}")
+            strategy_params['selected_crypto'] = args.crypto
+        
         # Agregar configuración adicional
         if args.position_size:
-            logger.info(f"💰 Tamaño de posición: {args.position_size}%")
+            logger.info(f"💰 Tamaño de posición (legacy): {args.position_size}%")
             strategy_params['position_size'] = args.position_size
+        
+        if args.pairs_position_size:
+            logger.info(f"📊 Tamaño de posición pares: {args.pairs_position_size}%")
+            strategy_params['pairs_position_size'] = args.pairs_position_size
+        
+        if args.crypto_position_size:
+            logger.info(f"🪙 Tamaño de posición crypto: {args.crypto_position_size}%")
+            strategy_params['crypto_position_size'] = args.crypto_position_size
         
         if args.aggressiveness:
             logger.info(f"⚡ Nivel de agresividad: {args.aggressiveness}")

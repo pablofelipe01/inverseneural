@@ -1,0 +1,46 @@
+# FastAPI Backend - Elestio Deployment
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# Redis for queues and caching
+redis[hiredis]==5.0.1
+
+# HTTP requests
+httpx==0.25.2
+requests==2.31.0
+
+# Background tasks
+celery==5.3.4
+kombu==5.3.4
+
+# Database (optional)
+asyncpg==0.29.0
+sqlalchemy[asyncio]==2.0.23
+
+# Authentication & Security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+
+# Environment management
+python-dotenv==1.0.0
+
+# Monitoring & Logging
+structlog==23.2.0
+prometheus-client==0.19.0
+
+# Trading specific
+numpy==1.25.2
+pandas==2.1.4
+websockets==12.0
+
+# Development
+pytest==7.4.3
+pytest-asyncio==0.21.1
+black==23.11.0
+flake8==6.1.0
+
+# Production
+gunicorn==21.2.0

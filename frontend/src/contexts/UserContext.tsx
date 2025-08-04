@@ -3,17 +3,7 @@
 import { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase';
-
-interface UserProfile {
-  id: string;
-  email: string;
-  full_name: string;
-  subscription_status: string;
-  trial_ends_at: string;
-  plan_type: string;
-  stripe_customer_id?: string;
-  stripe_subscription_id?: string;
-}
+import { UserProfile } from '@/types';
 
 interface UserContextType {
   user: User | null;

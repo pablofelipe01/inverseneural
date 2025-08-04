@@ -118,7 +118,7 @@ export default function PricingPage() {
             <ul className="space-y-3 mb-6">
               <li className="flex items-center text-gray-300">
                 <span className="text-green-400 mr-2">✓</span>
-                5 activos simultáneos
+                4 pares de stocks + 3 cryptomonedas
               </li>
               <li className="flex items-center text-gray-300">
                 <span className="text-green-400 mr-2">✓</span>
@@ -131,6 +131,14 @@ export default function PricingPage() {
               <li className="flex items-center text-gray-300">
                 <span className="text-green-400 mr-2">✓</span>
                 Dashboard avanzado
+              </li>
+              <li className="flex items-center text-gray-300">
+                <span className="text-blue-400 mr-2">🪙</span>
+                Algoritmos especializados en crypto
+              </li>
+               <li className="flex items-center text-gray-300">
+                <span className="text-yellow-400 mr-2">⚡</span>
+                Position sizing optimizado
               </li>
             </ul>
             
@@ -162,7 +170,7 @@ export default function PricingPage() {
             <ul className="space-y-3 mb-6">
               <li className="flex items-center text-gray-300">
                 <span className="text-green-400 mr-2">✓</span>
-                7 activos simultáneos
+                7 pares de stocks + 5 cryptomonedas
               </li>
               <li className="flex items-center text-gray-300">
                 <span className="text-green-400 mr-2">✓</span>
@@ -176,7 +184,14 @@ export default function PricingPage() {
                 <span className="text-green-400 mr-2">✓</span>
                 Dashboard avanzado
               </li>
-              
+              <li className="flex items-center text-gray-300">
+                <span className="text-blue-400 mr-2">🪙</span>
+                Algoritmos especializados en crypto
+              </li>
+              <li className="flex items-center text-gray-300">
+                <span className="text-yellow-400 mr-2">⚡</span>
+                Position sizing optimizado
+              </li>
             </ul>
             
             <button
@@ -207,7 +222,7 @@ export default function PricingPage() {
             <ul className="space-y-3 mb-6">
               <li className="flex items-center text-gray-300">
                 <span className="text-green-400 mr-2">✓</span>
-                9 activos simultáneos
+                Todos los activos: 9 stocks + 8 crypto
               </li>
               <li className="flex items-center text-gray-300">
                 <span className="text-green-400 mr-2">✓</span>
@@ -221,10 +236,17 @@ export default function PricingPage() {
                 <span className="text-green-400 mr-2">✓</span>
                 Dashboard avanzado
               </li>
-             
               <li className="flex items-center text-gray-300">
-                <span className="text-green-400 mr-2">✓</span>
-                Lista prioritaria en nuevos algoritmos.
+                <span className="text-blue-400 mr-2">🪙</span>
+                Algoritmos especializados en crypto
+              </li>
+              <li className="flex items-center text-gray-300">
+                <span className="text-yellow-400 mr-2">⚡</span>
+                Position sizing optimizado
+              </li>
+              <li className="flex items-center text-gray-300">
+                <span className="text-orange-400 mr-2">🎯</span>
+                Lista prioritaria en nuevos algoritmos
               </li>
             </ul>
             
@@ -254,9 +276,18 @@ export default function PricingPage() {
           <p className="text-gray-400 text-sm mb-4">
             • Todos los planes incluyen las funcionalidades completas del algoritmo
           </p>
-          <p className="text-gray-400 text-sm">
+          <p className="text-gray-400 text-sm mb-4">
             • La diferencia principal está en el número de activos que puedes operar simultáneamente
           </p>
+          <p className="text-gray-400 text-sm mb-4">
+            • Renovación automática mensual con 7 días de gracia en caso de problemas de pago
+          </p>
+          <Link
+            href="/billing-info"
+            className="text-blue-400 hover:text-blue-300 underline text-sm"
+          >
+            Ver información completa sobre facturación →
+          </Link>
         </div>
 
         {/* Preguntas Frecuentes */}
