@@ -204,7 +204,7 @@ export const INITIAL_STATUS: AlgorithmStatus = {
 
 // Configuración de API
 export const API_CONFIG = {
-  BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || 'https://python-390f6-u38879.vm.elestio.app',
+  BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000',
   ENDPOINTS: {
     START: '/strategy/start',
     STOP: '/strategy/stop',
