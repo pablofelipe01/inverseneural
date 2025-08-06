@@ -1,31 +1,21 @@
 {
-    "timestamp": "2025-08-05T18:37:48.933913",
+    "timestamp": "2025-08-05T19:07:12.436396",
     "strategy_mode": "CALL_PUT",
-    "active_options": {
-        "TESLA/FORD": [
-            {
-                "id": 12930145387,
-                "type": "CALL",
-                "asset": "TESLA/FORD",
-                "size": 521.25,
-                "entry_time": "2025-08-05T18:35:15.230921",
-                "expiry_time": "2025-08-05T18:40:15.230923",
-                "rsi": 70.89,
-                "balance_before": 10425,
-                "asset_group": "PAIR"
-            }
-        ]
-    },
+    "active_options": {},
     "last_signal_time": {
         "TESLA/FORD": "2025-08-05T18:35:15.230984"
     },
-    "consecutive_losses": {},
+    "consecutive_losses": {
+        "TESLA/FORD": 0
+    },
     "daily_lockouts": {},
-    "wins": {},
+    "wins": {
+        "TESLA/FORD": 1
+    },
     "losses": {},
     "ties": {},
-    "total_profit": 0.0,
-    "daily_profit": 0.0,
+    "total_profit": 442.85000000000036,
+    "daily_profit": 442.85000000000036,
     "monthly_profits": {},
     "monthly_starting_capital": {
         "2025-08": 10425
@@ -36,125 +26,125 @@
     "min_capital": 9904,
     "last_date": "2025-08-05",
     "current_month": "2025-08",
-    "daily_consecutive_wins": 0,
+    "daily_consecutive_wins": 1,
     "daily_consecutive_losses": 0,
     "daily_lock": false,
     "daily_lock_time": null,
     "daily_lock_reason": null,
     "max_daily_consecutive": 2,
-    "recent_results": [],
+    "recent_results": [
+        "win"
+    ],
     "day_start_balance": 10425,
     "rsi_history": {
         "NVDA/AMD": [
-            51.7,
-            51.38,
-            51.59,
-            51.92,
-            51.59
+            44.99,
+            45.65,
+            45.37,
+            44.56,
+            44.42
         ],
         "AMZN/ALIBABA": [
-            70.21,
-            69.66
-        ],
-        "TESLA/FORD": [],
-        "MSFT/AAPL": [
-            54.74,
-            54.35,
-            51.58,
-            49.82,
-            49.84
+            66.39,
+            67.97,
+            66.34,
+            68.46,
+            69.38
         ],
         "NFLX/AMZN": [
-            56.66,
-            57.25,
-            57.33,
-            56.87,
-            54.66
+            52.55,
+            52.95,
+            53.15,
+            52.75,
+            52.84
         ],
         "GOOGLE/MSFT": [
-            48.74,
-            49.55,
-            50.2,
-            50.51,
-            50.24
+            45.89,
+            45.94,
+            46.16,
+            46.16,
+            45.89
         ],
-        "INTEL/IBM": [
-            59.04,
-            57.72,
-            57.37,
-            58.07,
-            56.91
-        ],
-        "AMZN/EBAY": [
-            47.42,
-            47.11,
-            44.7,
-            45.62,
-            46.02
+        "MSFT/AAPL": [
+            58.57,
+            58.63,
+            57.9,
+            57.22,
+            56.81
         ],
         "META/GOOGLE": [
-            63.48,
-            62.72,
-            63.05,
-            63.24,
-            62.78
+            33.46,
+            33.28,
+            32.12,
+            32.93,
+            34.04
         ],
-        "ETHUSD": [
-            53.78,
-            53.69,
-            52.7,
-            51.62,
-            50.25
+        "AMZN/EBAY": [
+            36.8,
+            38.1,
+            38.53,
+            39.41,
+            39.77
         ],
-        "BTCUSD": [
-            62.78,
-            63.13,
-            63.13,
-            63.29,
-            63.28
-        ],
-        "NEARUSD": [
-            52.33,
-            53.51,
-            54.66,
-            54.15,
-            54.4
-        ],
-        "ARBUSD": [
-            40.3,
-            41.34,
-            39.77,
-            39.62,
-            38.72
-        ],
-        "LINKUSD": [
-            44.03,
-            42.15,
-            38.88,
-            40.23,
-            40.35
-        ],
-        "ATOMUSD": [
-            49.69,
-            51.18,
-            50.51,
-            50.43,
-            50.0
-        ],
-        "DOTUSD": [
-            45.86,
-            45.24,
-            43.58,
-            43.23,
-            42.16
+        "INTEL/IBM": [
+            43.74,
+            41.94,
+            43.0,
+            42.29,
+            42.47
         ],
         "MATICUSD": [
-            43.91,
-            43.34,
-            44.08,
-            44.76,
-            43.48
+            45.07,
+            42.56,
+            41.67,
+            41.4,
+            41.26
+        ],
+        "DOTUSD": [
+            43.71,
+            43.81,
+            43.0,
+            43.16,
+            43.35
+        ],
+        "LINKUSD": [
+            44.86,
+            47.77,
+            49.32,
+            49.6,
+            52.13
+        ],
+        "ATOMUSD": [
+            49.43,
+            48.55,
+            49.02,
+            48.97,
+            47.44
+        ],
+        "ETHUSD": [
+            46.47,
+            44.19,
+            44.07,
+            42.65,
+            42.09
+        ],
+        "BTCUSD": [
+            58.5,
+            58.78,
+            59.17,
+            59.04,
+            57.52
+        ],
+        "NEARUSD": [
+            47.47,
+            48.71,
+            51.02,
+            51.18,
+            51.31
+        ],
+        "ARBUSD": [
+            31.29
         ]
     },
-    "aggressiveness_mode": "AGGRESSIVE"
+    "aggressiveness_mode": "BALANCED"
 }
